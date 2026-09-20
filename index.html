@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Cocktail Arcade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0221;
+    --bg-panel:#170a30;
+    --bg-panel-2:#1f0e3d;
+    --pink:#ff2e6c;
+    --cyan:#00e8ff;
+    --yellow:#ffe45e;
+    --green:#39ff88;
+    --purple:#8a4fff;
+    --grid:#4b1f7a;
+    --text:#e9e6f7;
+    --dim:#9186b8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'VT323', monospace;
+    font-size:19px;
+    line-height:1.35;
+    min-height:100vh;
+    overflow-x:hidden;
+    -webkit-tap-highlight-color:transparent;
+  }
+  h1,h2,h3,.pixel{
+    font-family:'Press Start 2P', monospace;
+    letter-spacing:.5px;
+  }
+  #scanlines{
+    position:fixed; inset:0; pointer-events:none; z-index:50;
+    background:repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,.18) 3px
+    );
+    mix-blend-mode:multiply;
+  }
+  #vignette{
+    position:fixed; inset:0; pointer-events:none; z-index:49;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
+  }
+  #app{
+    position:relative;
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    padding:14px 14px 40px;
+  }
+
+  /* ---------- HUD ---------- */
+  .hud{
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--bg-panel);
+    border:2px solid var(--purple);
+    box-shadow:0 0 0 2px var(--bg), 0 0 12px rgba(138,79,255,.5);
+    padding:8px 10px;
+    margin-bottom:16px;
+    font-family:'Press Start 2P', monospace;
+    font-size:9px;
+    color:var(--cyan);
+  }
+  .hud .hud-item{display:flex; flex-direction:column; gap:4px; align-items:center;}
+  .hud .hud-label{color:var(--dim); font-size:8px;}
+  .hud button{
+    background:var(--bg-panel-2); color:var(--yellow); border:2px solid var(--yellow);
+    font-family:'Press Start 2P', monospace; font-size:10px; width:26px; height:26px;
+    cursor:pointer;
+  }
+  .hud button:active{transform:translateY(1px);}
+  .hud .val{color:var(--yellow); font-size:13px;}
+
+  /* ---------- Title screen ---------- */
+  .title-screen{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    min-height:80vh; text-align:center; gap:28px;
+  }
+  .logo{
+    font-size:clamp(22px,7vw,32px);
+    color:var(--pink);
+    text-shadow:
+      0 0 6px var(--pink),
+      0 0 18px var(--pink),
+      3px 3px 0 var(--cyan);
+    animation:flicker 3.2s infinite;
+    line-height:1.6;
+  }
+  .logo span{color:var(--cyan); text-shadow:0 0 6px var(--cyan), 0 0 18px var(--cyan), -3px 3px 0 var(--pink);}
+  @keyframes flicker{
+    0%,100%{opacity:1;}
+    92%{opacity:1;}
+    93%{opacity:.6;}
+    94%{opacity:1;}
+    96%{opacity:.75;}
+    97%{opacity:1;}
+  }
+  .grid-floor{
+    width:100%; height:120px;
+    background:
+      linear-gradient(to top, rgba(255,46,108,.35), transparent 70%),
+      repeating-linear-gradient(90deg, var(--grid) 0 2px, transparent 2px 40px);
+    -webkit-mask-image:linear-gradient(to top, black, transparent);
+            mask-image:linear-gradient(to top, black, transparent);
+    position:relative;
+  }
+  .sun{
+    width:90px; height:90px; border-radius:50%;
+    background:linear-gradient(to top, var(--pink), var(--yellow));
+    margin:0 auto -20px;
+    box-shadow:0 0 40px rgba(255,46,108,.6);
+  }
+  .press-start{
+    font-family:'Press Start 2P', monospace;
+    font-size:12px; color:var(--yellow);
+    animation:blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+  .coin-btn{
+    background:var(--pink); color:#fff; border:none;
+    font-family:'Press Start 2P', monospace; font-size:12px;
+    padding:14px 22px; cursor:pointer;
+    box-shadow:0 4px 0 #9c0034, 0 0 20px rgba(255,46,108,.6);
+  }
+  .coin-btn:active{transform:translateY(4px); box-shadow:0 0 0 #9c0034;}
+  .loading-txt{color:var(--dim); font-size:14px;}
+
+  /* ---------- Menu ---------- */
+  .menu-title{color:var(--yellow); font-size:14px; text-align:center; margin-bottom:18px;}
+  .menu-btn{
+    display:block; width:100%; text-align:left;
+    background:var(--bg-panel); color:var(--text);
+    border:2px solid var(--cyan);
+    box-shadow:4px 4px 0 var(--cyan);
+    padding:16px 14px; margin-bottom:20px; cursor:pointer;
+    font-family:'Press Start 2P', monospace; font-size:12px;
+  }
+  .menu-btn:active{transform:translate(4px,4px); box-shadow:0 0 0 var(--cyan);}
+  .menu-btn.pink{border-color:var(--pink); box-shadow:4px 4px 0 var(--pink);}
+  .menu-btn.pink:active{box-shadow:0 0 0 var(--pink);}
+  .menu-btn.yellow{border-color:var(--yellow); box-shadow:4px 4px 0 var(--yellow);}
+  .menu-btn.yellow:active{box-shadow:0 0 0 var(--yellow);}
+  .menu-btn.green{border-color:var(--green); box-shadow:4px 4px 0 var(--green);}
+  .menu-btn.green:active{box-shadow:0 0 0 var(--green);}
+  .menu-btn .sub{
+    font-family:'VT323', monospace; font-size:16px; color:var(--dim); margin-top:8px; display:block;
+  }
+
+  /* ---------- Generic screen header ---------- */
+  .screen-header{
+    display:flex; align-items:center; gap:10px; margin-bottom:16px;
+  }
+  .back-btn{
+    background:var(--bg-panel); color:var(--pink); border:2px solid var(--pink);
+    font-family:'Press Start 2P', monospace; font-size:10px; padding:8px 10px; cursor:pointer;
+  }
+  .back-btn:active{transform:translateY(2px);}
+  .screen-title{color:var(--cyan); font-size:13px; text-shadow:0 0 8px rgba(0,232,255,.6);}
+
+  /* ---------- Inventory ---------- */
+  .inv-cat{color:var(--yellow); font-size:11px; margin:18px 0 8px;}
+  .inv-row{
+    display:flex; align-items:center; gap:10px;
+    background:var(--bg-panel); border:1px solid var(--grid);
+    padding:9px 10px; margin-bottom:6px;
+  }
+  .inv-row input{width:20px; height:20px; accent-color:var(--green);}
+  .inv-row label{flex:1; font-size:18px;}
+  .inv-row.checked{border-color:var(--green);}
+  .inv-note{color:var(--dim); font-size:15px; margin-top:14px;}
+
+  /* ---------- Cocktail list ---------- */
+  .cocktail-card{
+    background:var(--bg-panel); border:2px solid var(--grid);
+    padding:12px; margin-bottom:12px; cursor:pointer;
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .cocktail-card.ready{border-color:var(--green); box-shadow:0 0 10px rgba(57,255,136,.25);}
+  .cocktail-card:active{transform:scale(.98);}
+  .cc-name{font-family:'Press Start 2P', monospace; font-size:11px; margin-bottom:6px;}
+  .cc-missing{color:var(--dim); font-size:15px;}
+  .badge{
+    font-family:'Press Start 2P', monospace; font-size:8px; padding:5px 7px;
+    white-space:nowrap; flex-shrink:0;
+  }
+  .badge.ready{background:var(--green); color:#04240f;}
+  .badge.locked{background:var(--pink); color:#3a0013;}
+
+  /* ---------- Cocktail detail / play screen ---------- */
+  .glass-row{display:flex; justify-content:center; align-items:flex-end; gap:14px; margin:14px 0 6px;}
+  .glass{
+    position:relative; width:110px; height:130px; flex-shrink:0;
+    border:4px solid var(--cyan);
+    border-top:none;
+    background:rgba(255,255,255,.03);
+    overflow:hidden;
+    box-shadow:0 0 16px rgba(0,232,255,.35);
+  }
+  .glass.shape-coupe{
+    width:130px; height:90px;
+    border-radius:0 0 70px 70px / 0 0 90px 90px;
+    border-top:none;
+  }
+  .glass.shape-highball{width:80px; height:150px;}
+  .layer{
+    position:absolute; left:0; right:0;
+    transition:height .5s ease, bottom .5s ease;
+  }
+  .ice{
+    position:absolute; top:6px; left:0; right:0; z-index:3;
+    display:flex; justify-content:center; align-items:flex-start; gap:4px;
+    flex-wrap:wrap; padding:0 8px; pointer-events:none;
+  }
+  .ice-cube{
+    width:24px; height:24px; flex-shrink:0;
+    background:rgba(255,255,255,.5); border:2px solid rgba(255,255,255,.85);
+    box-shadow:inset -3px -3px 0 rgba(255,255,255,.2);
+  }
+  .ice-cube.big{width:44px; height:44px;}
+  .ice-shard{
+    width:8px; height:8px; flex-shrink:0;
+    background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8);
+  }
+  .glass-tick{
+    position:absolute; right:-9px; width:9px; height:2px; z-index:4;
+  }
+  .legend{position:relative; flex:1; min-width:0; max-width:190px; display:flex; flex-direction:column; gap:8px; justify-content:center;}
+  .legend-row{display:flex; align-items:center; gap:6px;}
+  .legend-swatch{width:10px; height:10px; flex-shrink:0; border:1px solid rgba(255,255,255,.35);}
+  .legend-text{font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .glass-legend{color:var(--dim); font-size:14px; text-align:center; margin-bottom:14px;}
+  .step-counter{
+    text-align:center; color:var(--yellow); font-family:'Press Start 2P', monospace;
+    font-size:11px; margin-bottom:10px;
+  }
+  .step-box{
+    background:var(--bg-panel); border:2px solid var(--pink);
+    padding:16px; margin-bottom:14px; font-size:20px;
+  }
+  .step-tag{
+    display:inline-block; font-family:'Press Start 2P', monospace; font-size:8px;
+    color:var(--bg); background:var(--pink); padding:3px 6px; margin-bottom:10px;
+  }
+  .action-btn{
+    display:block; width:100%; padding:14px; margin-bottom:10px; cursor:pointer;
+    font-family:'Press Start 2P', monospace; font-size:11px; border:none; color:#04240f;
+    background:var(--green); box-shadow:0 4px 0 #1a7d43;
+  }
+  .action-btn:active{transform:translateY(4px); box-shadow:none;}
+  .action-btn:disabled{background:var(--grid); color:var(--dim); box-shadow:none; cursor:default;}
+  .action-btn.secondary{background:var(--yellow); box-shadow:0 4px 0 #a88a10;}
+  .timer-bar-outer{
+    height:18px; border:2px solid var(--yellow); background:var(--bg-panel); margin-bottom:12px;
+  }
+  .timer-bar-inner{height:100%; width:0%; background:var(--yellow); transition:width linear;}
+  .flavor-text{
+    text-align:center; color:var(--green); font-family:'Press Start 2P', monospace;
+    font-size:10px; min-height:20px; margin-bottom:6px;
+  }
+  .tool-list{color:var(--dim); font-size:16px; margin-bottom:14px;}
+  .tool-list .missing{color:var(--pink);}
+  .guest-note{color:var(--cyan); font-size:15px; margin-top:6px;}
+
+  /* ---------- Basi ---------- */
+  .card{
+    background:var(--bg-panel); border:1px solid var(--grid); padding:14px; margin-bottom:14px;
+  }
+  .card h3{color:var(--yellow); font-size:12px; margin:0 0 8px;}
+  .card p{margin:0; font-size:18px;}
+  .calc-check{display:flex; align-items:center; gap:8px; margin-bottom:6px;}
+  .calc-check input{width:18px; height:18px; accent-color:var(--cyan);}
+  .calc-check label{font-size:17px;}
+  .calc-item{border-bottom:1px solid var(--grid); padding-bottom:10px; margin-bottom:10px;}
+  .calc-controls{display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:8px 0 0 26px;}
+  .calc-controls button{
+    width:24px; height:24px; background:var(--bg-panel-2); color:var(--yellow);
+    border:2px solid var(--yellow); font-family:'Press Start 2P', monospace; font-size:9px; cursor:pointer;
+  }
+  .calc-label{font-size:14px; color:var(--dim);}
+  .calc-val{font-size:16px; color:var(--yellow); min-width:16px; text-align:center;}
+  .result-line{display:flex; justify-content:space-between; font-size:18px; border-bottom:1px dashed var(--grid); padding:5px 0;}
+  .result-line b{color:var(--cyan);}
+
+  /* ---------- Musica ---------- */
+  .text-input{
+    width:100%; padding:9px 10px; background:var(--bg); border:2px solid var(--grid);
+    color:var(--text); font-family:'VT323', monospace; font-size:17px; margin-bottom:10px;
+  }
+  .text-input:focus{outline:none; border-color:var(--cyan);}
+
+  /* ---------- Now playing bar (solo versione self-hosted con Spotify vero) ---------- */
+  .now-playing-bar{
+    position:fixed; bottom:0; left:0; right:0; z-index:40;
+    max-width:480px; margin:0 auto;
+    background:var(--bg-panel); border-top:2px solid var(--green);
+    padding:8px 14px; display:none; align-items:center; gap:10px;
+  }
+  .now-playing-bar img{width:32px; height:32px; flex-shrink:0;}
+  .now-playing-bar .np-text{
+    font-size:14px; color:var(--text); overflow:hidden;
+    white-space:nowrap; text-overflow:ellipsis;
+  }
+  body.has-now-playing #app{padding-bottom:64px;}
+</style>
+</head>
+<body>
+<div id="scanlines"></div>
+<div id="vignette"></div>
+<div id="app"></div>
+<div id="now-playing-bar" class="now-playing-bar"></div>
+
+<script>
+/* ============ DATA ============ */
+
+const INVENTORY_CATS = [
+  { id:'attrezzi', label:'Attrezzatura', items:[
+    {inv:'shaker', label:'Shaker'},
+    {inv:'jigger', label:'Jigger / misurino'},
+    {inv:'mixingGlass', label:'Mixing glass'},
+    {inv:'barSpoon', label:'Bar spoon'},
+    {inv:'strainer', label:'Strainer Hawthorne'},
+    {inv:'muddler', label:'Muddler'},
+    {inv:'peeler', label:'Peeler agrumi'},
+  ]},
+  { id:'bicchieri', label:'Bicchieri', items:[
+    {inv:'tumbler', label:'Tumbler basso'},
+    {inv:'coupe', label:'Coupe / Nick&Nora'},
+    {inv:'highball', label:'Highball / mug'},
+  ]},
+  { id:'alcolici', label:'Alcolici', items:[
+    {inv:'bourbon', label:'Bourbon'},
+    {inv:'gin', label:'Gin'},
+    {inv:'rum', label:'Rum bianco'},
+    {inv:'tequila', label:'Tequila'},
+    {inv:'vodka', label:'Vodka'},
+    {inv:'vermouthRosso', label:'Vermouth rosso'},
+    {inv:'tripleSec', label:'Triple sec / Cointreau'},
+    {inv:'campari', label:'Campari'},
+  ]},
+  { id:'altri', label:'Altri ingredienti', items:[
+    {inv:'angostura', label:'Angostura bitters'},
+    {inv:'sciroppo', label:'Sciroppo di zucchero'},
+    {inv:'lime', label:'Lime freschi'},
+    {inv:'limone', label:'Limoni freschi'},
+    {inv:'arancia', label:'Arance'},
+    {inv:'mentaFresca', label:'Menta fresca'},
+    {inv:'sodaWater', label:'Soda water'},
+    {inv:'gingerBeer', label:'Ginger beer'},
+    {inv:'saleRim', label:'Sale grosso'},
+    {inv:'ciliegie', label:'Ciliegie sotto spirito'},
+  ]},
+];
+
+const INV_LABELS = {};
+INVENTORY_CATS.forEach(c=>c.items.forEach(i=>INV_LABELS[i.inv]=i.label));
+
+function ing(inv, amount, unit){ return {inv, amount, unit, label:INV_LABELS[inv]}; }
+
+// Colore reale (approssimato) di ogni spirito/ingrediente, per riconoscerlo nel bicchiere
+const COLORS = {
+  bourbon:'#c17a3d',
+  gin:'#e4eff8',
+  rum:'#f5f0dc',
+  tequila:'#eef2d6',
+  vodka:'#eef3fb',
+  vermouthRosso:'#8c2038',
+  campari:'#e8283f',
+  tripleSec:'#f7d98a',
+  angostura:'#4a1712',
+  sciroppo:'#f2e6bf',
+  lime:'#c8e86a',
+  limone:'#eeea7a',
+  sodaWater:'#eaf7fb',
+  gingerBeer:'#e3b96a',
+};
+const NOMINAL_DASH_CL = 0.6; // volume "visivo" convenzionale per un dash, solo per proporzioni grafiche
+
+const COCKTAILS = [
+  {
+    id:'oldfashioned', name:'Old Fashioned', glassShape:'shape-tumbler',
+    tools:['jigger','barSpoon','peeler','tumbler'],
+    ingredients:[ing('bourbon',6,'cl'), ing('sciroppo',1,'cl'), ing('angostura',2,'dash'), ing('arancia',1,'pz')],
+    steps:[
+      {tag:'BUILD', reveal:['sciroppo','angostura'], ice:'none', text:'Metti {sciroppo} di sciroppo e {angostura} dash di Angostura nel bicchiere.'},
+      {tag:'VERSA', reveal:['bourbon'], ice:'none', text:'Aggiungi {bourbon} di bourbon.'},
+      {tag:'GHIACCIO', reveal:[], ice:'big', text:'Riempi il bicchiere con un grosso cubo di ghiaccio.'},
+      {tag:'STIR', reveal:[], ice:'big', duration:20, text:'Mescola con il bar spoon per 20 secondi, fino a quando il bicchiere è freddo al tatto.'},
+      {tag:'GARNISH', reveal:[], ice:'big', text:'Ricava una twist di arancia con il peeler e spremila sopra il drink per rilasciare gli oli.'},
+    ]
+  },
+  {
+    id:'negroni', name:'Negroni', glassShape:'shape-tumbler',
+    tools:['jigger','barSpoon','tumbler'],
+    ingredients:[ing('gin',3,'cl'), ing('vermouthRosso',3,'cl'), ing('campari',3,'cl'), ing('arancia',1,'pz')],
+    steps:[
+      {tag:'GHIACCIO', reveal:[], ice:'cubes', text:'Riempi il bicchiere con ghiaccio.'},
+      {tag:'VERSA', reveal:['gin'], ice:'cubes', text:'Versa {gin} di gin.'},
+      {tag:'VERSA', reveal:['vermouthRosso'], ice:'cubes', text:'Aggiungi {vermouthRosso} di vermouth rosso.'},
+      {tag:'VERSA', reveal:['campari'], ice:'cubes', text:'Aggiungi {campari} di Campari.'},
+      {tag:'STIR', reveal:[], ice:'cubes', duration:15, text:'Mescola per 15 secondi.'},
+      {tag:'GARNISH', reveal:[], ice:'cubes', text:'Guarnisci con una twist di arancia.'},
+    ]
+  },
+  {
+    id:'whiskeysour', name:'Whiskey Sour', glassShape:'shape-coupe',
+    tools:['shaker','strainer','jigger','coupe'],
+    ingredients:[ing('bourbon',6,'cl'), ing('limone',2.5,'cl'), ing('sciroppo',2,'cl')],
+    steps:[
+      {tag:'VERSA', reveal:['bourbon','limone','sciroppo'], ice:'none', text:'Versa {bourbon} di bourbon, {limone} di succo di limone fresco e {sciroppo} di sciroppo nello shaker.'},
+      {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio nello shaker e shakera energicamente per 12 secondi.'},
+      {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra con lo strainer nella coppa, senza ghiaccio.'},
+      {tag:'GARNISH', reveal:[], ice:'none', text:'Guarnisci con una twist di limone o una ciliegia.'},
+    ]
+  },
+  {
+    id:'daiquiri', name:'Daiquiri', glassShape:'shape-coupe',
+    tools:['shaker','strainer','jigger','coupe'],
+    ingredients:[ing('rum',6,'cl'), ing('lime',2.5,'cl'), ing('sciroppo',2,'cl')],
+    steps:[
+      {tag:'VERSA', reveal:['rum','lime','sciroppo'], ice:'none', text:'Versa {rum} di rum bianco, {lime} di succo di lime fresco e {sciroppo} di sciroppo nello shaker.'},
+      {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
+      {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra nella coppa fredda, senza ghiaccio.'},
+    ]
+  },
+  {
+    id:'margarita', name:'Margarita', glassShape:'shape-tumbler',
+    tools:['shaker','strainer','jigger','tumbler'],
+    extraTools:['saleRim'],
+    ingredients:[ing('tequila',5,'cl'), ing('tripleSec',2,'cl'), ing('lime',2.5,'cl')],
+    steps:[
+      {tag:'RIM', reveal:[], ice:'none', text:'Bagna il bordo del bicchiere con uno spicchio di lime e passalo nel sale grosso.'},
+      {tag:'VERSA', reveal:['tequila','tripleSec','lime'], ice:'none', text:'Versa {tequila} di tequila, {tripleSec} di triple sec e {lime} di succo di lime nello shaker.'},
+      {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
+      {tag:'STRAIN', reveal:[], ice:'cubes', text:'Filtra nel bicchiere con ghiaccio.'},
+    ]
+  },
+  {
+    id:'moscowmule', name:'Moscow Mule', glassShape:'shape-highball',
+    tools:['jigger','highball'],
+    ingredients:[ing('vodka',5,'cl'), ing('lime',1.5,'cl'), ing('gingerBeer',10,'cl')],
+    steps:[
+      {tag:'GHIACCIO', reveal:[], ice:'cubes', text:'Riempi il bicchiere (o mug di rame) con ghiaccio.'},
+      {tag:'VERSA', reveal:['vodka','lime'], ice:'cubes', text:'Versa {vodka} di vodka e {lime} di succo di lime.'},
+      {tag:'TOP', reveal:['gingerBeer'], ice:'cubes', text:'Completa con {gingerBeer} di ginger beer.'},
+      {tag:'STIR', reveal:[], ice:'cubes', duration:5, text:'Mescola brevemente per amalgamare.'},
+      {tag:'GARNISH', reveal:[], ice:'cubes', text:'Guarnisci con una rondella di lime.'},
+    ]
+  },
+  {
+    id:'mojito', name:'Mojito', glassShape:'shape-highball',
+    tools:['muddler','jigger','highball'],
+    ingredients:[ing('rum',6,'cl'), ing('lime',2,'cl'), ing('sciroppo',2,'cl'), ing('mentaFresca',9,'foglie'), ing('sodaWater',6,'cl')],
+    steps:[
+      {tag:'MUDDLE', reveal:['lime'], ice:'none', text:'Metti {mentaFresca} foglie di menta e {lime} di succo di lime nel bicchiere, pesta leggermente per svegliare gli aromi.'},
+      {tag:'VERSA', reveal:['rum','sciroppo'], ice:'none', text:'Aggiungi {rum} di rum bianco e {sciroppo} di sciroppo.'},
+      {tag:'GHIACCIO', reveal:[], ice:'crushed', text:'Riempi con ghiaccio tritato.'},
+      {tag:'TOP', reveal:['sodaWater'], ice:'crushed', text:'Completa con {sodaWater} di soda.'},
+      {tag:'STIR', reveal:[], ice:'crushed', duration:5, text:'Mescola delicatamente con un movimento verticale, dal basso in alto.'},
+    ]
+  },
+  {
+    id:'manhattan', name:'Manhattan', glassShape:'shape-coupe',
+    tools:['mixingGlass','barSpoon','strainer','jigger','coupe'],
+    ingredients:[ing('bourbon',6,'cl'), ing('vermouthRosso',3,'cl'), ing('angostura',2,'dash')],
+    steps:[
+      {tag:'VERSA', reveal:['bourbon','vermouthRosso','angostura'], ice:'none', text:'Versa {bourbon} di bourbon (o rye), {vermouthRosso} di vermouth rosso e {angostura} dash di Angostura nel mixing glass.'},
+      {tag:'STIR', reveal:[], ice:'cubes', duration:20, text:'Aggiungi ghiaccio e mescola per 20 secondi.'},
+      {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra nella coppa fredda.'},
+      {tag:'GARNISH', reveal:[], ice:'none', text:'Guarnisci con una ciliegia sotto spirito.'},
+    ]
+  },
+];
+
+const BASI_INFO = [
+  {title:'Sciroppo di zucchero', text:'Scalda acqua e zucchero in parti uguali (es. 200ml + 200g) fino a completo scioglimento, senza far bollire. Fai raffreddare e conserva in frigo fino a 3 settimane.'},
+  {title:'Ghiaccio', text:'Usa cubi grandi per i drink mescolati o costruiti (si sciolgono più lentamente): diluiscono meno e mantengono il drink freddo più a lungo. Trita il ghiaccio solo per Mojito e simili.'},
+  {title:'Twist di agrumi', text:'Prepara le scorze solo al momento del servizio: perdono in fretta gli oli essenziali. Usa il peeler evitando la parte bianca (amara).'},
+  {title:'Succo fresco', text:'Spremi lime e limoni la sera stessa, non prima: il succo perde acidità e aroma già dopo poche ore in frigo.'},
+  {title:'Bordo salato/zuccherato', text:'Bagna il bordo del bicchiere con uno spicchio di agrume e passalo capovolto in un piattino con sale grosso o zucchero, ruotandolo.'},
+];
+
+const LIME_YIELD = 2.5;   // cl succo per lime
+const LEMON_YIELD = 3;    // cl succo per limone
+
+/* ============ STATE ============ */
+
+let state = {
+  view:'title',
+  loaded:false,
+  inventory:{},
+  guests:2,
+  currentCocktailId:null,
+  stepIndex:0,
+  timer:{running:false, interval:null, seconds:0, total:0},
+  basiSelection:{},
+  musicLink:'',
+  spotifyClientId:'',
+  spotifyToken:null,
+  spotifyRefresh:null,
+  spotifyExpiresAt:0,
+  nowPlaying:null,
+};
+
+let saveTimeout = null;
+
+function loadData(){
+  try{
+    const raw = localStorage.getItem('cocktailArcadeData');
+    if(raw){
+      const parsed = JSON.parse(raw);
+      state.inventory = parsed.inventory || {};
+      state.guests = parsed.guests || 2;
+      state.musicLink = parsed.musicLink || '';
+      state.spotifyClientId = parsed.spotifyClientId || '';
+      state.spotifyToken = parsed.spotifyToken || null;
+      state.spotifyRefresh = parsed.spotifyRefresh || null;
+      state.spotifyExpiresAt = parsed.spotifyExpiresAt || 0;
+    }
+  }catch(e){ /* nessun dato salvato ancora, o storage non disponibile */ }
+  state.loaded = true;
+}
+
+function persistData(){
+  try{
+    localStorage.setItem('cocktailArcadeData', JSON.stringify({
+      inventory: state.inventory, guests: state.guests, musicLink: state.musicLink,
+      spotifyClientId: state.spotifyClientId, spotifyToken: state.spotifyToken,
+      spotifyRefresh: state.spotifyRefresh, spotifyExpiresAt: state.spotifyExpiresAt,
+    }));
+  }catch(e){ /* storage non disponibile in questo contesto */ }
+}
+
+/* ============ HELPERS ============ */
+
+function round(n){ return Math.round(n*10)/10; }
+
+function scaleAmount(ing, guests){
+  const raw = ing.amount * guests;
+  if(ing.unit==='cl') return round(raw);
+  return Math.round(raw);
+}
+
+function isCocktailReady(cocktail){
+  const needed = [...cocktail.tools, ...(cocktail.extraTools||[]), ...cocktail.ingredients.map(i=>i.inv)];
+  return needed.every(k => !!state.inventory[k]);
+}
+
+function missingItems(cocktail){
+  const needed = [...cocktail.tools, ...(cocktail.extraTools||[]), ...cocktail.ingredients.map(i=>i.inv)];
+  const uniq = [...new Set(needed)];
+  return uniq.filter(k => !state.inventory[k]);
+}
+
+function fillTemplate(text, cocktail, guests){
+  return text.replace(/\{(\w+)\}/g, (m, key)=>{
+    const found = cocktail.ingredients.find(i=>i.inv===key);
+    if(!found) return m;
+    const amt = scaleAmount(found, guests);
+    return amt + found.unit;
+  });
+}
+
+function glassShapeClass(shape){
+  if(shape==='shape-coupe') return 'glass shape-coupe';
+  if(shape==='shape-highball') return 'glass shape-highball';
+  return 'glass';
+}
+
+// Costruisce gli strati colorati cumulativi nel bicchiere, in base agli ingredienti
+// versati fino allo step corrente (ognuno con la sua altezza proporzionale e il suo colore)
+function buildLayers(cocktail, uptoStepIndex, guests){
+  const revealedOrder = [];
+  for(let i=0;i<=uptoStepIndex;i++){
+    (cocktail.steps[i].reveal||[]).forEach(inv=>{
+      if(!revealedOrder.includes(inv)) revealedOrder.push(inv);
+    });
+  }
+  const visVol = {};
+  let total = 0;
+  revealedOrder.forEach(inv=>{
+    const ingredient = cocktail.ingredients.find(i=>i.inv===inv);
+    if(!ingredient) return;
+    let vol = 0;
+    if(ingredient.unit==='cl') vol = ingredient.amount;
+    else if(ingredient.unit==='dash') vol = ingredient.amount*NOMINAL_DASH_CL;
+    visVol[inv] = vol;
+    total += vol;
+  });
+  const maxFill = 85;
+  let cumBottom = 0;
+  const layers = [];
+  revealedOrder.forEach(inv=>{
+    const vol = visVol[inv];
+    if(!vol) return;
+    const ingredient = cocktail.ingredients.find(i=>i.inv===inv);
+    const heightPct = total>0 ? (vol/total)*maxFill : 0;
+    const bottomPct = cumBottom;
+    cumBottom += heightPct;
+    layers.push({
+      inv, bottomPct, heightPct, topPct:cumBottom,
+      color: COLORS[inv] || '#cccccc',
+      label: ingredient.label,
+      amountDisplay: scaleAmount(ingredient, guests) + (ingredient.unit==='dash' ? ' dash' : ingredient.unit)
+    });
+  });
+  return layers;
+}
+
+function iceHTML(iceState){
+  if(!iceState || iceState==='none') return '';
+  if(iceState==='big') return `<div class="ice"><div class="ice-cube big"></div></div>`;
+  if(iceState==='cubes') return `<div class="ice">${'<div class="ice-cube"></div>'.repeat(3)}</div>`;
+  if(iceState==='crushed') return `<div class="ice">${'<div class="ice-shard"></div>'.repeat(9)}</div>`;
+  return '';
+}
+
+/* ============ RENDER ============ */
+
+const app = document.getElementById('app');
+
+function render(){
+  if(!state.loaded){
+    app.innerHTML = renderTitle(true);
+    return;
+  }
+  switch(state.view){
+    case 'title': app.innerHTML = renderTitle(false); break;
+    case 'menu': app.innerHTML = renderMenu(); break;
+    case 'inventory': app.innerHTML = renderInventory(); break;
+    case 'cocktails': app.innerHTML = renderCocktailList(); break;
+    case 'detail': app.innerHTML = renderDetail(); break;
+    case 'basi': app.innerHTML = renderBasi(); break;
+    case 'music': app.innerHTML = renderMusic(); break;
+  }
+}
+
+function renderTitle(loading){
+  return `
+    <div class="title-screen">
+      <div>
+        <div class="logo">COCKTAIL<br><span>ARCADE</span></div>
+      </div>
+      <div class="sun"></div>
+      <div class="grid-floor"></div>
+      ${loading
+        ? `<div class="loading-txt pixel" style="font-family:'Press Start 2P';font-size:10px;">CARICAMENTO...</div>`
+        : `<button class="coin-btn" data-action="start">INSERISCI COIN</button><div class="press-start">PREMI PER GIOCARE</div>`
+      }
+    </div>
+  `;
+}
+
+function hudHTML(title){
+  const ready = COCKTAILS.filter(isCocktailReady).length;
+  return `
+    <div class="hud">
+      <div class="hud-item">
+        <span class="hud-label">PERSONE</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <button data-action="guest-minus">-</button>
+          <span class="val">${String(state.guests).padStart(2,'0')}</span>
+          <button data-action="guest-plus">+</button>
+        </div>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">PRONTI</span>
+        <span class="val">${ready}/${COCKTAILS.length}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderMenu(){
+  return `
+    ${hudHTML()}
+    <div class="menu-title pixel">MENU PRINCIPALE</div>
+    <button class="menu-btn" data-action="goto-inventory">
+      SCORTE
+      <span class="sub">Segna cosa hai in casa</span>
+    </button>
+    <button class="menu-btn pink" data-action="goto-cocktails">
+      COCKTAIL
+      <span class="sub">Scegli e preparali passo passo</span>
+    </button>
+    <button class="menu-btn yellow" data-action="goto-basi">
+      BASI &amp; SCORTE SERATA
+      <span class="sub">Tecniche base e calcolo quantità</span>
+    </button>
+    <button class="menu-btn green" data-action="goto-music">
+      MUSICA
+      <span class="sub">Colonna sonora retro per la serata</span>
+    </button>
+  `;
+}
+
+function screenHeader(title){
+  return `
+    <div class="screen-header">
+      <button class="back-btn" data-action="goto-menu">‹ MENU</button>
+      <div class="screen-title pixel">${title}</div>
+    </div>
+  `;
+}
+
+function renderInventory(){
+  let html = hudHTML() + screenHeader('SCORTE');
+  INVENTORY_CATS.forEach(cat=>{
+    html += `<div class="inv-cat pixel">${cat.label}</div>`;
+    cat.items.forEach(item=>{
+      const checked = !!state.inventory[item.inv];
+      html += `
+        <div class="inv-row ${checked?'checked':''}">
+          <input type="checkbox" id="inv-${item.inv}" data-inv="${item.inv}" ${checked?'checked':''}>
+          <label for="inv-${item.inv}">${item.label}</label>
+        </div>
+      `;
+    });
+  });
+  html += `<div class="inv-note">Le spunte restano salvate anche se chiudi l'app.</div>`;
+  return html;
+}
+
+function renderCocktailList(){
+  let html = hudHTML() + screenHeader('COCKTAIL');
+  html += `<div class="inv-note" style="margin-top:0;margin-bottom:14px;">Puoi comunque aprire un cocktail anche se ti manca qualcosa: il badge indica solo quanti ingredienti/attrezzi ti mancano.</div>`;
+  COCKTAILS.forEach(c=>{
+    const ready = isCocktailReady(c);
+    const miss = missingItems(c);
+    html += `
+      <div class="cocktail-card ${ready?'ready':''}" data-action="open-cocktail" data-id="${c.id}">
+        <div>
+          <div class="cc-name">${c.name.toUpperCase()}</div>
+          ${ready
+            ? `<div class="cc-missing" style="color:var(--green);">Tutto pronto</div>`
+            : `<div class="cc-missing">Manca: ${miss.slice(0,3).map(m=>INV_LABELS[m]).join(', ')}${miss.length>3?` +${miss.length-3}`:''}</div>`
+          }
+        </div>
+        <span class="badge ${ready?'ready':'locked'}">${ready?'PLAY':'-'+miss.length}</span>
+      </div>
+    `;
+  });
+  return html;
+}
+
+function renderDetail(){
+  const c = COCKTAILS.find(c=>c.id===state.currentCocktailId);
+  const step = c.steps[state.stepIndex];
+  const total = c.steps.length;
+  const isLast = state.stepIndex === total-1;
+  const miss = missingItems(c);
+  const layers = buildLayers(c, state.stepIndex, state.guests);
+
+  let html = hudHTML() + screenHeader(c.name.toUpperCase());
+
+  html += `<div class="glass-row">
+      <div class="${glassShapeClass(c.glassShape)}">
+        ${layers.map(l=>`<div class="layer" style="bottom:${l.bottomPct}%; height:${l.heightPct}%; background:${l.color};"></div>`).join('')}
+        ${layers.map(l=>`<div class="glass-tick" style="bottom:${l.topPct}%; background:${l.color};"></div>`).join('')}
+        ${iceHTML(step.ice)}
+      </div>
+      <div class="legend">
+        ${[...layers].reverse().map(l=>`
+          <div class="legend-row">
+            <span class="legend-swatch" style="background:${l.color};"></span>
+            <span class="legend-text">${l.label} — ${l.amountDisplay}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  html += `<div class="glass-legend">Il colore e l'altezza di ogni strato corrispondono al vero ingrediente versato.</div>`;
+
+  if(miss.length){
+    html += `<div class="tool-list">Ti manca ancora: <span class="missing">${miss.map(m=>INV_LABELS[m]).join(', ')}</span></div>`;
+  }
+
+  html += `<div class="step-counter">STAGE ${state.stepIndex+1} / ${total}</div>`;
+
+  html += `<div class="step-box">
+      <span class="step-tag">${step.tag}</span><br>
+      ${fillTemplate(step.text, c, state.guests)}
+    </div>`;
+
+  if(state.guests>2 && (step.tag==='SHAKE')){
+    html += `<div class="guest-note">Consiglio: con più di 2 persone shakera in 2-3 lotti separati, resta più freddo ed equilibrato.</div>`;
+  }
+
+  if(step.duration){
+    const t = state.timer;
+    const pct = t.total ? Math.min(100, (t.seconds/t.total)*100) : 0;
+    html += `<div class="timer-bar-outer"><div class="timer-bar-inner" style="width:${pct}%;"></div></div>`;
+    if(!t.running && t.seconds===0){
+      html += `<button class="action-btn secondary" data-action="start-timer">AVVIA (${step.duration}s)</button>`;
+    } else if(t.running){
+      html += `<div class="flavor-text">IN CORSO...</div>`;
+      html += `<button class="action-btn" disabled>ATTENDI...</button>`;
+    } else {
+      html += `<div class="flavor-text">PERFETTO!</div>`;
+      html += `<button class="action-btn" data-action="${isLast?'finish-cocktail':'next-step'}">${isLast?'FINE! ▶ TORNA AI COCKTAIL':'STEP SUCCESSIVO ▶'}</button>`;
+    }
+  } else {
+    html += `<button class="action-btn" data-action="${isLast?'finish-cocktail':'next-step'}">${isLast?'FINE! ▶ TORNA AI COCKTAIL':'FATTO ▶ STEP SUCCESSIVO'}</button>`;
+  }
+
+  if(state.stepIndex>0){
+    html += `<button class="action-btn secondary" data-action="prev-step">◀ STEP PRECEDENTE</button>`;
+  }
+
+  return html;
+}
+
+function renderBasi(){
+  let html = hudHTML() + screenHeader('BASI');
+
+  BASI_INFO.forEach(b=>{
+    html += `<div class="card"><h3>${b.title}</h3><p>${b.text}</p></div>`;
+  });
+
+  html += `<div class="card">
+    <h3>CALCOLA LA SERATA</h3>
+    <p style="margin-bottom:10px;">Seleziona i cocktail della serata: per ognuno imposti persone e quanti drink a testa, così ogni cocktail può avere il suo pubblico.</p>
+  `;
+
+  COCKTAILS.forEach(c=>{
+    const item = state.basiSelection[c.id];
+    const selected = !!(item && item.selected);
+    html += `<div class="calc-item">
+      <div class="calc-check">
+        <input type="checkbox" id="basi-${c.id}" data-basi="${c.id}" ${selected?'checked':''}>
+        <label for="basi-${c.id}">${c.name}</label>
+      </div>`;
+    if(selected){
+      html += `
+        <div class="calc-controls">
+          <span class="calc-label">Persone</span>
+          <button data-action="basi-guest-minus" data-id="${c.id}">-</button>
+          <span class="calc-val">${item.guests}</span>
+          <button data-action="basi-guest-plus" data-id="${c.id}">+</button>
+          <span class="calc-label">A testa</span>
+          <button data-action="basi-drinks-minus" data-id="${c.id}">-</button>
+          <span class="calc-val">${item.perPerson}</span>
+          <button data-action="basi-drinks-plus" data-id="${c.id}">+</button>
+        </div>`;
+    }
+    html += `</div>`;
+  });
+
+  const selectedEntries = Object.entries(state.basiSelection).filter(([id,v])=>v.selected);
+  if(selectedEntries.length){
+    const totals = {};
+    selectedEntries.forEach(([id,v])=>{
+      const c = COCKTAILS.find(c=>c.id===id);
+      const multiplier = v.guests * v.perPerson;
+      c.ingredients.forEach(i=>{
+        const amt = scaleAmount(i, multiplier);
+        if(!totals[i.inv]) totals[i.inv] = {amount:0, unit:i.unit, label:i.label};
+        totals[i.inv].amount += amt;
+      });
+    });
+    html += `<div style="margin-top:14px;">`;
+    Object.keys(totals).forEach(key=>{
+      const t = totals[key];
+      let extra = '';
+      if(key==='lime') extra = ` (≈ ${Math.ceil(t.amount/LIME_YIELD)} lime)`;
+      if(key==='limone') extra = ` (≈ ${Math.ceil(t.amount/LEMON_YIELD)} limoni)`;
+      if(key==='sciroppo') extra = ` — prepara almeno ${Math.ceil((t.amount*10)/50)*50}ml di sciroppo`;
+      html += `<div class="result-line"><span>${t.label}${extra}</span><b>${round(t.amount)}${t.unit==='pz'?' pz':t.unit==='dash'?' dash':t.unit==='foglie'?' foglie':t.unit}</b></div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="inv-note">Seleziona almeno un cocktail per vedere le quantità totali.</div>`;
+  }
+
+  html += `</div>`;
+  return html;
+}
+
+function renderMusic(){
+  let html = hudHTML() + screenHeader('MUSICA');
+
+  if(!state.spotifyToken){
+    html += `<div class="card">
+      <h3>COLLEGA SPOTIFY</h3>
+      <p style="margin-bottom:10px;">Incolla il Client ID della tua app creata su developer.spotify.com. Come Redirect URI, su Spotify, registra esattamente l'indirizzo qui sotto.</p>
+      <input type="text" class="text-input" id="spotify-client-input" value="${(state.spotifyClientId||'').replace(/"/g,'&quot;')}" placeholder="Client ID Spotify">
+      <button class="action-btn" data-action="save-spotify-client">SALVA CLIENT ID</button>
+      <p class="inv-note" style="margin-top:10px;">Redirect URI da registrare su Spotify:<br><b style="color:var(--cyan); word-break:break-all;">${spotifyRedirectUri()}</b></p>
+      ${state.spotifyClientId ? `<button class="action-btn secondary" data-action="spotify-login" style="margin-top:10px;">🔗 ACCEDI CON SPOTIFY</button>` : ''}
+    </div>`;
+  } else {
+    html += `<div class="card">
+      <h3>SPOTIFY COLLEGATO</h3>
+      <div style="margin:10px 0;">
+        ${state.nowPlaying
+          ? `<div style="display:flex;align-items:center;gap:10px;">
+              ${state.nowPlaying.image?`<img src="${state.nowPlaying.image}" style="width:48px;height:48px;">`:''}
+              <div>
+                <div style="color:var(--green);">${state.nowPlaying.isPlaying?'▶':'⏸'} ${state.nowPlaying.track}</div>
+                <div style="color:var(--dim);font-size:14px;">${state.nowPlaying.artist}</div>
+              </div>
+            </div>`
+          : `<p style="color:var(--dim);">Nessuna riproduzione in corso al momento su Spotify.</p>`
+        }
+      </div>
+      <button class="action-btn secondary" data-action="spotify-logout">SCOLLEGA</button>
+    </div>`;
+  }
+
+  html += `<div class="card">
+    <h3>PLAYLIST RETRO</h3>
+    <p>Un tap per aprire musica retro/videogame anni 80-90 su Spotify (parte dall'app o dal player web, così suona su tutti i tuoi dispositivi collegati).</p>
+  </div>`;
+
+  html += `<button class="action-btn secondary" data-action="open-spotify-search">🎵 APRI MUSICA RETRO/VIDEOGAME</button>`;
+
+  html += `<div class="card">
+    <h3>LA TUA PLAYLIST</h3>
+    <p style="margin-bottom:10px;">Incolla qui il link di una tua playlist Spotify: la salvo, così la riapri con un tap la prossima volta.</p>
+    <input type="text" class="text-input" id="music-link-input" value="${(state.musicLink||'').replace(/"/g,'&quot;')}" placeholder="https://open.spotify.com/playlist/...">
+    <button class="action-btn" data-action="save-music-link">SALVA LINK</button>
+    ${state.musicLink ? `<button class="action-btn secondary" data-action="open-my-music">▶ APRI LA MIA PLAYLIST</button>` : ''}
+  </div>`;
+
+  return html;
+}
+
+/* ============ SPOTIFY (richiede hosting esterno: qui le chiamate a account.spotify.com
+   e api.spotify.com funzionano perché non c'è più la sandbox di Claude) ============ */
+
+function randomString(len){
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let out = '';
+  const values = crypto.getRandomValues(new Uint8Array(len));
+  values.forEach(v => out += chars[v % chars.length]);
+  return out;
+}
+
+async function sha256Base64Url(plain){
+  const data = new TextEncoder().encode(plain);
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  let str = '';
+  new Uint8Array(digest).forEach(b => str += String.fromCharCode(b));
+  return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+
+function spotifyRedirectUri(){
+  return window.location.origin + window.location.pathname;
+}
+
+async function spotifyLogin(){
+  if(!state.spotifyClientId){ return; }
+  const verifier = randomString(64);
+  sessionStorage.setItem('sp_verifier', verifier);
+  const challenge = await sha256Base64Url(verifier);
+  const params = new URLSearchParams({
+    client_id: state.spotifyClientId,
+    response_type: 'code',
+    redirect_uri: spotifyRedirectUri(),
+    scope: 'user-read-currently-playing',
+    code_challenge_method: 'S256',
+    code_challenge: challenge,
+  });
+  window.location.href = 'https://accounts.spotify.com/authorize?' + params.toString();
+}
+
+async function spotifyHandleRedirect(){
+  const url = new URL(window.location.href);
+  const code = url.searchParams.get('code');
+  if(!code) return;
+  const verifier = sessionStorage.getItem('sp_verifier');
+  try{
+    const res = await fetch('https://accounts.spotify.com/api/token', {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: new URLSearchParams({
+        client_id: state.spotifyClientId,
+        grant_type:'authorization_code',
+        code,
+        redirect_uri: spotifyRedirectUri(),
+        code_verifier: verifier || '',
+      }),
+    });
+    const data = await res.json();
+    if(data.access_token){
+      state.spotifyToken = data.access_token;
+      state.spotifyRefresh = data.refresh_token || state.spotifyRefresh;
+      state.spotifyExpiresAt = Date.now() + (data.expires_in||3600)*1000;
+      persistData();
+    }
+  }catch(e){ /* login Spotify non riuscito */ }
+  window.history.replaceState({}, document.title, spotifyRedirectUri());
+}
+
+async function spotifyRefreshToken(){
+  if(!state.spotifyRefresh || !state.spotifyClientId) return null;
+  try{
+    const res = await fetch('https://accounts.spotify.com/api/token', {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: new URLSearchParams({
+        client_id: state.spotifyClientId,
+        grant_type:'refresh_token',
+        refresh_token: state.spotifyRefresh,
+      }),
+    });
+    const data = await res.json();
+    if(data.access_token){
+      state.spotifyToken = data.access_token;
+      if(data.refresh_token) state.spotifyRefresh = data.refresh_token;
+      state.spotifyExpiresAt = Date.now() + (data.expires_in||3600)*1000;
+      persistData();
+      return state.spotifyToken;
+    }
+  }catch(e){ /* refresh non riuscito */ }
+  return null;
+}
+
+function spotifyLogout(){
+  state.spotifyToken = null;
+  state.spotifyRefresh = null;
+  state.spotifyExpiresAt = 0;
+  state.nowPlaying = null;
+  persistData();
+  updateNowPlayingBar();
+}
+
+let nowPlayingTimer = null;
+
+async function fetchNowPlaying(){
+  if(!state.spotifyToken) return;
+  if(Date.now() > state.spotifyExpiresAt - 5000){
+    await spotifyRefreshToken();
+    if(!state.spotifyToken) return;
+  }
+  try{
+    const res = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+      headers:{Authorization:'Bearer '+state.spotifyToken},
+    });
+    if(res.status===204){
+      state.nowPlaying = null;
+    } else if(res.status===401){
+      await spotifyRefreshToken();
+    } else if(res.ok){
+      const data = await res.json();
+      state.nowPlaying = (data && data.item) ? {
+        track: data.item.name,
+        artist: data.item.artists.map(a=>a.name).join(', '),
+        image: (data.item.album.images[2]||data.item.album.images[0]||{}).url,
+        isPlaying: data.is_playing,
+      } : null;
+    }
+  }catch(e){ /* rete non disponibile in questo momento */ }
+  updateNowPlayingBar();
+  if(state.view==='music') render();
+}
+
+function startNowPlayingPolling(){
+  if(nowPlayingTimer) return;
+  fetchNowPlaying();
+  nowPlayingTimer = setInterval(fetchNowPlaying, 8000);
+}
+
+function updateNowPlayingBar(){
+  const bar = document.getElementById('now-playing-bar');
+  if(!bar) return;
+  if(state.spotifyToken && state.nowPlaying){
+    document.body.classList.add('has-now-playing');
+    bar.style.display = 'flex';
+    bar.innerHTML = `
+      ${state.nowPlaying.image ? `<img src="${state.nowPlaying.image}" alt="">` : ''}
+      <span class="np-text">${state.nowPlaying.isPlaying?'▶':'⏸'} ${state.nowPlaying.track} — ${state.nowPlaying.artist}</span>
+    `;
+  } else {
+    document.body.classList.remove('has-now-playing');
+    bar.style.display = 'none';
+  }
+}
+
+/* ============ AUDIO ============ */
+
+function playCoinSound(){
+  try{
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new Ctx();
+    const now = ctx.currentTime;
+    const notes = [988, 1319]; // classico "cha-ching" da cabinato arcade
+    notes.forEach((freq, i)=>{
+      const t0 = now + i*0.09;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(freq, t0);
+      gain.gain.setValueAtTime(0.18, t0);
+      gain.gain.exponentialRampToValueAtTime(0.001, t0+0.14);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(t0);
+      osc.stop(t0+0.15);
+    });
+  }catch(e){ /* audio non disponibile su questo dispositivo/browser */ }
+}
+
+/* ============ TIMER ============ */
+
+function startTimer(duration){
+  state.timer = {running:true, interval:null, seconds:0, total:duration};
+  render();
+  state.timer.interval = setInterval(()=>{
+    state.timer.seconds += 0.1;
+    if(state.timer.seconds >= state.timer.total){
+      state.timer.seconds = state.timer.total;
+      state.timer.running = false;
+      clearInterval(state.timer.interval);
+    }
+    render();
+  }, 100);
+}
+
+function clearTimerState(){
+  if(state.timer.interval) clearInterval(state.timer.interval);
+  state.timer = {running:false, interval:null, seconds:0, total:0};
+}
+
+/* ============ EVENTS ============ */
+
+app.addEventListener('click', (e)=>{
+  const target = e.target.closest('[data-action]');
+  if(!target) return;
+  const action = target.dataset.action;
+
+  switch(action){
+    case 'start':
+      playCoinSound();
+      state.view = 'menu'; render(); break;
+    case 'goto-menu':
+      clearTimerState();
+      state.view = 'menu'; render(); break;
+    case 'goto-inventory':
+      state.view = 'inventory'; render(); break;
+    case 'goto-cocktails':
+      state.view = 'cocktails'; render(); break;
+    case 'goto-basi':
+      state.view = 'basi'; render(); break;
+    case 'goto-music':
+      state.view = 'music'; render(); break;
+    case 'open-spotify-search': {
+      const q = encodeURIComponent('retro 8-bit videogame music 80s 90s');
+      window.open(`https://open.spotify.com/search/${q}`, '_blank', 'noopener');
+      break;
+    }
+    case 'open-my-music':
+      if(state.musicLink) window.open(state.musicLink, '_blank', 'noopener');
+      break;
+    case 'save-music-link': {
+      const input = document.getElementById('music-link-input');
+      state.musicLink = input ? input.value.trim() : '';
+      persistData();
+      render();
+      break;
+    }
+    case 'save-spotify-client': {
+      const input = document.getElementById('spotify-client-input');
+      state.spotifyClientId = input ? input.value.trim() : '';
+      persistData();
+      render();
+      break;
+    }
+    case 'spotify-login':
+      spotifyLogin();
+      break;
+    case 'spotify-logout':
+      spotifyLogout();
+      render();
+      break;
+    case 'guest-plus':
+      state.guests = Math.min(8, state.guests+1); persistData(); render(); break;
+    case 'guest-minus':
+      state.guests = Math.max(1, state.guests-1); persistData(); render(); break;
+    case 'basi-guest-plus': {
+      const item = state.basiSelection[target.dataset.id];
+      if(item) item.guests = Math.min(20, item.guests+1);
+      render(); break;
+    }
+    case 'basi-guest-minus': {
+      const item = state.basiSelection[target.dataset.id];
+      if(item) item.guests = Math.max(1, item.guests-1);
+      render(); break;
+    }
+    case 'basi-drinks-plus': {
+      const item = state.basiSelection[target.dataset.id];
+      if(item) item.perPerson = Math.min(10, item.perPerson+1);
+      render(); break;
+    }
+    case 'basi-drinks-minus': {
+      const item = state.basiSelection[target.dataset.id];
+      if(item) item.perPerson = Math.max(1, item.perPerson-1);
+      render(); break;
+    }
+    case 'open-cocktail':
+      clearTimerState();
+      state.currentCocktailId = target.dataset.id;
+      state.stepIndex = 0;
+      state.view = 'detail'; render(); break;
+    case 'next-step': {
+      const c = COCKTAILS.find(c=>c.id===state.currentCocktailId);
+      clearTimerState();
+      state.stepIndex = Math.min(c.steps.length-1, state.stepIndex+1);
+      render(); break;
+    }
+    case 'prev-step':
+      clearTimerState();
+      state.stepIndex = Math.max(0, state.stepIndex-1);
+      render(); break;
+    case 'start-timer': {
+      const c = COCKTAILS.find(c=>c.id===state.currentCocktailId);
+      const step = c.steps[state.stepIndex];
+      startTimer(step.duration);
+      break;
+    }
+    case 'finish-cocktail':
+      clearTimerState();
+      state.view = 'cocktails'; render(); break;
+  }
+});
+
+app.addEventListener('change', (e)=>{
+  if(e.target.dataset.inv){
+    state.inventory[e.target.dataset.inv] = e.target.checked;
+    persistData();
+    render();
+  }
+  if(e.target.dataset.basi){
+    const id = e.target.dataset.basi;
+    if(!state.basiSelection[id]) state.basiSelection[id] = {selected:false, guests: state.guests, perPerson:1};
+    state.basiSelection[id].selected = e.target.checked;
+    render();
+  }
+});
+
+/* ============ INIT ============ */
+
+loadData();
+spotifyHandleRedirect().then(()=>{
+  render();
+  if(state.spotifyToken) startNowPlayingPolling();
+});
+render();
+</script>
+</body>
+</html>
