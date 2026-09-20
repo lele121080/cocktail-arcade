@@ -390,8 +390,8 @@ const COCKTAILS = [
     tools:['jigger','barSpoon','peeler','tumbler'],
     ingredients:[ing('bourbon',6,'cl'), ing('sciroppo',1,'cl'), ing('angostura',2,'dash'), ing('arancia',1,'pz')],
     steps:[
-      {tag:'BUILD', reveal:['sciroppo','angostura'], ice:'none', text:'Metti {sciroppo} di sciroppo e {angostura} dash di Angostura nel bicchiere.'},
-      {tag:'VERSA', reveal:['bourbon'], ice:'none', text:'Aggiungi {bourbon} di bourbon.'},
+      {tag:'BUILD', reveal:['sciroppo','angostura'], ice:'none', text:'Metti {sciroppo}cl di sciroppo e {angostura} dash di Angostura nel bicchiere.'},
+      {tag:'VERSA', reveal:['bourbon'], ice:'none', text:'Aggiungi {bourbon}cl di bourbon.'},
       {tag:'GHIACCIO', reveal:[], ice:'big', text:'Riempi il bicchiere con un grosso cubo di ghiaccio.'},
       {tag:'STIR', reveal:[], ice:'big', duration:20, text:'Mescola con il bar spoon per 20 secondi, fino a quando il bicchiere è freddo al tatto.'},
       {tag:'GARNISH', reveal:[], ice:'big', text:'Ricava una twist di arancia con il peeler e spremila sopra il drink per rilasciare gli oli.'},
@@ -403,9 +403,9 @@ const COCKTAILS = [
     ingredients:[ing('gin',3,'cl'), ing('vermouthRosso',3,'cl'), ing('campari',3,'cl'), ing('arancia',1,'pz')],
     steps:[
       {tag:'GHIACCIO', reveal:[], ice:'cubes', text:'Riempi il bicchiere con ghiaccio.'},
-      {tag:'VERSA', reveal:['gin'], ice:'cubes', text:'Versa {gin} di gin.'},
-      {tag:'VERSA', reveal:['vermouthRosso'], ice:'cubes', text:'Aggiungi {vermouthRosso} di vermouth rosso.'},
-      {tag:'VERSA', reveal:['campari'], ice:'cubes', text:'Aggiungi {campari} di Campari.'},
+      {tag:'VERSA', reveal:['gin'], ice:'cubes', text:'Versa {gin}cl di gin.'},
+      {tag:'VERSA', reveal:['vermouthRosso'], ice:'cubes', text:'Aggiungi {vermouthRosso}cl di vermouth rosso.'},
+      {tag:'VERSA', reveal:['campari'], ice:'cubes', text:'Aggiungi {campari}cl di Campari.'},
       {tag:'STIR', reveal:[], ice:'cubes', duration:15, text:'Mescola per 15 secondi.'},
       {tag:'GARNISH', reveal:[], ice:'cubes', text:'Guarnisci con una twist di arancia.'},
     ]
@@ -415,7 +415,7 @@ const COCKTAILS = [
     tools:['shaker','strainer','jigger','coupe'],
     ingredients:[ing('bourbon',6,'cl'), ing('limone',2.5,'cl'), ing('sciroppo',2,'cl')],
     steps:[
-      {tag:'VERSA', reveal:['bourbon','limone','sciroppo'], ice:'none', text:'Versa {bourbon} di bourbon, {limone} di succo di limone fresco e {sciroppo} di sciroppo nello shaker.'},
+      {tag:'VERSA', reveal:['bourbon','limone','sciroppo'], ice:'none', text:'Versa {bourbon}cl di bourbon, {limone}cl di succo di limone fresco e {sciroppo}cl di sciroppo nello shaker.'},
       {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio nello shaker e shakera energicamente per 12 secondi.'},
       {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra con lo strainer nella coppa, senza ghiaccio.'},
       {tag:'GARNISH', reveal:[], ice:'none', text:'Guarnisci con una twist di limone o una ciliegia.'},
@@ -426,7 +426,7 @@ const COCKTAILS = [
     tools:['shaker','strainer','jigger','coupe'],
     ingredients:[ing('rum',6,'cl'), ing('lime',2.5,'cl'), ing('sciroppo',2,'cl')],
     steps:[
-      {tag:'VERSA', reveal:['rum','lime','sciroppo'], ice:'none', text:'Versa {rum} di rum bianco, {lime} di succo di lime fresco e {sciroppo} di sciroppo nello shaker.'},
+      {tag:'VERSA', reveal:['rum','lime','sciroppo'], ice:'none', text:'Versa {rum}cl di rum bianco, {lime}cl di succo di lime fresco e {sciroppo}cl di sciroppo nello shaker.'},
       {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
       {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra nella coppa fredda, senza ghiaccio.'},
     ]
@@ -438,7 +438,7 @@ const COCKTAILS = [
     ingredients:[ing('tequila',5,'cl'), ing('tripleSec',2,'cl'), ing('lime',2.5,'cl')],
     steps:[
       {tag:'RIM', reveal:[], ice:'none', text:'Bagna il bordo del bicchiere con uno spicchio di lime e passalo nel sale grosso.'},
-      {tag:'VERSA', reveal:['tequila','tripleSec','lime'], ice:'none', text:'Versa {tequila} di tequila, {tripleSec} di triple sec e {lime} di succo di lime nello shaker.'},
+      {tag:'VERSA', reveal:['tequila','tripleSec','lime'], ice:'none', text:'Versa {tequila}cl di tequila, {tripleSec}cl di triple sec e {lime}cl di succo di lime nello shaker.'},
       {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
       {tag:'STRAIN', reveal:[], ice:'cubes', text:'Filtra nel bicchiere con ghiaccio.'},
     ]
@@ -449,8 +449,8 @@ const COCKTAILS = [
     ingredients:[ing('vodka',5,'cl'), ing('lime',1.5,'cl'), ing('gingerBeer',10,'cl')],
     steps:[
       {tag:'GHIACCIO', reveal:[], ice:'cubes', text:'Riempi il bicchiere (o mug di rame) con ghiaccio.'},
-      {tag:'VERSA', reveal:['vodka','lime'], ice:'cubes', text:'Versa {vodka} di vodka e {lime} di succo di lime.'},
-      {tag:'TOP', reveal:['gingerBeer'], ice:'cubes', text:'Completa con {gingerBeer} di ginger beer.'},
+      {tag:'VERSA', reveal:['vodka','lime'], ice:'cubes', text:'Versa {vodka}cl di vodka e {lime}cl di succo di lime.'},
+      {tag:'TOP', reveal:['gingerBeer'], ice:'cubes', text:'Completa con {gingerBeer}cl di ginger beer.'},
       {tag:'STIR', reveal:[], ice:'cubes', duration:5, text:'Mescola brevemente per amalgamare.'},
       {tag:'GARNISH', reveal:[], ice:'cubes', text:'Guarnisci con una rondella di lime.'},
     ]
@@ -460,10 +460,10 @@ const COCKTAILS = [
     tools:['muddler','jigger','highball'],
     ingredients:[ing('rum',6,'cl'), ing('lime',2,'cl'), ing('sciroppo',2,'cl'), ing('mentaFresca',9,'foglie'), ing('sodaWater',6,'cl')],
     steps:[
-      {tag:'MUDDLE', reveal:['lime'], ice:'none', text:'Metti {mentaFresca} foglie di menta e {lime} di succo di lime nel bicchiere, pesta leggermente per svegliare gli aromi.'},
-      {tag:'VERSA', reveal:['rum','sciroppo'], ice:'none', text:'Aggiungi {rum} di rum bianco e {sciroppo} di sciroppo.'},
+      {tag:'MUDDLE', reveal:['lime'], ice:'none', text:'Metti {mentaFresca} foglie di menta e {lime}cl di succo di lime nel bicchiere, pesta leggermente per svegliare gli aromi.'},
+      {tag:'VERSA', reveal:['rum','sciroppo'], ice:'none', text:'Aggiungi {rum}cl di rum bianco e {sciroppo}cl di sciroppo.'},
       {tag:'GHIACCIO', reveal:[], ice:'crushed', text:'Riempi con ghiaccio tritato.'},
-      {tag:'TOP', reveal:['sodaWater'], ice:'crushed', text:'Completa con {sodaWater} di soda.'},
+      {tag:'TOP', reveal:['sodaWater'], ice:'crushed', text:'Completa con {sodaWater}cl di soda.'},
       {tag:'STIR', reveal:[], ice:'crushed', duration:5, text:'Mescola delicatamente con un movimento verticale, dal basso in alto.'},
     ]
   },
@@ -472,7 +472,7 @@ const COCKTAILS = [
     tools:['mixingGlass','barSpoon','strainer','jigger','coupe'],
     ingredients:[ing('bourbon',6,'cl'), ing('vermouthRosso',3,'cl'), ing('angostura',2,'dash')],
     steps:[
-      {tag:'VERSA', reveal:['bourbon','vermouthRosso','angostura'], ice:'none', text:'Versa {bourbon} di bourbon (o rye), {vermouthRosso} di vermouth rosso e {angostura} dash di Angostura nel mixing glass.'},
+      {tag:'VERSA', reveal:['bourbon','vermouthRosso','angostura'], ice:'none', text:'Versa {bourbon}cl di bourbon (o rye), {vermouthRosso}cl di vermouth rosso e {angostura} dash di Angostura nel mixing glass.'},
       {tag:'STIR', reveal:[], ice:'cubes', duration:20, text:'Aggiungi ghiaccio e mescola per 20 secondi.'},
       {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra nella coppa fredda.'},
       {tag:'GARNISH', reveal:[], ice:'none', text:'Guarnisci con una ciliegia sotto spirito.'},
@@ -564,8 +564,7 @@ function fillTemplate(text, cocktail, guests){
   return text.replace(/\{(\w+)\}/g, (m, key)=>{
     const found = cocktail.ingredients.find(i=>i.inv===key);
     if(!found) return m;
-    const amt = scaleAmount(found, guests);
-    return amt + found.unit;
+    return String(scaleAmount(found, guests));
   });
 }
 
@@ -584,22 +583,23 @@ function buildLayers(cocktail, uptoStepIndex, guests){
       if(!revealedOrder.includes(inv)) revealedOrder.push(inv);
     });
   }
-  const visVol = {};
+  // Il totale si calcola sull'intera ricetta finale (non solo su cio' che e' stato
+  // versato finora): cosi' il livello cresce in proporzione reale invece di sembrare
+  // gia' pieno appena si aggiunge un ingrediente piccolo come l'Angostura.
+  const volByInv = {};
   let total = 0;
-  revealedOrder.forEach(inv=>{
-    const ingredient = cocktail.ingredients.find(i=>i.inv===inv);
-    if(!ingredient) return;
+  cocktail.ingredients.forEach(ingredient=>{
     let vol = 0;
     if(ingredient.unit==='cl') vol = ingredient.amount;
     else if(ingredient.unit==='dash') vol = ingredient.amount*NOMINAL_DASH_CL;
-    visVol[inv] = vol;
+    volByInv[ingredient.inv] = vol;
     total += vol;
   });
   const maxFill = 85;
   let cumBottom = 0;
   const layers = [];
   revealedOrder.forEach(inv=>{
-    const vol = visVol[inv];
+    const vol = volByInv[inv];
     if(!vol) return;
     const ingredient = cocktail.ingredients.find(i=>i.inv===inv);
     const heightPct = total>0 ? (vol/total)*maxFill : 0;
@@ -760,6 +760,9 @@ function renderDetail(){
   const layers = buildLayers(c, state.stepIndex, state.guests);
 
   let html = hudHTML() + screenHeader(c.name.toUpperCase());
+  html += `<div style="display:flex; justify-content:flex-end; margin:-8px 0 10px;">
+      <button class="back-btn" data-action="restart-cocktail" style="border-color:var(--yellow); color:var(--yellow);">RICOMINCIA</button>
+    </div>`;
 
   html += `<div class="glass-row">
       <div class="${glassShapeClass(c.glassShape)}">
@@ -1224,6 +1227,10 @@ app.addEventListener('click', (e)=>{
       startTimer(step.duration);
       break;
     }
+    case 'restart-cocktail':
+      clearTimerState();
+      state.stepIndex = 0;
+      render(); break;
     case 'finish-cocktail':
       clearTimerState();
       state.view = 'cocktails'; render(); break;
