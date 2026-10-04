@@ -216,9 +216,15 @@
     transition:height .5s ease, bottom .5s ease;
   }
   .ice{
-    position:absolute; top:6px; left:0; right:0; z-index:3;
-    display:flex; justify-content:center; align-items:flex-start; gap:4px;
+    position:absolute; left:0; right:0; z-index:3;
+    bottom:max(0px, calc(var(--lvl-to, 0) * 1% - 14px));
+    display:flex; justify-content:center; align-items:flex-end; gap:4px;
     flex-wrap:wrap; padding:0 8px; pointer-events:none;
+    animation:iceRise var(--rise-dur, 0s) ease-out var(--rise-delay, 0s) both;
+  }
+  @keyframes iceRise{
+    from{bottom:max(0px, calc(var(--lvl-from, 0) * 1% - 14px));}
+    to{bottom:max(0px, calc(var(--lvl-to, 0) * 1% - 14px));}
   }
   .ice-cube{
     width:24px; height:24px; flex-shrink:0;
@@ -299,9 +305,58 @@
     78%{ transform:translate(0,-8px) rotate(-40deg); opacity:1; }
     100%{ transform:translate(46px,-14px) rotate(-40deg); opacity:0; }
   }
-  @keyframes iceDrop{ from{opacity:0; transform:translateY(-16px) scale(.6);} to{opacity:1; transform:translateY(0) scale(1);} }
+  /* il ghiaccio cade dall'alto fino al fondo (o sul pelo del liquido) */
+  @keyframes iceDrop{ from{transform:translateY(-140px);} to{transform:translateY(0);} }
   .ice[data-animate="1"] .ice-cube,
-  .ice[data-animate="1"] .ice-shard{ animation: iceDrop .5s ease-out .6s both; }
+  .ice[data-animate="1"] .ice-shard{ animation: iceDrop .5s cubic-bezier(.5,0,.9,.6) .6s both; }
+  .ice[data-animate="1"] > :nth-child(3n+2){ animation-delay:.72s; }
+  .ice[data-animate="1"] > :nth-child(3n){ animation-delay:.84s; }
+
+  /* gli strati di liquido crescono dal basso mentre la bottiglia versa */
+  .layer.new{ animation:layerGrow .45s ease-out var(--d, .5s) both; }
+  @keyframes layerGrow{ from{height:0%;} to{height:var(--h);} }
+  .glass-tick.new{ animation:tickIn .2s linear var(--d2, 1s) both; }
+  @keyframes tickIn{ from{opacity:0;} to{opacity:1;} }
+
+  /* ---------- Guarnizioni ---------- */
+  .garnish{position:absolute; z-index:7; pointer-events:none;}
+  .garnish.new{animation:garnishDrop .7s ease-out both;}
+  @keyframes garnishDrop{ from{opacity:0; transform:translateY(-34px) rotate(-25deg);} to{opacity:1; transform:none;} }
+  .g-orangeTwist, .g-lemonTwist{right:10px; top:-14px; width:30px; height:24px; --tw:#ff9a1f;}
+  .g-lemonTwist{--tw:#ffe45e;}
+  .g-orangeTwist::before, .g-lemonTwist::before{
+    content:''; position:absolute; left:0; top:0; width:20px; height:20px;
+    border:4px solid var(--tw); border-radius:50%;
+    border-bottom-color:transparent; border-left-color:transparent; transform:rotate(-20deg);
+  }
+  .g-orangeTwist::after, .g-lemonTwist::after{
+    content:''; position:absolute; left:11px; top:7px; width:17px; height:5px;
+    background:var(--tw); border-radius:3px; transform:rotate(28deg);
+  }
+  .g-cherry{
+    left:50%; margin-left:-7px; top:2px; width:14px; height:14px; border-radius:50%;
+    background:#e0143c; box-shadow:inset -3px -3px 0 rgba(0,0,0,.28), inset 2px 2px 0 rgba(255,255,255,.35);
+  }
+  .g-cherry::before{
+    content:''; position:absolute; left:8px; top:-10px; width:2px; height:11px;
+    background:#4a9a35; transform:rotate(25deg);
+  }
+  .g-limeWheel{
+    right:6px; top:-12px; width:26px; height:26px; border-radius:50%;
+    border:3px solid #6fcf2a;
+    background:repeating-conic-gradient(#d4f58a 0 30deg, #a6df52 30deg 60deg);
+  }
+  .g-mintSprig{left:50%; margin-left:-13px; top:-18px; width:26px; height:24px;
+    background:linear-gradient(#3b8d2f,#3b8d2f) 12px 8px/2px 16px no-repeat;}
+  .g-mintSprig::before, .g-mintSprig::after{
+    content:''; position:absolute; top:2px; width:13px; height:9px; background:#4fc23a;
+  }
+  .g-mintSprig::before{left:0; border-radius:70% 0 70% 0; transform:rotate(-25deg);}
+  .g-mintSprig::after{left:12px; border-radius:0 70% 0 70%; transform:rotate(25deg);}
+  .g-saltRim{
+    left:-2px; right:-2px; top:-3px; height:6px;
+    background:repeating-linear-gradient(90deg,#ffffff 0 3px,#cfd8e3 3px 4px,transparent 4px 6px);
+  }
 
   .pour-row{
     position:absolute; top:-44px; left:0; right:0; z-index:6; height:44px;
@@ -495,7 +550,7 @@ const COCKTAILS = [
       {tag:'VERSA', vessel:'glass', reveal:['bourbon'], ice:'none', text:'Aggiungi {bourbon}cl di bourbon.'},
       {tag:'GHIACCIO', vessel:'glass', reveal:[], ice:'big', text:'Riempi il bicchiere con un grosso cubo di ghiaccio.'},
       {tag:'STIR', vessel:'glass', reveal:[], ice:'big', duration:20, text:'Mescola con il bar spoon per 20 secondi, fino a quando il bicchiere è freddo al tatto.'},
-      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'big', text:'Ricava una twist di arancia con il peeler e spremila sopra il drink per rilasciare gli oli.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'big', garnish:'orangeTwist', text:'Ricava una twist di arancia con il peeler e spremila sopra il drink per rilasciare gli oli.'},
     ]
   },
   {
@@ -508,7 +563,7 @@ const COCKTAILS = [
       {tag:'VERSA', vessel:'glass', reveal:['vermouthRosso'], ice:'cubes', text:'Aggiungi {vermouthRosso}cl di vermouth rosso.'},
       {tag:'VERSA', vessel:'glass', reveal:['campari'], ice:'cubes', text:'Aggiungi {campari}cl di Campari.'},
       {tag:'STIR', vessel:'glass', reveal:[], ice:'cubes', duration:15, text:'Mescola per 15 secondi.'},
-      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'cubes', text:'Guarnisci con una twist di arancia.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'cubes', garnish:'orangeTwist', text:'Guarnisci con una twist di arancia.'},
     ]
   },
   {
@@ -519,7 +574,7 @@ const COCKTAILS = [
       {tag:'VERSA', vessel:'shaker', reveal:['bourbon','limone','sciroppo'], ice:'none', text:'Versa {bourbon}cl di bourbon, {limone}cl di succo di limone fresco e {sciroppo}cl di sciroppo nello shaker.'},
       {tag:'SHAKE', vessel:'shaker', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio nello shaker e shakera energicamente per 12 secondi.'},
       {tag:'STRAIN', vessel:'glass', reveal:[], ice:'none', text:'Filtra con lo strainer nella coppa, senza ghiaccio.'},
-      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'none', text:'Guarnisci con una twist di limone o una ciliegia.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'none', garnish:'lemonTwist', text:'Guarnisci con una twist di limone o una ciliegia.'},
     ]
   },
   {
@@ -538,7 +593,7 @@ const COCKTAILS = [
     extraTools:['saleRim'],
     ingredients:[ing('tequila',5,'cl'), ing('tripleSec',2,'cl'), ing('lime',2.5,'cl')],
     steps:[
-      {tag:'RIM', vessel:'glass', reveal:[], ice:'none', text:'Bagna il bordo del bicchiere con uno spicchio di lime e passalo nel sale grosso.'},
+      {tag:'RIM', vessel:'glass', reveal:[], ice:'none', garnish:'saltRim', text:'Bagna il bordo del bicchiere con uno spicchio di lime e passalo nel sale grosso.'},
       {tag:'VERSA', vessel:'shaker', reveal:['tequila','tripleSec','lime'], ice:'none', text:'Versa {tequila}cl di tequila, {tripleSec}cl di triple sec e {lime}cl di succo di lime nello shaker.'},
       {tag:'SHAKE', vessel:'shaker', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
       {tag:'STRAIN', vessel:'glass', reveal:[], ice:'cubes', text:'Filtra nel bicchiere con ghiaccio.'},
@@ -553,7 +608,7 @@ const COCKTAILS = [
       {tag:'VERSA', vessel:'glass', reveal:['vodka','lime'], ice:'cubes', text:'Versa {vodka}cl di vodka e {lime}cl di succo di lime.'},
       {tag:'TOP', vessel:'glass', reveal:['gingerBeer'], ice:'cubes', text:'Completa con {gingerBeer}cl di ginger beer.'},
       {tag:'STIR', vessel:'glass', reveal:[], ice:'cubes', duration:5, text:'Mescola brevemente per amalgamare.'},
-      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'cubes', text:'Guarnisci con una rondella di lime.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'cubes', garnish:'limeWheel', text:'Guarnisci con una rondella di lime.'},
     ]
   },
   {
@@ -566,6 +621,7 @@ const COCKTAILS = [
       {tag:'GHIACCIO', vessel:'glass', reveal:[], ice:'crushed', text:'Riempi con ghiaccio tritato.'},
       {tag:'TOP', vessel:'glass', reveal:['sodaWater'], ice:'crushed', text:'Completa con {sodaWater}cl di soda.'},
       {tag:'STIR', vessel:'glass', reveal:[], ice:'crushed', duration:5, text:'Mescola delicatamente con un movimento verticale, dal basso in alto.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'crushed', garnish:'mintSprig', text:'Guarnisci con un rametto di menta, battendolo leggermente tra le mani per liberare gli aromi.'},
     ]
   },
   {
@@ -576,7 +632,7 @@ const COCKTAILS = [
       {tag:'VERSA', vessel:'mixing', reveal:['bourbon','vermouthRosso','angostura'], ice:'none', text:'Versa {bourbon}cl di bourbon (o rye), {vermouthRosso}cl di vermouth rosso e {angostura} dash di Angostura nel mixing glass.'},
       {tag:'STIR', vessel:'mixing', reveal:[], ice:'cubes', duration:20, text:'Aggiungi ghiaccio e mescola per 20 secondi.'},
       {tag:'STRAIN', vessel:'glass', reveal:[], ice:'none', text:'Filtra nella coppa fredda.'},
-      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'none', text:'Guarnisci con una ciliegia sotto spirito.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'none', garnish:'cherry', text:'Guarnisci con una ciliegia sotto spirito.'},
     ]
   },
 ];
@@ -716,13 +772,26 @@ function buildLayers(cocktail, uptoStepIndex, guests){
   return layers;
 }
 
-function iceHTML(iceState, animate){
+function iceHTML(iceState, animate, vars){
   if(!iceState || iceState==='none') return '';
   const flag = animate ? ' data-animate="1"' : '';
-  if(iceState==='big') return `<div class="ice"${flag}><div class="ice-cube big"></div></div>`;
-  if(iceState==='cubes') return `<div class="ice"${flag}>${'<div class="ice-cube"></div>'.repeat(3)}</div>`;
-  if(iceState==='crushed') return `<div class="ice"${flag}>${'<div class="ice-shard"></div>'.repeat(9)}</div>`;
+  const v = vars || {};
+  const style = ` style="--lvl-from:${(v.from||0).toFixed(1)}; --lvl-to:${(v.to||0).toFixed(1)}; --rise-dur:${(v.dur||0).toFixed(2)}s; --rise-delay:.5s;"`;
+  if(iceState==='big') return `<div class="ice"${flag}${style}><div class="ice-cube big"></div></div>`;
+  if(iceState==='cubes') return `<div class="ice"${flag}${style}>${'<div class="ice-cube"></div>'.repeat(3)}</div>`;
+  if(iceState==='crushed') return `<div class="ice"${flag}${style}>${'<div class="ice-shard"></div>'.repeat(9)}</div>`;
   return '';
+}
+
+// Guarnizioni accumulate fino allo step corrente (visibili solo sul bicchiere di servizio)
+function garnishHTML(cocktail, stepIndex){
+  if(cocktail.steps[stepIndex].vessel !== 'glass') return '';
+  const items = [];
+  for(let i=0;i<=stepIndex;i++){
+    const g = cocktail.steps[i].garnish;
+    if(g && !items.some(x=>x.type===g)) items.push({type:g, isNew:i===stepIndex});
+  }
+  return items.map(it=>`<div class="garnish g-${it.type}${it.isNew?' new':''}"></div>`).join('');
 }
 
 // Una bottiglietta colorata per ciascun ingrediente versato in QUESTO step (non cumulativo),
@@ -734,7 +803,7 @@ function pourRowHTML(step, cocktail, guests){
     const ingredient = cocktail.ingredients.find(i=>i.inv===inv);
     if(!ingredient) return '';
     const color = COLORS[inv] || '#cccccc';
-    const delay = (idx*0.2).toFixed(2);
+    const delay = (idx*0.45).toFixed(2);
     return `<div class="pour-unit">
       <div class="pour-bottle" style="background:${color}; animation-delay:${delay}s;"></div>
       <div class="pour-stream" style="background:${color}; animation-delay:${delay}s;"></div>
@@ -888,6 +957,11 @@ function renderDetail(){
   const isLast = state.stepIndex === total-1;
   const miss = missingItems(c);
   const layers = buildLayers(c, state.stepIndex, state.guests);
+  const prevLayers = state.stepIndex>0 ? buildLayers(c, state.stepIndex-1, state.guests) : [];
+  const lvlFrom = prevLayers.length ? prevLayers[prevLayers.length-1].topPct : 0;
+  const lvlTo = layers.length ? layers[layers.length-1].topPct : 0;
+  const newInvs = step.reveal || [];
+  const newCount = layers.filter(l=>newInvs.includes(l.inv)).length;
 
   let html = hudHTML() + screenHeader(c.name.toUpperCase());
   html += `<div style="display:flex; justify-content:flex-end; margin:-8px 0 10px;">
@@ -906,11 +980,20 @@ function renderDetail(){
         ${pourRowHTML(step, c, state.guests)}
         ${iceScoopHTML(step)}
         <div class="vessel ${vClass} ${isShaking?'shaking':''}">
-          ${layers.map(l=>`<div class="layer" style="bottom:${l.bottomPct}%; height:${l.heightPct}%; background:${l.color};"></div>`).join('')}
-          ${layers.map(l=>`<div class="glass-tick" style="bottom:${l.topPct}%; background:${l.color};"></div>`).join('')}
-          ${iceHTML(step.ice, step.tag==='GHIACCIO')}
+          ${layers.map(l=>{
+            const k = newInvs.indexOf(l.inv);
+            const d = (0.5 + Math.max(0,k)*0.45).toFixed(2);
+            return `<div class="layer${k>=0?' new':''}" style="bottom:${l.bottomPct}%; height:${l.heightPct}%; --h:${l.heightPct}%; --d:${d}s; background:${l.color};"></div>`;
+          }).join('')}
+          ${layers.map(l=>{
+            const k = newInvs.indexOf(l.inv);
+            const d2 = (0.5 + Math.max(0,k)*0.45 + 0.4).toFixed(2);
+            return `<div class="glass-tick${k>=0?' new':''}" style="bottom:${l.topPct}%; --d2:${d2}s; background:${l.color};"></div>`;
+          }).join('')}
+          ${iceHTML(step.ice, step.tag==='GHIACCIO', {from:lvlFrom, to:lvlTo, dur:0.45*newCount})}
           ${stirRingHTML(step, state.timer.running)}
         </div>
+        ${garnishHTML(c, state.stepIndex)}
       </div>
       <div class="legend">
         ${[...layers].reverse().map(l=>`

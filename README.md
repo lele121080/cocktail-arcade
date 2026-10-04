@@ -46,7 +46,9 @@ Regola extra: il Negroni è l'unico a parti uguali (1:1:1).
   - bicchiere consigliato sempre visibile (nome + forma);
   - il contenitore cambia in base alla tecnica: **shaker** (si scuote da solo durante lo shake), **mixing glass**, poi il bicchiere di servizio dopo il filtraggio;
   - ogni ingrediente ha il suo colore reale e un'altezza proporzionale alla dose, con legenda a fianco;
-  - bottigliette colorate che si capovolgono e versano; paletta che fa cadere il ghiaccio (cubo grande, cubetti, o tritato a seconda del cocktail);
+  - bottigliette colorate che si capovolgono e versano, una dopo l'altra, e il livello di ogni ingrediente cresce dal basso mentre versano;
+  - paletta che fa cadere il ghiaccio (cubo grande, cubetti, o tritato a seconda del cocktail): cade sul fondo e poi **sale insieme al liquido** man mano che si aggiungono gli ingredienti;
+  - guarnizioni disegnate sul bicchiere: twist d'arancia o di limone, ciliegia, rondella di lime, rametto di menta, bordo di sale;
   - timer con barra per shake e stir, anello che gira durante la mescolata;
   - tasto **RICOMINCIA** in ogni momento.
 - **BASI**: le tecniche fondamentali (sciroppo, ghiaccio, twist, succo fresco, bordo salato) e **Calcola la serata**: per ogni cocktail scelto si imposta il numero di persone e quanti drink a testa, e l'app somma le quantità totali (con conversione in lime/limoni interi e in ml di sciroppo da preparare).
@@ -87,7 +89,9 @@ Persistenza in `localStorage`, chiave `cocktailArcadeData`: inventario, numero p
 - `scaleAmount()` moltiplica la dose per persone (e drink a testa nel calcolatore serata).
 - `fillTemplate()` sostituisce `{inv}` con **solo il numero**: l'unità di misura è scritta nel testo dello step (evita duplicati tipo "4dash dash").
 - `buildLayers()` costruisce gli strati colorati. Il totale è calcolato sull'**intera ricetta finale**, non solo su quanto versato finora, altrimenti un ingrediente piccolo sembra riempire il bicchiere. Un dash vale 0,6 "cl visivi" (`NOMINAL_DASH_CL`) solo per il disegno.
-- Animazioni solo CSS: `vesselShake`, `stirSpin`, `scoopMove`, `iceDrop`, `pourTilt`, `streamFlow`. Il timer aggiorna soltanto la barra (non ridisegna tutto) per non riavviare le animazioni a ogni tick.
+- Animazioni solo CSS: `vesselShake`, `stirSpin`, `scoopMove`, `iceDrop`, `iceRise`, `layerGrow`, `pourTilt`, `streamFlow`, `garnishDrop`.
+- Il ghiaccio (`.ice`) è ancorato al fondo con `bottom` calcolato dal livello del liquido (variabili CSS `--lvl-from` / `--lvl-to`): lo step precedente dà il punto di partenza, quello corrente il punto di arrivo.
+- Le guarnizioni sono un campo `garnish` dello step (`orangeTwist`, `lemonTwist`, `cherry`, `limeWheel`, `mintSprig`, `saltRim`), accumulate fino allo step corrente e mostrate solo sul bicchiere di servizio. Il timer aggiorna soltanto la barra (non ridisegna tutto) per non riavviare le animazioni a ogni tick.
 - Suono moneta: Web Audio API (due onde quadre), parte al tocco.
 
 ### Integrazione Spotify (OAuth 2.0 Authorization Code + PKCE, senza server)
@@ -128,6 +132,7 @@ Il **Redirect URI** registrato su Spotify deve coincidere esattamente (carattere
 6. Correzione testi (unità duplicate), proporzioni calcolate sulla ricetta finale, tasto RICOMINCIA.
 7. Preparazione animata: shaker/mixing glass, anello di mescolata, paletta del ghiaccio, bottiglie che versano, bicchiere consigliato sempre visibile.
 8. Bottiglie ridisegnate: si capovolgono con il rivolo dal collo, e c'è più spazio sopra il bicchiere per non sovrapporsi al testo.
+9. Guarnizioni disegnate (twist, ciliegia, rondella di lime, menta, bordo di sale), ghiaccio che cade sul fondo e sale col liquido, strati che crescono mentre si versa; aggiunto lo step di guarnizione con menta al Mojito.
 
 ## 4. Idee future (non approvate, solo appuntate)
 
