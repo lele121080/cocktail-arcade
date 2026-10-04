@@ -464,6 +464,113 @@
     white-space:nowrap; text-overflow:ellipsis;
   }
   body.has-now-playing #app{padding-bottom:64px;}
+
+  /* ====================== NUOVE FORME DI BICCHIERE ====================== */
+  .vessel-fill{position:absolute; inset:0;}
+  .vessel.v-martini{
+    width:140px; height:100px; border:none; background:var(--cyan);
+    clip-path:polygon(0 0, 100% 0, 50% 100%); box-shadow:none;
+  }
+  .vessel.v-martini .vessel-fill{
+    inset:auto; left:5px; right:5px; top:0; bottom:7px; background:#12073a;
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+  }
+  .vessel.v-flute{width:54px; height:150px; border-radius:0 0 26px 26px / 0 0 46px 46px;}
+  .vessel.v-calice{width:112px; height:100px; border-radius:0 0 56px 56px / 0 0 100px 100px;}
+  .vessel.v-mug{width:100px; height:110px;}
+  .vessel-stage.has-handle::after{
+    content:''; position:absolute; right:-20px; top:22px; width:22px; height:50px;
+    border:4px solid var(--cyan); border-left:none; border-radius:0 18px 18px 0;
+  }
+  .mini-glass-icon.shape-martini{
+    width:22px; height:14px; border:none; background:var(--cyan);
+    clip-path:polygon(0 0, 100% 0, 50% 100%);
+  }
+  .mini-glass-icon.shape-flute{width:9px; height:24px; border-radius:0 0 5px 5px;}
+  .mini-glass-icon.shape-calice{width:20px; height:16px; border-radius:0 0 10px 10px / 0 0 16px 16px;}
+  .mini-glass-icon.shape-mug{width:16px; height:16px;}
+
+  /* ====================== NUOVE GUARNIZIONI ====================== */
+  .g-olive{left:50%; margin-left:-6px; top:-2px; width:12px; height:12px; border-radius:50%;
+    background:#7a9a2a; box-shadow:inset -2px -2px 0 rgba(0,0,0,.25);}
+  .g-olive::before{content:''; position:absolute; left:5px; top:-14px; width:2px; height:30px;
+    background:#d9b27a; rotate:18deg;}
+  .g-olive::after{content:''; position:absolute; left:3px; top:3px; width:5px; height:5px;
+    border-radius:50%; background:#d8281a;}
+  .g-orangeSlice, .g-lemonWheel{
+    right:6px; top:-12px; width:26px; height:26px; border-radius:50%;
+    border:3px solid #ff8a1f;
+    background:repeating-conic-gradient(#ffd28a 0 30deg, #ffb24a 30deg 60deg);
+  }
+  .g-lemonWheel{border-color:#e8d23a; background:repeating-conic-gradient(#fff3a0 0 30deg, #f4e04a 30deg 60deg);}
+  .g-pineappleWedge{
+    right:6px; top:-20px; width:0; height:0;
+    border-left:12px solid transparent; border-right:12px solid transparent; border-bottom:22px solid #ffd84a;
+  }
+  .g-pineappleWedge::before{
+    content:''; position:absolute; left:-6px; top:-14px; width:12px; height:12px;
+    background:#3fb03a; border-radius:70% 0 70% 0;
+  }
+  .g-celery{right:18px; top:-30px; width:8px; height:44px; background:#6fcf3a; border-radius:3px; rotate:12deg;}
+  .g-basil{left:50%; margin-left:-9px; top:-10px; width:18px; height:12px; background:#3fb03a;
+    border-radius:70% 0 70% 0; rotate:-15deg;}
+  .g-blackberry{right:14px; top:-8px; width:14px; height:14px; border-radius:50%; background:#3a1250;
+    box-shadow:inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.15);}
+  .g-chili{right:10px; top:-10px; width:22px; height:8px; background:#e0141c; border-radius:4px; rotate:-20deg;}
+  .g-nutmeg{left:30%; right:30%; top:2px; height:6px;
+    background:radial-gradient(circle, #c98a4a 0 1.5px, transparent 2px) 0 0/8px 6px repeat-x;}
+  .g-sugarRim{
+    left:-2px; right:-2px; top:-3px; height:6px;
+    background:repeating-linear-gradient(90deg,#ffffff 0 3px,#f3e2c4 3px 4px,transparent 4px 6px);
+  }
+  .g-umbrella{right:8px; top:-24px; width:26px; height:13px; border-radius:26px 26px 0 0;
+    background:repeating-linear-gradient(90deg,#ff2e6c 0 6px,#ffe45e 6px 12px);}
+  .g-umbrella::after{content:''; position:absolute; left:12px; top:13px; width:2px; height:24px; background:#d9b27a;}
+
+  /* ====================== MENU: NUOVI COLORI ====================== */
+  .menu-btn.purple{border-color:var(--purple); box-shadow:4px 4px 0 var(--purple);}
+  .menu-btn.purple:active{box-shadow:0 0 0 var(--purple);}
+  .menu-btn.orange{border-color:#ff9a1f; box-shadow:4px 4px 0 #ff9a1f;}
+  .menu-btn.orange:active{box-shadow:0 0 0 #ff9a1f;}
+
+  /* ====================== LISTA COCKTAIL: FILTRI E SBLOCCO ====================== */
+  .filter-row{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+  .chip{
+    background:var(--bg-panel); color:var(--dim); border:2px solid var(--grid);
+    font-family:'Press Start 2P', monospace; font-size:8px; padding:8px 8px; cursor:pointer;
+  }
+  .chip.on{color:var(--yellow); border-color:var(--yellow);}
+  .chip:active{transform:translateY(1px);}
+  .cocktail-card{flex-wrap:wrap;}
+  .cocktail-card.is-locked{border-color:var(--purple); opacity:.92;}
+  .cc-meta{color:var(--dim); font-size:14px; margin-bottom:4px;}
+  .badge.pay{background:var(--purple); color:#fff;}
+  .unlock-panel{flex-basis:100%; border-top:1px dashed var(--grid); padding-top:10px; margin-top:6px; cursor:default;}
+
+  /* ====================== CORSO ====================== */
+  .progress-outer{height:14px; border:2px solid var(--green); background:var(--bg-panel); margin-top:8px;}
+  .progress-inner{height:100%; background:var(--green);}
+  .module-title{color:var(--yellow); font-size:10px; margin:18px 0 8px; line-height:1.6;}
+  .lesson-row{
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+    background:var(--bg-panel); border:2px solid var(--grid); padding:10px; margin-bottom:8px; cursor:pointer;
+  }
+  .lesson-row.done{border-color:var(--green);}
+  .lesson-row.locked{opacity:.45; cursor:default;}
+  .lesson-title{font-size:18px;}
+  .lesson-pts{font-family:'Press Start 2P', monospace; font-size:8px; color:var(--yellow); white-space:nowrap;}
+  .lesson-row.done .lesson-pts{color:var(--green);}
+  .quiz-opt{
+    display:block; width:100%; text-align:left; background:var(--bg-panel-2); color:var(--text);
+    border:2px solid var(--cyan); padding:10px; margin-bottom:8px;
+    font-family:'VT323', monospace; font-size:18px; cursor:pointer;
+  }
+  .quiz-opt.right{border-color:var(--green); color:var(--green);}
+  .quiz-opt:disabled{cursor:default;}
+  .need-ok{color:var(--green); font-size:17px;}
+  .need-miss{color:var(--pink); font-size:17px;}
+  select.text-input{appearance:auto;}
+
 </style>
 </head>
 <body>
@@ -488,29 +595,115 @@ const INVENTORY_CATS = [
   { id:'bicchieri', label:'Bicchieri', items:[
     {inv:'tumbler', label:'Tumbler basso'},
     {inv:'coupe', label:'Coupe / Nick&Nora'},
-    {inv:'highball', label:'Highball / mug'},
+    {inv:'highball', label:'Highball / Collins'},
+    {inv:'martini', label:'Bicchiere a V (martini)'},
+    {inv:'flute', label:'Flute'},
+    {inv:'calice', label:'Calice da vino / balloon'},
+    {inv:'mug', label:'Tazza / mug (Irish coffee)'},
   ]},
-  { id:'alcolici', label:'Alcolici', items:[
+  { id:'distillati', label:'Distillati', items:[
     {inv:'bourbon', label:'Bourbon'},
+    {inv:'rye', label:'Rye whiskey'},
+    {inv:'scotch', label:'Scotch whisky'},
+    {inv:'irishWhiskey', label:'Irish whiskey'},
     {inv:'gin', label:'Gin'},
     {inv:'rum', label:'Rum bianco'},
+    {inv:'rumScuro', label:'Rum scuro / invecchiato'},
+    {inv:'cachaca', label:'Cachaça'},
     {inv:'tequila', label:'Tequila'},
+    {inv:'mezcal', label:'Mezcal'},
     {inv:'vodka', label:'Vodka'},
-    {inv:'vermouthRosso', label:'Vermouth rosso'},
-    {inv:'tripleSec', label:'Triple sec / Cointreau'},
-    {inv:'campari', label:'Campari'},
+    {inv:'cognac', label:'Cognac / brandy'},
+    {inv:'calvados', label:'Calvados'},
+    {inv:'pisco', label:'Pisco'},
+    {inv:'grappa', label:'Grappa'},
+    {inv:'absinthe', label:'Absinthe'},
   ]},
-  { id:'altri', label:'Altri ingredienti', items:[
+  { id:'liquori', label:'Liquori e amari', items:[
+    {inv:'campari', label:'Campari'},
+    {inv:'aperol', label:'Aperol'},
+    {inv:'tripleSec', label:'Triple sec / Cointreau / Curaçao'},
+    {inv:'grandMarnier', label:'Grand Marnier'},
+    {inv:'maraschino', label:'Maraschino'},
+    {inv:'cremeDeCacao', label:'Crème de cacao'},
+    {inv:'cremeDeMenthe', label:'Crème de menthe'},
+    {inv:'cremeDeCassis', label:'Crème de cassis'},
+    {inv:'cremeDeMure', label:'Crème de mûre (mora)'},
+    {inv:'cremeDeViolette', label:'Crème de violette'},
+    {inv:'chartreuseVerde', label:'Chartreuse verde'},
+    {inv:'chartreuseGialla', label:'Chartreuse gialla'},
+    {inv:'amaretto', label:'Amaretto'},
+    {inv:'frangelico', label:'Frangelico'},
+    {inv:'liquoreCaffe', label:'Liquore al caffè'},
+    {inv:'drambuie', label:'Drambuie'},
+    {inv:'benedictine', label:'Bénédictine'},
+    {inv:'fernet', label:'Fernet-Branca'},
+    {inv:'cynar', label:'Cynar'},
+    {inv:'amaroNonino', label:'Amaro Nonino'},
+    {inv:'falernum', label:'Falernum'},
+    {inv:'allspiceDram', label:'Allspice dram (pimento)'},
+    {inv:'chambord', label:'Chambord (lampone)'},
+    {inv:'liquorePassione', label:'Liquore al frutto della passione'},
+    {inv:'peachSchnapps', label:'Peach schnapps'},
+    {inv:'peachBrandy', label:'Peach brandy'},
+    {inv:'apricotBrandy', label:'Apricot brandy'},
+    {inv:'cherryBrandy', label:'Cherry brandy'},
+  ]},
+  { id:'vini', label:'Vini e vermouth', items:[
+    {inv:'vermouthRosso', label:'Vermouth rosso'},
+    {inv:'vermouthSecco', label:'Vermouth secco (dry)'},
+    {inv:'lillet', label:'Lillet / Cocchi Americano'},
+    {inv:'spumante', label:'Prosecco / Champagne'},
+    {inv:'vinoBianco', label:'Vino bianco secco'},
+    {inv:'vinoRosso', label:'Vino rosso (Shiraz / Malbec)'},
+    {inv:'porto', label:'Porto rubino'},
+    {inv:'sherry', label:'Sherry (Amontillado / Palo Cortado)'},
+  ]},
+  { id:'mixer', label:'Succhi e mixer', items:[
+    {inv:'succoArancia', label:'Succo d\'arancia'},
+    {inv:'succoAnanas', label:'Succo d\'ananas'},
+    {inv:'succoMirtillo', label:'Succo di mirtillo rosso'},
+    {inv:'succoPompelmo', label:'Succo di pompelmo'},
+    {inv:'succoPomodoro', label:'Succo di pomodoro'},
+    {inv:'maracuja', label:'Succo / purea di frutto della passione'},
+    {inv:'purePesca', label:'Purea di pesca'},
+    {inv:'sodaWater', label:'Soda water'},
+    {inv:'gingerBeer', label:'Ginger beer'},
+    {inv:'gingerAle', label:'Ginger ale'},
+    {inv:'cola', label:'Cola'},
+    {inv:'sodaPompelmo', label:'Soda al pompelmo'},
+    {inv:'caffe', label:'Caffè espresso'},
+    {inv:'panna', label:'Panna fresca'},
+    {inv:'cremaCocco', label:'Crema di cocco'},
+  ]},
+  { id:'sciroppi', label:'Sciroppi, bitter e condimenti', items:[
+    {inv:'sciroppo', label:'Sciroppo di zucchero / agave'},
+    {inv:'sciroppoMiele', label:'Sciroppo di miele'},
+    {inv:'sciroppoZenzero', label:'Sciroppo di miele e zenzero'},
+    {inv:'sciroppoSambuco', label:'Sciroppo di sambuco'},
+    {inv:'sciroppoLampone', label:'Sciroppo di lampone'},
+    {inv:'orgeat', label:'Orgeat (mandorla)'},
+    {inv:'grenadine', label:'Granatina (grenadine)'},
     {inv:'angostura', label:'Angostura bitters'},
-    {inv:'sciroppo', label:'Sciroppo di zucchero'},
+    {inv:'orangeBitters', label:'Orange bitters'},
+    {inv:'peychaud', label:'Peychaud\'s bitters'},
+    {inv:'zucchero', label:'Zucchero (zollette / cucchiaini)'},
+    {inv:'worcestershire', label:'Salsa Worcestershire'},
+    {inv:'tabasco', label:'Tabasco'},
+    {inv:'acquaFiordarancio', label:'Acqua di fior d\'arancio'},
+    {inv:'saleRim', label:'Sale grosso'},
+  ]},
+  { id:'altri', label:'Frutta, uova e altro', items:[
     {inv:'lime', label:'Lime freschi'},
     {inv:'limone', label:'Limoni freschi'},
     {inv:'arancia', label:'Arance'},
     {inv:'mentaFresca', label:'Menta fresca'},
-    {inv:'sodaWater', label:'Soda water'},
-    {inv:'gingerBeer', label:'Ginger beer'},
-    {inv:'saleRim', label:'Sale grosso'},
+    {inv:'basilico', label:'Basilico fresco'},
+    {inv:'albume', label:'Albume (uovo)'},
+    {inv:'tuorlo', label:'Tuorlo (uovo)'},
     {inv:'ciliegie', label:'Ciliegie sotto spirito'},
+    {inv:'olive', label:'Olive'},
+    {inv:'peperoncino', label:'Peperoncino fresco'},
   ]},
 ];
 
@@ -544,6 +737,41 @@ const GLASS_INFO = {
   'shape-coupe':    { name:'Coupe / Nick&Nora',  vClass:'v-coupe',    iconClass:'shape-coupe' },
   'shape-highball': { name:'Highball / mug',     vClass:'v-highball', iconClass:'shape-highball' },
 };
+
+// Colori aggiuntivi per gli ingredienti del catalogo IBA completo
+Object.assign(COLORS, {
+  rye:'#b8651b', scotch:'#c58b2a', irishWhiskey:'#c9962f', rumScuro:'#7a3b12',
+  cachaca:'#efeccf', mezcal:'#efe9cf', cognac:'#a8561c', calvados:'#c27a2c',
+  pisco:'#efeed6', grappa:'#f2f2e6', absinthe:'#bfe8a0',
+  aperol:'#ff7a2a', grandMarnier:'#e69a2e', maraschino:'#f3f0e6',
+  cremeDeCacao:'#6b3a1e', cremeDeMenthe:'#35d17f', cremeDeCassis:'#4a1030',
+  cremeDeMure:'#3a1250', cremeDeViolette:'#8d5bd0',
+  chartreuseVerde:'#8ee04a', chartreuseGialla:'#e8d84a', amaretto:'#a35a22',
+  frangelico:'#c28640', liquoreCaffe:'#2a140c', drambuie:'#d6a23c',
+  benedictine:'#c9922c', fernet:'#2b1a10', cynar:'#3a2214', amaroNonino:'#a5521a',
+  falernum:'#e8d28a', allspiceDram:'#8a4a22', chambord:'#7a1235',
+  liquorePassione:'#f2a516', peachSchnapps:'#ffc27a', peachBrandy:'#f2b266',
+  apricotBrandy:'#f08a2c', cherryBrandy:'#b01234',
+  lillet:'#f1e7a8', vermouthSecco:'#f0ecc8', spumante:'#f6efb0',
+  vinoBianco:'#f1ebb5', vinoRosso:'#7a1c2c', porto:'#6f1228', sherry:'#a8601c',
+  succoArancia:'#ffa81f', succoAnanas:'#ffd84a', succoMirtillo:'#b3123f',
+  succoPompelmo:'#ff8f7a', succoPomodoro:'#d82a1a', maracuja:'#ffcb2a',
+  purePesca:'#ffc27a', cola:'#3a1e10', gingerAle:'#e8d28a', sodaPompelmo:'#ffb3a1',
+  caffe:'#2a1810', panna:'#fffdf2', cremaCocco:'#fbf5e2',
+  sciroppoMiele:'#e8b43a', sciroppoZenzero:'#e8c25a', sciroppoSambuco:'#f1ebb0',
+  sciroppoLampone:'#d4285a', orgeat:'#f2ead2', grenadine:'#d8123a',
+  orangeBitters:'#8a4a1a', peychaud:'#b0183a', worcestershire:'#4a2410',
+  tabasco:'#d8281a', acquaFiordarancio:'#f2f6fa',
+});
+
+// Nuove forme di bicchiere (oltre a tumbler, coupe, highball)
+Object.assign(GLASS_INFO, {
+  'shape-martini': { name:'Bicchiere a V (martini)', vClass:'v-martini', iconClass:'shape-martini' },
+  'shape-flute':   { name:'Flute',                    vClass:'v-flute',   iconClass:'shape-flute' },
+  'shape-calice':  { name:'Calice da vino',           vClass:'v-calice',  iconClass:'shape-calice' },
+  'shape-mug':     { name:'Tazza / mug',              vClass:'v-mug',     iconClass:'shape-mug' },
+});
+
 
 const COCKTAILS = [
   {
@@ -642,6 +870,340 @@ const COCKTAILS = [
   },
 ];
 
+/* ======================================================================
+   CATALOGO IBA COMPLETO (102 cocktail ufficiali, lista 2024)
+   Gli 8 cocktail "scritti a mano" qui sopra restano com'erano; gli altri 94
+   sono descritti in formato compatto (funzione R) e gli step guidati vengono
+   generati da ibaBuildCocktail().
+
+   Formato ingredienti (separati da spazio):  chiave:quantita[unita]
+     unita: nessuna = cl, d = dash, p = pezzi, f = foglie
+     prefissi: ^ = si aggiunge alla fine (top)   ~ = si pesta per primo (muddle)
+               % = risciacquo del bicchiere       _ = affonda sul fondo (solo grafica)
+   Metodi: build, muddleBuild, stir, shake, shakeEgg, shakeDirty, muddleShake
+   ====================================================================== */
+
+const CAT_LABELS = { U:'UNFORGETTABLES', C:'CONTEMPORARY', N:'NEW ERA' };
+const TIER_ORDER = { base:0, standard:1, premium:2 };
+const TIER_LABELS = { base:'BASE', standard:'STANDARD', premium:'PREMIUM' };
+
+// Gruppo di appartenenza (per il filtro "per spirito"); a parita vince il primo della lista
+const SPIRIT_GROUPS = [
+  { id:'whisky',  label:'WHISKY',  inv:['bourbon','rye','scotch','irishWhiskey'] },
+  { id:'gin',     label:'GIN',     inv:['gin'] },
+  { id:'rum',     label:'RUM',     inv:['rum','rumScuro','cachaca'] },
+  { id:'tequila', label:'TEQUILA / MEZCAL', inv:['tequila','mezcal'] },
+  { id:'vodka',   label:'VODKA',   inv:['vodka'] },
+  { id:'brandy',  label:'BRANDY',  inv:['cognac','pisco','grappa','calvados'] },
+  { id:'amari',   label:'AMARI',   inv:['campari','aperol','fernet','cynar','amaroNonino'] },
+  { id:'vini',    label:'VINI / BOLLICINE', inv:['spumante','vinoBianco','vinoRosso','sherry','porto','vermouthRosso','vermouthSecco','lillet'] },
+];
+
+const GLASS_INV = { tumbler:'tumbler', coupe:'coupe', highball:'highball', martini:'martini', flute:'flute', calice:'calice', mug:'mug' };
+
+const ICE_TEXT = {
+  big: "Riempi il bicchiere con un grosso cubo di ghiaccio.",
+  cubes: "Riempi il bicchiere con ghiaccio a cubetti.",
+  crushed: "Riempi il bicchiere con ghiaccio tritato.",
+};
+
+const GARNISH_INFO = {
+  orangeTwist:    { text:"Guarnisci con una twist di arancia, spremendo la scorza sopra il drink.", inv:'arancia', tool:'peeler' },
+  lemonTwist:     { text:"Guarnisci con una twist di limone, spremendo la scorza sopra il drink.", inv:'limone', tool:'peeler' },
+  limeWheel:      { text:"Guarnisci con una rondella di lime.", inv:'lime' },
+  orangeSlice:    { text:"Guarnisci con una fetta d'arancia.", inv:'arancia' },
+  lemonWheel:     { text:"Guarnisci con una rondella di limone.", inv:'limone' },
+  cherry:         { text:"Guarnisci con una ciliegia sotto spirito.", inv:'ciliegie' },
+  olive:          { text:"Guarnisci con un'oliva infilzata su uno stecchino.", inv:'olive' },
+  mintSprig:      { text:"Guarnisci con un rametto di menta, battendolo leggermente tra le mani per liberare gli aromi.", inv:'mentaFresca' },
+  basil:          { text:"Guarnisci con una foglia di basilico.", inv:'basilico' },
+  chili:          { text:"Guarnisci con una fettina di peperoncino.", inv:'peperoncino' },
+  pineappleWedge: { text:"Guarnisci con uno spicchio di ananas." },
+  celery:         { text:"Guarnisci con una costa di sedano." },
+  nutmeg:         { text:"Spolvera con un pizzico di noce moscata." },
+  blackberry:     { text:"Guarnisci con una mora." },
+  umbrella:       { text:"Guarnisci con uno spicchio di ananas e un ombrellino da cocktail." },
+};
+
+function ibaShortLabel(inv){ return (INV_LABELS[inv] || inv).split(' / ')[0].split(' (')[0]; }
+
+function ibaParseIng(tok){
+  const o = { top:false, muddle:false, rinse:false, sink:false, garnish:false };
+  while('^~%_'.indexOf(tok[0]) >= 0){
+    if(tok[0]==='^') o.top = true;
+    else if(tok[0]==='~') o.muddle = true;
+    else if(tok[0]==='%') o.rinse = true;
+    else o.sink = true;
+    tok = tok.slice(1);
+  }
+  const parts = tok.split(':');
+  const m = parts[1].match(/^([\d.]+)([dpf]?)$/);
+  o.inv = parts[0];
+  o.amount = parseFloat(m[1]);
+  o.unit = m[2]==='d' ? 'dash' : m[2]==='p' ? 'pz' : m[2]==='f' ? 'foglie' : 'cl';
+  o.label = INV_LABELS[o.inv];
+  return o;
+}
+
+function ibaGarnishIng(inv){
+  return { inv, amount:1, unit:'pz', label:INV_LABELS[inv], top:false, muddle:false, rinse:false, sink:false, garnish:true };
+}
+
+function ibaPhrase(i){
+  const L = ibaShortLabel(i.inv);
+  if(i.unit==='cl') return `{${i.inv}}cl di ${L}`;
+  if(i.unit==='dash') return `{${i.inv}} dash di ${L}`;
+  if(i.unit==='foglie') return `{${i.inv}} foglie di ${L}`;
+  return `{${i.inv}} pz di ${L}`;
+}
+
+function ibaJoin(parts){
+  if(parts.length < 2) return parts[0] || '';
+  return parts.slice(0,-1).join(', ') + ' e ' + parts[parts.length-1];
+}
+
+function ibaChunk(arr, n){
+  const out = [];
+  for(let i=0;i<arr.length;i+=n) out.push(arr.slice(i,i+n));
+  return out;
+}
+
+function ibaComputeSpirit(ings){
+  const tot = {};
+  ings.forEach(i=>{
+    if(i.unit!=='cl' || i.rinse || i.garnish) return;
+    const g = SPIRIT_GROUPS.find(g=>g.inv.indexOf(i.inv) >= 0);
+    if(g) tot[g.id] = (tot[g.id]||0) + i.amount;
+  });
+  let best = null, bestV = 0;
+  SPIRIT_GROUPS.forEach(g=>{ if((tot[g.id]||0) > bestV){ best = g.id; bestV = tot[g.id]; } });
+  return best || 'altro';
+}
+
+function ibaBuildCocktail(r){
+  const ings = r.ings.split(' ').map(ibaParseIng);
+  ings.forEach(i=>{ if(!i.label) throw new Error('Ingrediente sconosciuto: '+i.inv+' in '+r.id); });
+
+  const gar = (r.gar && r.gar!=='none') ? r.gar : null;
+  const gi = gar ? GARNISH_INFO[gar] : null;
+  if(gar && !gi) throw new Error('Guarnizione sconosciuta: '+gar+' in '+r.id);
+  if(gi && gi.inv && !ings.some(i=>i.inv===gi.inv)) ings.push(ibaGarnishIng(gi.inv));
+  if(r.rim==='sugar' && !ings.some(i=>i.inv==='zucchero')) ings.push(ibaGarnishIng('zucchero'));
+
+  const m = r.m;
+  const isShake = m.indexOf('shake')===0 || m==='muddleShake';
+  const isStir = m==='stir';
+  const isBuild = m==='build' || m==='muddleBuild';
+  const mixVessel = isShake ? 'shaker' : isStir ? 'mixing' : 'glass';
+  const mixWhere = isShake ? 'nello shaker' : isStir ? 'nel mixing glass' : 'nel bicchiere';
+  const serveIce = r.ice || 'none';
+
+  const rinse = ings.filter(i=>i.rinse);
+  const muddled = ings.filter(i=>i.muddle);
+  const mainIngs = ings.filter(i=>!i.top && !i.muddle && !i.rinse && !i.garnish);
+  const tops = ings.filter(i=>i.top);
+
+  const steps = [];
+  let curIce = 'none';
+  const push = (tag, vessel, reveal, text, extra)=>{
+    steps.push(Object.assign({ tag, vessel, reveal, ice:curIce, text }, extra||{}));
+  };
+
+  if(r.rim){
+    const salt = r.rim==='salt';
+    push('RIM','glass',[],
+      salt ? "Bagna il bordo del bicchiere con uno spicchio di lime e passalo nel sale grosso."
+           : "Bagna il bordo del bicchiere con uno spicchio di limone e passalo nello zucchero.",
+      { garnish: salt ? 'saltRim' : 'sugarRim' });
+  }
+  if(rinse.length){
+    push('RINSE','glass',[],
+      `Risciacqua il bicchiere con ${ibaJoin(rinse.map(ibaPhrase))}: ruotalo per rivestire le pareti ed elimina l'eccesso.`);
+  }
+  if(muddled.length){
+    push('MUDDLE', mixVessel, muddled.map(i=>i.inv),
+      `Metti ${ibaJoin(muddled.map(ibaPhrase))} ${mixWhere} e pesta delicatamente.`);
+  }
+  if(isBuild && !muddled.length && serveIce!=='none'){
+    curIce = serveIce;
+    push('GHIACCIO','glass',[], ICE_TEXT[serveIce]);
+  }
+
+  ibaChunk(mainIngs, 3).forEach(ch=>{
+    push('VERSA', mixVessel, ch.map(i=>i.inv), `Versa ${ibaJoin(ch.map(ibaPhrase))} ${mixWhere}.`);
+  });
+
+  const pushTops = ()=> tops.forEach(t=> push('TOP','glass',[t.inv], `Completa con ${ibaPhrase(t)}.`));
+
+  if(isBuild){
+    if(muddled.length && serveIce!=='none'){
+      curIce = serveIce;
+      push('GHIACCIO','glass',[], ICE_TEXT[serveIce]);
+    }
+    const stir = ()=> { if(!r.ns) push('STIR','glass',[], 'Mescola delicatamente per 8 secondi.', { duration:8 }); };
+    if(r.sb) stir();
+    pushTops();
+    if(!r.sb) stir();
+  } else if(isStir){
+    push('STIR','mixing',[], 'Aggiungi ghiaccio nel mixing glass e mescola per 20 secondi.', { duration:20, ice:'cubes' });
+    curIce = serveIce;
+    push('STRAIN','glass',[], serveIce!=='none' ? 'Filtra nel bicchiere con ghiaccio.' : 'Filtra nel bicchiere freddo, senza ghiaccio.');
+    pushTops();
+  } else {
+    if(m==='shakeEgg'){
+      push('SHAKE','shaker',[], "Dry shake: shakera senza ghiaccio per 8 secondi per emulsionare l'uovo.", { duration:8, ice:'none' });
+    }
+    push('SHAKE','shaker',[], 'Aggiungi ghiaccio e shakera per 12 secondi.', { duration:12, ice:'cubes' });
+    curIce = serveIce;
+    if(m==='shakeDirty'){
+      push('STRAIN','glass',[], 'Versa tutto, ghiaccio compreso, nel bicchiere.');
+    } else {
+      const fine = m==='muddleShake' ? 'con doppio filtro (strainer + colino fine) ' : 'con lo strainer ';
+      push('STRAIN','glass',[], 'Filtra ' + fine + (serveIce!=='none' ? 'nel bicchiere con ghiaccio.' : 'nel bicchiere freddo, senza ghiaccio.'));
+    }
+    pushTops();
+  }
+
+  if(gar) push('GARNISH','glass',[], gi.text, { garnish: gar });
+
+  const tools = ['jigger'];
+  if(isStir) tools.push('mixingGlass','barSpoon','strainer');
+  else if(isShake) tools.push('shaker','strainer');
+  else tools.push('barSpoon');
+  if(muddled.length) tools.push('muddler');
+  tools.push(GLASS_INV[r.g]);
+  if(gi && gi.tool) tools.push(gi.tool);
+
+  return {
+    id: r.id, name: r.name, cat: r.c, tier: r.t,
+    glassShape: 'shape-' + r.g,
+    tools: tools.filter((t,i)=>tools.indexOf(t)===i),
+    extraTools: r.rim==='salt' ? ['saleRim'] : [],
+    ingredients: ings,
+    steps,
+    spirit: ibaComputeSpirit(ings),
+  };
+}
+
+const IBA_RECIPES = [];
+function R(id, name, c, t, g, m, ice, ings, gar, opts){
+  IBA_RECIPES.push(Object.assign({ id, name, c, t, g, m, ice, ings, gar }, opts || {}));
+}
+
+/* ---------------- THE UNFORGETTABLES ---------------- */
+R('alexander','Alexander','U','standard','coupe','shake','none','cognac:3 cremeDeCacao:3 panna:3','nutmeg');
+R('americano','Americano','U','base','tumbler','build','cubes','campari:3 vermouthRosso:3 ^sodaWater:6','orangeSlice');
+R('angelface','Angel Face','U','premium','coupe','shake','none','gin:3 apricotBrandy:3 calvados:3','none');
+R('aviation','Aviation','U','premium','martini','shake','none','gin:6 maraschino:1.5 cremeDeViolette:0.75 limone:1.5','cherry');
+R('betweenthesheets','Between the Sheets','U','standard','martini','shake','none','rum:3 cognac:3 tripleSec:3 limone:2','lemonTwist');
+R('boulevardier','Boulevardier','U','base','martini','stir','none','bourbon:4.5 vermouthRosso:3 campari:3','orangeTwist');
+R('brandycrusta','Brandy Crusta','U','premium','coupe','shake','none','cognac:5 maraschino:1 tripleSec:1 limone:1 sciroppo:0.8 angostura:2d','lemonTwist',{ rim:'sugar' });
+R('casino','Casino','U','premium','martini','shake','none','gin:4.5 maraschino:1.5 limone:1.5 orangeBitters:2d','cherry');
+R('cloverclub','Clover Club','U','standard','coupe','shakeEgg','none','gin:4.5 sciroppoLampone:1.5 limone:1.5 albume:1p','none');
+R('drymartini','Dry Martini','U','base','martini','stir','none','gin:6 vermouthSecco:1','olive');
+R('ginfizz','Gin Fizz','U','base','tumbler','shake','none','gin:4.5 limone:3 sciroppo:1 ^sodaWater:6','lemonWheel');
+R('hankypanky','Hanky Panky','U','standard','martini','stir','none','gin:4.5 vermouthRosso:4.5 fernet:2d','orangeTwist');
+R('johncollins','John Collins','U','base','highball','build','cubes','gin:4.5 limone:3 sciroppo:1.5 ^sodaWater:6','lemonWheel');
+R('lastword','Last Word','U','premium','martini','shake','none','gin:2.25 chartreuseVerde:2.25 maraschino:2.25 lime:2.25','cherry');
+R('martinez','Martinez','U','standard','martini','stir','none','gin:4.5 vermouthRosso:4.5 maraschino:0.5 orangeBitters:2d','lemonTwist');
+R('marypickford','Mary Pickford','U','standard','martini','shake','none','rum:6 succoAnanas:6 grenadine:1 maraschino:1','cherry');
+R('monkeygland','Monkey Gland','U','standard','martini','shake','none','gin:5 succoArancia:3 grenadine:1 absinthe:0.5','orangeSlice');
+R('paradise','Paradise','U','standard','martini','shake','none','gin:3.5 apricotBrandy:2 succoArancia:1.5','none');
+R('plantersPunch',"Planter's Punch",'U','standard','highball','shake','cubes','rumScuro:4.5 succoArancia:3.5 succoAnanas:3.5 limone:2 grenadine:1 sciroppo:1 angostura:3d','pineappleWedge');
+R('portoflip','Porto Flip','U','standard','coupe','shakeEgg','none','cognac:1.5 porto:4.5 tuorlo:1p','nutmeg');
+R('ramosfizz','Ramos Fizz','U','premium','highball','shakeEgg','none','gin:4.5 limone:1.5 lime:1.5 sciroppo:3 panna:6 albume:1p acquaFiordarancio:3d ^sodaWater:6','none');
+R('rememberthemaine','Remember the Maine','U','premium','martini','stir','none','%absinthe:0.5 rye:6 vermouthRosso:3 cherryBrandy:1','cherry');
+R('rustynail','Rusty Nail','U','standard','tumbler','build','cubes','scotch:4.5 drambuie:2.5','lemonTwist');
+R('sazerac','Sazerac','U','premium','tumbler','stir','none','%absinthe:1 ~zucchero:1p rye:5 peychaud:2d','lemonTwist');
+R('sidecar','Sidecar','U','base','coupe','shake','none','cognac:5 tripleSec:2 limone:2','none');
+R('stinger','Stinger','U','base','martini','stir','none','cognac:5 cremeDeMenthe:2','none');
+R('tuxedo','Tuxedo','U','premium','martini','stir','none','%absinthe:0.3 gin:3 vermouthSecco:3 maraschino:0.5 orangeBitters:2d','cherry');
+R('vieuxcarre','Vieux Carré','U','premium','tumbler','stir','cubes','rye:3 cognac:3 vermouthRosso:3 benedictine:1 peychaud:2d angostura:2d','lemonTwist');
+R('whitelady','White Lady','U','base','martini','shake','none','gin:4 tripleSec:3 limone:2','none');
+
+/* ---------------- CONTEMPORARY CLASSICS ---------------- */
+R('bellini','Bellini','C','standard','flute','build','none','purePesca:5 ^spumante:10','none');
+R('blackrussian','Black Russian','C','base','tumbler','build','cubes','vodka:5 liquoreCaffe:2','none');
+R('bloodymary','Bloody Mary','C','standard','highball','build','cubes','vodka:4.5 succoPomodoro:9 limone:1.5 worcestershire:2d tabasco:2d','celery');
+R('caipirinha','Caipirinha','C','base','tumbler','muddleBuild','crushed','~lime:2.5 ~zucchero:2p cachaca:5','none');
+R('cardinale','Cardinale','C','standard','martini','stir','none','gin:3 vermouthSecco:1.5 campari:1.5','orangeTwist');
+R('champagnecocktail','Champagne Cocktail','C','standard','flute','build','none','~zucchero:1p ~angostura:2d cognac:1 ^spumante:9','cherry',{ ns:1 });
+R('corpsereviver2','Corpse Reviver #2','C','premium','martini','shake','none','%absinthe:0.5 gin:3 tripleSec:3 lillet:3 limone:3','none');
+R('cosmopolitan','Cosmopolitan','C','standard','martini','shake','none','vodka:4 tripleSec:1.5 succoMirtillo:3 lime:1.5','limeWheel');
+R('cubalibre','Cuba Libre','C','base','highball','build','cubes','rum:5 lime:1 ^cola:12','limeWheel');
+R('french75','French 75','C','standard','flute','shake','none','gin:3 limone:1.5 sciroppo:1.5 ^spumante:6','lemonTwist');
+R('frenchconnection','French Connection','C','base','tumbler','build','cubes','cognac:3.5 amaretto:3.5','none');
+R('garibaldi','Garibaldi','C','base','highball','build','cubes','campari:4.5 ^succoArancia:12','orangeSlice',{ ns:1 });
+R('grasshopper','Grasshopper','C','standard','coupe','shake','none','cremeDeMenthe:3 cremeDeCacao:3 panna:3','none');
+R('hemingwayspecial','Hemingway Special','C','standard','martini','shake','none','rum:6 maraschino:1.5 lime:1.5 succoPompelmo:4','limeWheel');
+R('horsesneck',"Horse's Neck",'C','base','highball','build','cubes','cognac:4 angostura:2d ^gingerAle:12','lemonTwist');
+R('irishcoffee','Irish Coffee','C','standard','mug','build','none','irishWhiskey:4 zucchero:1p caffe:8 ^panna:4','nutmeg',{ sb:1 });
+R('kir','Kir','C','base','calice','build','none','cremeDeCassis:1 ^vinoBianco:9','none',{ ns:1 });
+R('lemondrop','Lemon Drop','C','standard','martini','shake','none','vodka:4.5 tripleSec:2 limone:2.5 sciroppo:1','lemonWheel',{ rim:'sugar' });
+R('longisland','Long Island Iced Tea','C','standard','highball','build','cubes','vodka:1.5 tequila:1.5 rum:1.5 tripleSec:1.5 gin:1.5 limone:2.5 sciroppo:3 ^cola:1','lemonWheel');
+R('maitai','Mai Tai','C','premium','tumbler','shakeDirty','crushed','rum:4 rumScuro:4 tripleSec:1.5 orgeat:1.5 lime:3','mintSprig');
+R('mimosa','Mimosa','C','base','flute','build','none','succoArancia:7.5 ^spumante:7.5','none',{ ns:1 });
+R('mintjulep','Mint Julep','C','base','tumbler','muddleBuild','crushed','~mentaFresca:8f ~sciroppo:1 bourbon:6','mintSprig');
+R('pinacolada','Piña Colada','C','standard','highball','shakeDirty','crushed','rum:5 cremaCocco:3.5 succoAnanas:5','pineappleWedge');
+R('piscosour','Pisco Sour','C','standard','coupe','shakeEgg','none','pisco:4.5 limone:3 sciroppo:2 albume:1p angostura:3d','none');
+R('rabodegalo','Rabo de Galo','C','premium','tumbler','build','cubes','cachaca:4.5 cynar:3 vermouthRosso:1.5 angostura:1d','none');
+R('seabreeze','Sea Breeze','C','base','highball','build','cubes','vodka:4 succoMirtillo:12 succoPompelmo:3','limeWheel');
+R('sexonthebeach','Sex on the Beach','C','standard','highball','build','cubes','vodka:4 peachSchnapps:2 succoArancia:4 succoMirtillo:4','orangeSlice');
+R('singaporesling','Singapore Sling','C','premium','highball','shake','cubes','gin:3 cherryBrandy:1.5 tripleSec:0.75 benedictine:0.75 succoAnanas:12 lime:1.5 grenadine:1 angostura:1d','orangeSlice');
+R('tequilasunrise','Tequila Sunrise','C','base','highball','build','cubes','tequila:4.5 succoArancia:9 ^_grenadine:1.5','orangeSlice',{ ns:1 });
+R('vesper','Vesper','C','standard','martini','shake','none','gin:6 vodka:1.5 lillet:0.75','lemonTwist');
+R('zombie','Zombie','C','premium','highball','shake','cubes','rum:3 rumScuro:3 apricotBrandy:1.5 lime:2.5 succoAnanas:6 grenadine:1 angostura:2d','mintSprig');
+
+/* ---------------- NEW ERA DRINKS ---------------- */
+R('beesknees',"Bee's Knees",'N','standard','coupe','shake','none','gin:5 limone:2.5 sciroppoMiele:2','lemonTwist');
+R('bramble','Bramble','N','standard','tumbler','build','crushed','gin:4 limone:2 sciroppo:1 ^_cremeDeMure:2','blackberry');
+R('canchanchara','Canchanchara','N','standard','tumbler','build','cubes','rum:6 sciroppoMiele:2 lime:2.5 sodaWater:2.5','limeWheel');
+R('chartreuseswizzle','Chartreuse Swizzle','N','premium','highball','build','crushed','chartreuseVerde:5 succoAnanas:4 lime:2.5 falernum:1.5','mintSprig');
+R('darknstormy',"Dark 'n' Stormy",'N','base','highball','build','cubes','rumScuro:6 lime:1.5 ^gingerBeer:10','limeWheel');
+R('donsspecial',"Don's Special Daiquiri",'N','premium','coupe','shake','none','rum:2.5 rumScuro:2.5 maracuja:3 lime:2.5 sciroppoMiele:1.5','limeWheel');
+R('espressomartini','Espresso Martini','N','standard','martini','shake','none','vodka:5 liquoreCaffe:2 caffe:3 sciroppo:1','none');
+R('fernandito','Fernandito','N','standard','highball','build','cubes','fernet:5 ^cola:15','none');
+R('frenchmartini','French Martini','N','standard','martini','shake','none','vodka:4.5 chambord:1.5 succoAnanas:1.5','none');
+R('ginbasilsmash','Gin Basil Smash','N','base','tumbler','muddleShake','cubes','~basilico:10f ~limone:3 ~sciroppo:2 gin:6','basil');
+R('grandmargarita','Grand Margarita','N','standard','tumbler','shake','cubes','tequila:5 grandMarnier:2 lime:2.5','limeWheel',{ rim:'salt' });
+R('ibatiki','IBA Tiki','N','premium','highball','shake','crushed','rum:3 rumScuro:3 amaretto:1.5 frangelico:1.5 maraschino:1.5 maracuja:3 succoAnanas:6 lime:2.5','umbrella');
+R('illegal','Illegal','N','premium','coupe','shake','none','mezcal:4.5 rum:1.5 falernum:1.5 maraschino:1.5 lime:2.5 sciroppo:1.5','none');
+R('junglebird','Jungle Bird','N','standard','tumbler','shake','cubes','rumScuro:4.5 campari:2 succoAnanas:4.5 lime:1.5 sciroppo:1.5','pineappleWedge');
+R('missionarysdownfall',"Missionary's Downfall",'N','premium','highball','shakeDirty','crushed','~mentaFresca:8f rum:4.5 peachBrandy:1.5 lime:2 sciroppoMiele:1.5 succoAnanas:3','mintSprig');
+R('nakedandfamous','Naked and Famous','N','premium','coupe','shake','none','mezcal:2.25 chartreuseGialla:2.25 aperol:2.25 lime:2.25','none');
+R('newyorksour','New York Sour','N','standard','tumbler','shakeEgg','cubes','bourbon:4.5 limone:3 sciroppo:2 albume:1p ^vinoRosso:2','orangeSlice');
+R('oldcuban','Old Cuban','N','standard','coupe','muddleShake','none','~mentaFresca:6f rumScuro:4.5 lime:2.25 sciroppo:1.5 angostura:2d ^spumante:6','mintSprig');
+R('paloma','Paloma','N','base','highball','build','cubes','tequila:5 lime:1.5 ^sodaPompelmo:10','limeWheel');
+R('paperplane','Paper Plane','N','premium','coupe','shake','none','bourbon:3 aperol:3 amaroNonino:3 limone:3','none');
+R('penicillin','Penicillin','N','standard','tumbler','shake','big','scotch:6 limone:2.25 sciroppoZenzero:2.25','lemonTwist');
+R('piscopunch','Pisco Punch','N','standard','highball','shake','cubes','pisco:5 succoAnanas:2.5 limone:2.5 sciroppo:2.5 vinoBianco:5','pineappleWedge');
+R('pornstarmartini','Porn Star Martini','N','premium','coupe','shake','none','vodka:4 liquorePassione:1.5 maracuja:3 sciroppo:1','none');
+R('russianspringpunch','Russian Spring Punch','N','standard','highball','shake','cubes','vodka:2.5 cremeDeCassis:1.5 limone:2.5 sciroppo:1.5 ^spumante:10','lemonWheel');
+R('sherrycobbler','Sherry Cobbler','N','standard','calice','shakeDirty','crushed','sherry:9 sciroppo:1.5','orangeSlice');
+R('southside','South Side','N','base','coupe','muddleShake','none','~mentaFresca:6f gin:6 limone:3 sciroppo:1.5','mintSprig');
+R('spicyfifty','Spicy Fifty','N','premium','coupe','muddleShake','none','~peperoncino:2p vodka:5 sciroppoSambuco:2 sciroppoMiele:1.5 lime:2.5','chili');
+R('spritz','Spritz','N','base','calice','build','cubes','spumante:6 aperol:4 ^sodaWater:2','orangeSlice',{ ns:1 });
+R('sufferingbastard','Suffering Bastard','N','standard','highball','build','cubes','gin:3 cognac:3 lime:1.5 angostura:2d ^gingerBeer:9','mintSprig');
+R('threedotsandadash','Three Dots and a Dash','N','premium','highball','shakeDirty','crushed','rum:3 rumScuro:3 falernum:1.5 allspiceDram:0.5 sciroppoMiele:1.5 lime:3 succoArancia:3 angostura:1d','umbrella');
+R('tipperary','Tipperary','N','premium','coupe','stir','none','irishWhiskey:5 vermouthRosso:2.5 chartreuseVerde:1.5 angostura:1d','orangeTwist');
+R('tommysmargarita',"Tommy's Margarita",'N','base','tumbler','shake','cubes','tequila:5 lime:2.5 sciroppo:2','none');
+R('trinidadsour','Trinidad Sour','N','premium','coupe','shake','none','angostura:4 orgeat:3 limone:2 rye:1.5','none');
+R('venoto','Ve.n.to','N','standard','coupe','shake','none','grappa:5 limone:2 sciroppoMiele:2','none');
+
+/* ---- Costruzione del catalogo completo ---- */
+const IBA_EXISTING_META = {
+  oldfashioned:{ c:'U', t:'base' }, negroni:{ c:'U', t:'base' }, whiskeysour:{ c:'U', t:'base' },
+  daiquiri:{ c:'U', t:'base' }, manhattan:{ c:'U', t:'base' },
+  margarita:{ c:'C', t:'base' }, moscowmule:{ c:'C', t:'base' }, mojito:{ c:'C', t:'standard' },
+};
+COCKTAILS.forEach(c=>{
+  const meta = IBA_EXISTING_META[c.id];
+  c.cat = meta.c;
+  c.tier = meta.t;
+  c.spirit = ibaComputeSpirit(c.ingredients);
+});
+IBA_RECIPES.forEach(r=> COCKTAILS.push(ibaBuildCocktail(r)));
+
 const BASI_INFO = [
   {title:'Sciroppo di zucchero', text:'Scalda acqua e zucchero in parti uguali (es. 200ml + 200g) fino a completo scioglimento, senza far bollire. Fai raffreddare e conserva in frigo fino a 3 settimane.'},
   {title:'Ghiaccio', text:'Usa cubi grandi per i drink mescolati o costruiti (si sciolgono più lentamente): diluiscono meno e mantengono il drink freddo più a lungo. Trita il ghiaccio solo per Mojito e simili.'},
@@ -649,6 +1211,289 @@ const BASI_INFO = [
   {title:'Succo fresco', text:'Spremi lime e limoni la sera stessa, non prima: il succo perde acidità e aroma già dopo poche ore in frigo.'},
   {title:'Bordo salato/zuccherato', text:'Bagna il bordo del bicchiere con uno spicchio di agrume e passalo capovolto in un piattino con sale grosso o zucchero, ruotandolo.'},
 ];
+
+/* ======================================================================
+   CORSO GAMIFICATO + ECONOMIA DEI PUNTI + CODICI SEGRETI
+   ====================================================================== */
+
+// Cocktail sempre sbloccati all'inizio (5 base + 1 premium "esca")
+const FREE_IDS = ['oldfashioned','negroni','whiskeysour','daiquiri','margarita','paperplane'];
+
+// Costo di sblocco per fascia (in punti). Sono pensati in modo che completando
+// TUTTE le lezioni i punti bastino per sbloccare l'intero catalogo.
+const COST = { base:4, standard:6, premium:10 };
+
+const COURSE_MODULES = [
+  'PRIMI PASSI', 'LE TECNICHE', 'LE FAMIGLIE', 'GUARNIZIONI E AROMI', 'IL SERVIZIO', 'LIVELLO PRO'
+];
+
+const LESSONS = [
+  /* ---------- MODULO 1 · PRIMI PASSI ---------- */
+  { id:'l01', m:0, pts:12, t:"Benvenuto al bancone",
+    text:"Un bravo bartender non è chi conosce più ricette, ma chi ha ordine, pulizia e metodo. Prima di toccare una bottiglia impara la mise en place: tutto a portata di mano, superfici pulite, ghiaccio pronto.",
+    needs:[], ex:["Pulisci e asciuga il piano di lavoro","Disponi gli attrezzi in fila, sempre nello stesso ordine","Tieni uno strofinaccio pulito a portata di mano"],
+    cocktail:null,
+    q:{ q:"Che cos'è la mise en place?", o:["La guarnizione finale del drink","Preparare tutto prima di iniziare a servire","Un cocktail francese"], a:1 } },
+
+  { id:'l02', m:0, pts:12, t:"Gli attrezzi del mestiere",
+    text:"Shaker per agitare, mixing glass e bar spoon per mescolare, jigger per misurare, strainer per filtrare, muddler per pestare. Ogni attrezzo ha un compito preciso: usare quello giusto fa la differenza.",
+    needs:['shaker','jigger','mixingGlass','barSpoon','strainer'],
+    ex:["Trova nel tuo kit shaker, jigger, bar spoon e strainer","Smonta e rimonta lo shaker senza forzare","Ripeti a voce a cosa serve ogni attrezzo"],
+    cocktail:null,
+    q:{ q:"Quale attrezzo serve per mescolare un drink senza shakerarlo?", o:["Il muddler","Il peeler","Il bar spoon (con il mixing glass)"], a:2 } },
+
+  { id:'l03', m:0, pts:12, t:"Misurare: cl, dash e jigger",
+    text:"Le dosi si misurano in cl: 1 oncia sono circa 3 cl. Il jigger ha due lati (di solito 3 e 6 cl, oppure 2,5 e 5 cl). Un dash è una scrollata di bitters: pochissimo, circa mezzo millilitro.",
+    needs:['jigger','angostura'],
+    ex:["Riempi il jigger con acqua fino al bordo, senza traboccare, 10 volte di fila","Versa 6 cl in un bicchiere e osserva quanto spazio occupano","Prova a fare 2 dash con la bottiglietta di bitters su un piattino"],
+    cocktail:null,
+    q:{ q:"Quanti cl sono circa 2 once (2 oz)?", o:["3 cl","6 cl","10 cl"], a:1 } },
+
+  { id:'l04', m:0, pts:12, t:"Il ghiaccio",
+    text:"Il ghiaccio non è solo freddo: controlla la diluizione. Il cubo grande si scioglie piano (drink mescolati), i cubetti sono lo standard, il tritato serve per Mojito e simili. Il ghiaccio già usato nello shaker non si riusa mai.",
+    needs:[],
+    ex:["Prepara il ghiaccio in uno stampo grande almeno 3 ore prima","Metti 3 cubetti in un bicchiere e un cubo grande in un altro con la stessa acqua: guarda quale si scioglie prima","Conserva il ghiaccio in freezer, coperto e lontano da odori"],
+    cocktail:null,
+    q:{ q:"Quale ghiaccio diluisce meno il drink?", o:["Il ghiaccio tritato","Il cubo grande","Sono tutti uguali"], a:1 } },
+
+  { id:'l05', m:0, pts:12, t:"I bicchieri",
+    text:"Tumbler basso per i drink corti con ghiaccio, coupe e bicchiere a V per i drink serviti senza ghiaccio, highball per i long drink, flute per le bollicine, calice per Spritz e simili, mug per l'Irish Coffee.",
+    needs:['tumbler','coupe','highball'],
+    ex:["Metti due bicchieri in freezer per 15 minuti","Abbina a voce: Old Fashioned, Daiquiri, Mojito e il loro bicchiere","Controlla che i bicchieri siano privi di aloni"],
+    cocktail:null,
+    q:{ q:"In quale bicchiere si serve di solito un drink shakerato e filtrato, senza ghiaccio?", o:["Highball","Tumbler basso con cubo grande","Coupe o bicchiere a V"], a:2 } },
+
+  { id:'l06', m:0, pts:12, t:"Sciroppo e succhi freschi",
+    text:"Lo sciroppo di zucchero si fa 1:1 (acqua e zucchero in peso, a caldo). I succhi di lime e limone si spremono la sera stessa: un lime dà circa 2,5 cl di succo, un limone circa 3 cl.",
+    needs:['lime','limone','sciroppo','jigger'],
+    ex:["Prepara 200 ml di sciroppo 1:1 e mettilo in frigo","Spremi 2 lime e misura il succo con il jigger","Scrivi la data sul barattolo dello sciroppo"],
+    cocktail:null,
+    q:{ q:"Quando conviene spremere il succo di lime?", o:["Un mese prima","Una settimana prima","La sera stessa"], a:2 } },
+
+  /* ---------- MODULO 2 · LE TECNICHE ---------- */
+  { id:'l07', m:1, pts:15, t:"Build: costruire nel bicchiere",
+    text:"Build significa fare tutto direttamente nel bicchiere di servizio: ingredienti, ghiaccio, una mescolata. È la tecnica più semplice. L'Old Fashioned è il modello: zucchero, bitter, spirito, ghiaccio.",
+    needs:['bourbon','sciroppo','angostura','arancia','tumbler','barSpoon'],
+    ex:["Assaggia il drink: deve essere freddo e rotondo, non annacquato"],
+    cocktail:'oldfashioned',
+    q:{ q:"Nella tecnica build dove si preparano gli ingredienti?", o:["Nel frullatore","Nello shaker","Direttamente nel bicchiere di servizio"], a:2 } },
+
+  { id:'l08', m:1, pts:15, t:"Stir: mescolare con eleganza",
+    text:"Lo stir si usa per i drink di soli alcolici (nessun succo): si mescola con il bar spoon per 15-20 secondi finché il bicchiere è freddo. Shakerarli li renderebbe torbidi e troppo diluiti.",
+    needs:['gin','vermouthRosso','campari','barSpoon','tumbler'],
+    ex:["Assaggia: il Negroni deve essere limpido e perfettamente freddo"],
+    cocktail:'negroni',
+    q:{ q:"Quando si usa lo stir?", o:["Quando ci sono succhi di agrumi","Quando il drink è fatto solo di alcolici e vermouth","Quando serve la schiuma"], a:1 } },
+
+  { id:'l09', m:1, pts:15, t:"Shake: agitare con energia",
+    text:"Lo shake serve per i drink con succhi, creme e uova: si agita 10-15 secondi con ghiaccio abbondante, finché lo shaker si imperla di condensa all'esterno. Poi si filtra con lo strainer.",
+    needs:['rum','lime','sciroppo','shaker','strainer','coupe'],
+    ex:["Senti lo shaker: dopo lo shake deve essere gelido da tenere in mano"],
+    cocktail:'daiquiri',
+    q:{ q:"Perché si shakera un cocktail con succo di lime?", o:["Per scaldarlo","Per raffreddare, miscelare e arieggiare succo e zucchero","Per far evaporare l'alcol"], a:1 } },
+
+  { id:'l10', m:1, pts:15, t:"La formula Sour: 2 : 0,75 : 0,75",
+    text:"Spirito, acido e dolce in rapporto circa 2 : 0,75 : 0,75 (6 cl : 2,5 cl : 2 cl). Cambiando lo spirito ottieni intere famiglie: Daiquiri, Whiskey Sour, Margarita e tante altre. Imparare il rapporto vale più di imparare le ricette.",
+    needs:['bourbon','limone','sciroppo','shaker','strainer','coupe'],
+    ex:["Scrivi la formula su un foglietto e attaccalo vicino al bar"],
+    cocktail:'whiskeysour',
+    q:{ q:"Qual è il rapporto indicativo spirito : acido : dolce di un Sour?", o:["1 : 1 : 1","2 : 0,75 : 0,75","4 : 1 : 3"], a:1 } },
+
+  { id:'l11', m:1, pts:15, t:"Albume e dry shake",
+    text:"L'albume crea una schiuma setosa. Prima si fa il dry shake (senza ghiaccio, 8-10 secondi) per emulsionarlo, poi lo shake normale con ghiaccio. Usa uova fresche e lavale prima di romperle.",
+    needs:['gin','sciroppoLampone','limone','albume','shaker','strainer','coupe'],
+    ex:["Separa un albume dal tuorlo senza rompere il tuorlo"],
+    cocktail:'cloverclub',
+    q:{ q:"Che cos'è il dry shake?", o:["Shakerare senza ghiaccio per montare l'albume","Shakerare con ghiaccio secco","Shakerare senza liquidi"], a:0 } },
+
+  { id:'l12', m:1, pts:15, t:"Muddle: pestare con delicatezza",
+    text:"Il muddle libera gli oli di menta, lime e basilico. Si pesta con delicatezza: la menta si sveglia, non si spappola. Se la strapazzi diventa amara.",
+    needs:['rum','lime','mentaFresca','sciroppo','sodaWater','muddler','highball'],
+    ex:["Pesta una foglia di menta a mano e senti il profumo che si libera"],
+    cocktail:'mojito',
+    q:{ q:"Cosa succede se pesti troppo la menta?", o:["Diventa amara","Diventa più dolce","Non cambia nulla"], a:0 } },
+
+  /* ---------- MODULO 3 · LE FAMIGLIE ---------- */
+  { id:'l13', m:2, pts:18, t:"Whisky e amari: il Boulevardier",
+    text:"Il Boulevardier è un Negroni con il bourbon al posto del gin (4,5 cl bourbon, 3 cl vermouth rosso, 3 cl Campari). Imparare le varianti è molto più facile che imparare ricette nuove.",
+    needs:['bourbon','vermouthRosso','campari','mixingGlass','barSpoon','strainer'],
+    ex:["Assaggia un Negroni e un Boulevardier a confronto, uno dopo l'altro"],
+    cocktail:'boulevardier',
+    q:{ q:"Cosa cambia tra Negroni e Boulevardier?", o:["Il gin diventa bourbon","Il Campari diventa Aperol","Il vermouth diventa soda"], a:0 } },
+
+  { id:'l14', m:2, pts:18, t:"Il Dry Martini",
+    text:"Gin e poco vermouth secco, mescolati nel mixing glass e filtrati in un bicchiere ben freddo. Il segreto è il ghiaccio pulito e la temperatura: 20 secondi di stir, mai uno shake.",
+    needs:['gin','vermouthSecco','olive','mixingGlass','barSpoon','strainer','martini'],
+    ex:["Metti il bicchiere in freezer 15 minuti prima di servire"],
+    cocktail:'drymartini',
+    q:{ q:"Il Dry Martini classico si prepara…", o:["Frullandolo","Mescolandolo nel mixing glass","Shakerandolo con il succo"], a:1 } },
+
+  { id:'l15', m:2, pts:18, t:"Highball: spirito più mixer",
+    text:"Un highball è spirito più mixer lungo in un bicchiere alto con tanto ghiaccio. Il Cuba Libre (rum, cola, lime) è il modello. Il ghiaccio abbondante mantiene il drink freddo e frizzante più a lungo.",
+    needs:['rum','lime','cola','highball'],
+    ex:["Riempi il bicchiere di ghiaccio fino all'orlo prima di versare"],
+    cocktail:'cubalibre',
+    q:{ q:"Cosa si aggiunge per ultimo in un highball con ingredienti gassati?", o:["Lo spirito","La parte gassata, con delicatezza","Il ghiaccio"], a:1 } },
+
+  { id:'l16', m:2, pts:18, t:"Gli aperitivi italiani",
+    text:"L'Americano è Campari, vermouth rosso e soda: è il padre del Negroni, che sostituisce la soda con il gin. Il Garibaldi è Campari e succo d'arancia fresco. Pochi ingredienti, equilibrio perfetto.",
+    needs:['campari','vermouthRosso','sodaWater','arancia','tumbler'],
+    ex:["Assaggia l'Americano e cerca di capire cosa aggiunge il gin nel Negroni"],
+    cocktail:'americano',
+    q:{ q:"Cosa distingue il Negroni dall'Americano?", o:["Il gin al posto della soda","Il bourbon","Il succo d'arancia"], a:0 } },
+
+  { id:'l17', m:2, pts:18, t:"Bollicine: Spritz, Mimosa e Bellini",
+    text:"Le bollicine si aggiungono per ultime e non si mescolano mai con forza. Una bevanda gassata non si shakera mai: la pressione potrebbe far saltare lo shaker. Il flute si inclina leggermente quando si versa.",
+    needs:['spumante','aperol','sodaWater','arancia','calice'],
+    ex:["Versa una bevanda gassata inclinando il bicchiere e osserva quanta schiuma fa"],
+    cocktail:'spritz',
+    q:{ q:"Quando si aggiunge lo spumante?", o:["Nello shaker, all'inizio","Mai","Alla fine, senza mescolare con forza"], a:2 } },
+
+  { id:'l18', m:2, pts:18, t:"Cocktail cremosi",
+    text:"Alexander e Grasshopper usano la panna: si shakera con energia per emulsionarla e ottenere una consistenza vellutata. Meglio panna fresca, non montata.",
+    needs:['cognac','cremeDeCacao','panna','shaker','strainer','coupe'],
+    ex:["Assaggia: deve essere liscio e vellutato, senza grumi"],
+    cocktail:'alexander',
+    q:{ q:"Perché si shakera con forza un drink con la panna?", o:["Per emulsionarla e renderla vellutata","Per scaldarla","Per aggiungere anidride carbonica"], a:0 } },
+
+  { id:'l19', m:2, pts:18, t:"Sour classici: il Sidecar",
+    text:"Il Sidecar è cognac, triple sec e succo di limone: un Sour in cui il liquore all'arancia fa da dolcificante. Si shakera e si serve in coppa fredda, senza ghiaccio.",
+    needs:['cognac','tripleSec','limone','shaker','strainer','coupe'],
+    ex:["Confronta il Sidecar con un Whiskey Sour: cosa cambia nei sapori?"],
+    cocktail:'sidecar',
+    q:{ q:"Che cosa dolcifica il Sidecar?", o:["Il miele","Il triple sec","Lo sciroppo di zucchero"], a:1 } },
+
+  { id:'l20', m:2, pts:18, t:"Tequila e agrumi: la Paloma",
+    text:"Tequila, lime e soda al pompelmo: semplice, fresca, perfetta per iniziare con la tequila. Per un buon drink scegli tequila 100% agave e ghiaccio abbondante.",
+    needs:['tequila','lime','sodaPompelmo','highball'],
+    ex:["Leggi l'etichetta della tua tequila e cerca la dicitura 100% agave"],
+    cocktail:'paloma',
+    q:{ q:"Cosa deve riportare l'etichetta di una buona tequila?", o:["Solo la gradazione","100% agave","La parola gold"], a:1 } },
+
+  /* ---------- MODULO 4 · GUARNIZIONI E AROMI ---------- */
+  { id:'l21', m:3, pts:16, t:"La twist di agrumi",
+    text:"La twist si ricava con il peeler evitando la parte bianca, che è amara. Poi si spreme sopra il drink con la parte colorata verso il bicchiere: gli oli essenziali profumano la superficie.",
+    needs:['arancia','peeler'],
+    ex:["Ricava 3 twist da un'arancia senza parte bianca","Spremi una twist sopra un bicchiere e senti il profumo"],
+    cocktail:'negroni',
+    q:{ q:"Perché si spreme la twist sopra il drink?", o:["Per colorarlo","Per rilasciare gli oli aromatici","Per aggiungere succo"], a:1 } },
+
+  { id:'l22', m:3, pts:16, t:"Bordi di sale e zucchero",
+    text:"Il bordo di sale (Margarita) o di zucchero (Sidecar, Lemon Drop) si fa bagnando solo l'esterno del bordo con uno spicchio di agrume, poi passandolo capovolto in un piattino di sale o zucchero.",
+    needs:['saleRim','lime'],
+    ex:["Prepara un piattino di sale grosso","Prova a fare il bordo solo sull'esterno, senza sporcare l'interno"],
+    cocktail:'margarita',
+    q:{ q:"Come si bagna il bordo del bicchiere?", o:["Con acqua dentro il bicchiere","Con uno spicchio di agrume, solo all'esterno","Con del ghiaccio"], a:1 } },
+
+  { id:'l23', m:3, pts:16, t:"I bitters",
+    text:"I bitters sono estratti amari e aromatici: poche gocce cambiano un drink. Angostura (spezie), orange bitters (agrumi) e Peychaud's (anice e fiori) hanno profili diversi. Si dosano a dash.",
+    needs:['angostura','orangeBitters'],
+    ex:["Metti 2 dash di Angostura in un bicchiere d'acqua frizzante e assaggia"],
+    cocktail:'manhattan',
+    q:{ q:"Cosa sono i bitters?", o:["Sciroppi dolci","Estratti amari e aromatici usati a gocce","Succhi di frutta"], a:1 } },
+
+  { id:'l24', m:3, pts:16, t:"Guarnire con senso",
+    text:"Una guarnizione deve profumare o aggiungere sapore, non solo decorare: oliva nel Martini, ciliegia nel Manhattan, menta nel Julep. La menta si batte tra le mani per liberare gli aromi.",
+    needs:['mentaFresca'],
+    ex:["Batti un rametto di menta tra le mani e annusalo prima e dopo"],
+    cocktail:'mintjulep',
+    q:{ q:"Perché si batte la menta tra le mani?", o:["Per liberarne gli aromi","Per ammorbidirla","Per pulirla"], a:0 } },
+
+  /* ---------- MODULO 5 · IL SERVIZIO ---------- */
+  { id:'l25', m:4, pts:18, t:"Ordine e velocità",
+    text:"Prima la mise en place, poi i drink. Bicchieri freddi, ghiaccio pieno, ingredienti a portata. Con più drink da fare, si preparano insieme quelli con la stessa tecnica e si lavora un bicchiere alla volta.",
+    needs:[],
+    ex:["Prepara a freddo 4 bicchieri e allineali","Cronometra il tempo di un cocktail dall'ordine al servizio e prova a ridurlo"],
+    cocktail:null,
+    q:{ q:"Cosa conviene fare per primo prima di una serata?", o:["Lavare tutto a metà serata","Spremere i limoni a ogni drink","Raffreddare i bicchieri e preparare la mise en place"], a:2 } },
+
+  { id:'l26', m:4, pts:18, t:"Una serata per 4 persone",
+    text:"Per sapere cosa comprare e preparare usa BASI → Calcola la serata: scegli i cocktail e imposta persone e drink a testa per ognuno. L'app somma tutto, compresi lime, limoni e sciroppo.",
+    needs:[],
+    ex:["Apri BASI, aggiungi due cocktail per 4 persone e annota le quantità totali"],
+    cocktail:null,
+    q:{ q:"4 persone, 2 Daiquiri a testa, 2,5 cl di lime a drink: quanti cl di succo di lime servono?", o:["10 cl","20 cl","5 cl"], a:1 } },
+
+  { id:'l27', m:4, pts:18, t:"Una serata per 8: il batch",
+    text:"I drink di soli alcolici (Negroni, Manhattan) si possono preparare in anticipo in una bottiglia, con un po' d'acqua per la diluizione, e servire sul ghiaccio. I drink con succhi o uova si shakerano al momento.",
+    needs:[],
+    ex:["Calcola quanti cl servono per 8 Negroni (3 cl di ognuno dei 3 ingredienti a drink)"],
+    cocktail:null,
+    q:{ q:"Quale cocktail si presta meglio a un batch preparato prima?", o:["Whiskey Sour con albume","Negroni","Mojito"], a:1 } },
+
+  { id:'l28', m:4, pts:18, t:"Assaggiare e correggere",
+    text:"Tre domande: è troppo acido? troppo dolce? troppo forte? Si corregge con sciroppo (più dolce), succo (più acido) o un po' d'acqua e ghiaccio (meno forte). Cambia una cosa per volta.",
+    needs:['rum','lime','sciroppo'],
+    ex:["Prepara un Daiquiri troppo acido apposta, poi correggilo con lo sciroppo"],
+    cocktail:'daiquiri',
+    q:{ q:"Un Daiquiri è troppo acido: cosa aggiungi?", o:["Altro lime","Un po' di sciroppo","Soda"], a:1 } },
+
+  /* ---------- MODULO 6 · LIVELLO PRO ---------- */
+  { id:'l29', m:5, pts:20, t:"Tiki e rum",
+    text:"Il tiki è rum, agrumi e sciroppi speziati (orgeat, falernum), spesso con ghiaccio tritato e guarnizioni scenografiche. Il Mai Tai e lo Zombie sono i riferimenti. L'orgeat è uno sciroppo di mandorla.",
+    needs:['rum','rumScuro','orgeat','tripleSec','lime'],
+    ex:["Assaggia l'orgeat da solo per riconoscerne il gusto di mandorla"],
+    cocktail:'maitai',
+    q:{ q:"Che cos'è l'orgeat?", o:["Un liquore alla menta","Sciroppo di mandorla","Un succo di ananas"], a:1 } },
+
+  { id:'l30', m:5, pts:20, t:"Ingredienti rari",
+    text:"Chartreuse, absinthe, Bénédictine, maraschino: si usano in piccole dosi ma cambiano il profilo del drink. Per non spendere troppo compra bottiglie piccole e cerca i cocktail che le usano.",
+    needs:['absinthe','rye','peychaud'],
+    ex:["Fai un risciacquo di absinthe: versa pochissimo, ruota il bicchiere, elimina l'eccesso"],
+    cocktail:'sazerac',
+    q:{ q:"Come si fa un risciacquo (rinse) di absinthe?", o:["Si shakera con 6 cl di absinthe","Si aggiunge come ingrediente principale","Si riveste il bicchiere e si elimina l'eccesso"], a:2 } },
+
+  { id:'l31', m:5, pts:20, t:"Bilanciare un cocktail",
+    text:"Forte, dolce, acido, amaro: ogni drink è un equilibrio. Il Paper Plane è la lezione perfetta: quattro ingredienti in parti uguali. Quando correggi un drink, cambia una variabile alla volta.",
+    needs:['bourbon','aperol','amaroNonino','limone','shaker','strainer','coupe'],
+    ex:["Assaggia il Paper Plane e individua le quattro componenti"],
+    cocktail:'paperplane',
+    q:{ q:"Quante variabili cambi per volta quando correggi un drink?", o:["Tutte","Tre","Una sola"], a:2 } },
+
+  { id:'l32', m:5, pts:20, t:"Il tuo twist personale",
+    text:"Per inventare una variante parti da un classico e cambia un solo elemento: un Old Fashioned con rum scuro, una Margarita con mezcal, un Negroni con un altro amaro. Annota sempre dosi e giudizio.",
+    needs:[],
+    ex:["Scegli un classico e cambia un solo ingrediente","Annota dosi e voto da 1 a 10"],
+    cocktail:null,
+    q:{ q:"Qual è il metodo migliore per inventare una variante?", o:["Mescolare tutto a caso","Partire da un classico e cambiare un solo elemento","Raddoppiare l'alcol"], a:1 } },
+
+  { id:'l33', m:5, pts:20, t:"Lavorare in un locale",
+    text:"Dietro a un bancone contano ritmo, ordine delle comande, ghiaccio sempre pieno, pulizia continua e comunicazione con il team. La velocità arriva dopo la precisione, mai prima.",
+    needs:[],
+    ex:["Simula tre comande una dopo l'altra e decidi l'ordine di preparazione"],
+    cocktail:null,
+    q:{ q:"Che cos'è una comanda?", o:["Un attrezzo del bar","Un tipo di cocktail","L'ordine del cliente passato al bar"], a:2 } },
+
+  { id:'l34', m:5, pts:20, t:"Percorsi professionali",
+    text:"In Italia esistono corsi di associazioni di categoria come AIBES e ABI, e si impara moltissimo anche con uno stage in un locale. Studia i classici della lista IBA: sono il linguaggio comune dei bartender.",
+    needs:[],
+    ex:["Cerca un corso o uno stage vicino a te","Scrivi tre cose che vorresti imparare lavorando in un bar"],
+    cocktail:null,
+    q:{ q:"Quale lista di cocktail è riconosciuta a livello internazionale?", o:["La lista IBA","La lista di un singolo locale","Nessuna"], a:0 } },
+
+  { id:'l35', m:5, pts:40, t:"Esame pratico",
+    text:"Prepara di seguito tre cocktail di famiglie diverse senza guardare le dosi: un build, uno stir, uno shake. Se riesci a farli bene da memoria, hai capito il metodo.",
+    needs:['bourbon','gin','vermouthRosso','campari','rum','lime','sciroppo','shaker','strainer','tumbler','coupe'],
+    ex:["Prepara un Old Fashioned (build) senza guardare la ricetta","Prepara un Negroni (stir) senza guardare la ricetta","Prepara un Daiquiri (shake) senza guardare la ricetta"],
+    cocktail:null,
+    q:{ q:"A quale famiglia appartiene il Daiquiri?", o:["Highball","Old Fashioned","Sour"], a:2 } },
+
+  { id:'l36', m:5, pts:24, t:"Il diploma",
+    text:"Hai completato il corso. Ricorda: la pratica batte la teoria. Le ricette non si imparano a memoria una per una, si impara lo schema e si cambiano gli ingredienti.",
+    needs:[],
+    ex:["Prepara un cocktail a tua scelta per qualcuno e chiedigli un voto","Annota cosa cambieresti la prossima volta"],
+    cocktail:null,
+    q:{ q:"Qual è il segreto per ricordare molte ricette?", o:["Impararle tutte a forza","Scriverle sul braccio","Imparare le famiglie e i rapporti"], a:2 } },
+];
+
+/* Codici segreti (stile cabinato anni 80). Vengono normalizzati: maiuscolo, solo lettere. */
+const CHEAT_CODES = {
+  PUTYOURMONEYWHEREYOURMOUTHIS: { key:'money',   msg:"CODICE ACCETTATO: punti infiniti. Puoi sbloccare tutto, il portafoglio ringrazia." },
+  IALREADYKNOWEVERYTHING:       { key:'lessons', msg:"CODICE ACCETTATO: tutte le lezioni sbloccate. Il tuo insegnante è molto colpito (e un po' offeso)." },
+  SHAKENNOTSTIRRED:             { key:'premium', msg:"CODICE ACCETTATO: tutti i cocktail premium sbloccati. Il nome è Bond, James Bond." },
+  ITSFIVEOCLOCKSOMEWHERE:       { key:'all',     msg:"CODICE ACCETTATO: tutti i cocktail sbloccati. Da qualche parte è sempre l'ora giusta." },
+  LASTORDERSPLEASE:             { key:'reset',   msg:"CODICE ACCETTATO: partita azzerata. Ultimo giro, e si ricomincia da capo." },
+};
 
 const LIME_YIELD = 2.5;   // cl succo per lime
 const LEMON_YIELD = 3;    // cl succo per limone
@@ -665,6 +1510,9 @@ let state = {
   timer:{running:false, interval:null, seconds:0, total:0},
   basiSelection:{},
   musicLink:'',
+  progress: defaultProgress(),
+  filter:{ tier:'all', spirit:'all', status:'all', q:'' },
+  currentLessonId:null, lessonMsg:'', backTo:null, tempAccess:null, unlockConfirm:null, codeMsg:'', codeOk:false,
   spotifyClientId:'',
   spotifyToken:null,
   spotifyRefresh:null,
@@ -682,6 +1530,7 @@ function loadData(){
       state.inventory = parsed.inventory || {};
       state.guests = parsed.guests || 2;
       state.musicLink = parsed.musicLink || '';
+      state.progress = normalizeProgress(parsed.progress);
       state.spotifyClientId = parsed.spotifyClientId || '';
       state.spotifyToken = parsed.spotifyToken || null;
       state.spotifyRefresh = parsed.spotifyRefresh || null;
@@ -694,7 +1543,7 @@ function loadData(){
 function persistData(){
   try{
     localStorage.setItem('cocktailArcadeData', JSON.stringify({
-      inventory: state.inventory, guests: state.guests, musicLink: state.musicLink,
+      inventory: state.inventory, guests: state.guests, musicLink: state.musicLink, progress: state.progress,
       spotifyClientId: state.spotifyClientId, spotifyToken: state.spotifyToken,
       spotifyRefresh: state.spotifyRefresh, spotifyExpiresAt: state.spotifyExpiresAt,
     }));
@@ -738,45 +1587,6 @@ function glassShapeClass(shape){
 
 // Costruisce gli strati colorati cumulativi nel bicchiere, in base agli ingredienti
 // versati fino allo step corrente (ognuno con la sua altezza proporzionale e il suo colore)
-function buildLayers(cocktail, uptoStepIndex, guests){
-  const revealedOrder = [];
-  for(let i=0;i<=uptoStepIndex;i++){
-    (cocktail.steps[i].reveal||[]).forEach(inv=>{
-      if(!revealedOrder.includes(inv)) revealedOrder.push(inv);
-    });
-  }
-  // Il totale si calcola sull'intera ricetta finale (non solo su cio' che e' stato
-  // versato finora): cosi' il livello cresce in proporzione reale invece di sembrare
-  // gia' pieno appena si aggiunge un ingrediente piccolo come l'Angostura.
-  const volByInv = {};
-  let total = 0;
-  cocktail.ingredients.forEach(ingredient=>{
-    let vol = 0;
-    if(ingredient.unit==='cl') vol = ingredient.amount;
-    else if(ingredient.unit==='dash') vol = ingredient.amount*NOMINAL_DASH_CL;
-    volByInv[ingredient.inv] = vol;
-    total += vol;
-  });
-  const maxFill = 85;
-  let cumBottom = 0;
-  const layers = [];
-  revealedOrder.forEach(inv=>{
-    const vol = volByInv[inv];
-    if(!vol) return;
-    const ingredient = cocktail.ingredients.find(i=>i.inv===inv);
-    const heightPct = total>0 ? (vol/total)*maxFill : 0;
-    const bottomPct = cumBottom;
-    cumBottom += heightPct;
-    layers.push({
-      inv, bottomPct, heightPct, topPct:cumBottom,
-      color: COLORS[inv] || '#cccccc',
-      label: ingredient.label,
-      amountDisplay: scaleAmount(ingredient, guests) + (ingredient.unit==='dash' ? ' dash' : ingredient.unit)
-    });
-  });
-  return layers;
-}
-
 function iceHTML(iceState, animate, vars){
   if(!iceState || iceState==='none') return '';
   const flag = animate ? ' data-animate="1"' : '';
@@ -844,6 +1654,9 @@ function render(){
     case 'detail': app.innerHTML = renderDetail(); break;
     case 'basi': app.innerHTML = renderBasi(); break;
     case 'music': app.innerHTML = renderMusic(); break;
+    case 'course': app.innerHTML = renderCourse(); break;
+    case 'lesson': app.innerHTML = renderLesson(); break;
+    case 'codes': app.innerHTML = renderCodes(); break;
   }
 }
 
@@ -863,58 +1676,6 @@ function renderTitle(loading){
   `;
 }
 
-function hudHTML(title){
-  const ready = COCKTAILS.filter(isCocktailReady).length;
-  return `
-    <div class="hud">
-      <div class="hud-item">
-        <span class="hud-label">PERSONE</span>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <button data-action="guest-minus">-</button>
-          <span class="val">${String(state.guests).padStart(2,'0')}</span>
-          <button data-action="guest-plus">+</button>
-        </div>
-      </div>
-      <div class="hud-item">
-        <span class="hud-label">PRONTI</span>
-        <span class="val">${ready}/${COCKTAILS.length}</span>
-      </div>
-    </div>
-  `;
-}
-
-function renderMenu(){
-  return `
-    ${hudHTML()}
-    <div class="menu-title pixel">MENU PRINCIPALE</div>
-    <button class="menu-btn" data-action="goto-inventory">
-      SCORTE
-      <span class="sub">Segna cosa hai in casa</span>
-    </button>
-    <button class="menu-btn pink" data-action="goto-cocktails">
-      COCKTAIL
-      <span class="sub">Scegli e preparali passo passo</span>
-    </button>
-    <button class="menu-btn yellow" data-action="goto-basi">
-      BASI &amp; SCORTE SERATA
-      <span class="sub">Tecniche base e calcolo quantità</span>
-    </button>
-    <button class="menu-btn green" data-action="goto-music">
-      MUSICA
-      <span class="sub">Colonna sonora retro per la serata</span>
-    </button>
-  `;
-}
-
-function screenHeader(title){
-  return `
-    <div class="screen-header">
-      <button class="back-btn" data-action="goto-menu">‹ MENU</button>
-      <div class="screen-title pixel">${title}</div>
-    </div>
-  `;
-}
-
 function renderInventory(){
   let html = hudHTML() + screenHeader('SCORTE');
   INVENTORY_CATS.forEach(cat=>{
@@ -930,189 +1691,6 @@ function renderInventory(){
     });
   });
   html += `<div class="inv-note">Le spunte restano salvate anche se chiudi l'app.</div>`;
-  return html;
-}
-
-function renderCocktailList(){
-  let html = hudHTML() + screenHeader('COCKTAIL');
-  html += `<div class="inv-note" style="margin-top:0;margin-bottom:14px;">Puoi comunque aprire un cocktail anche se ti manca qualcosa: il badge indica solo quanti ingredienti/attrezzi ti mancano.</div>`;
-  COCKTAILS.forEach(c=>{
-    const ready = isCocktailReady(c);
-    const miss = missingItems(c);
-    html += `
-      <div class="cocktail-card ${ready?'ready':''}" data-action="open-cocktail" data-id="${c.id}">
-        <div>
-          <div class="cc-name">${c.name.toUpperCase()}</div>
-          ${ready
-            ? `<div class="cc-missing" style="color:var(--green);">Tutto pronto</div>`
-            : `<div class="cc-missing">Manca: ${miss.slice(0,3).map(m=>INV_LABELS[m]).join(', ')}${miss.length>3?` +${miss.length-3}`:''}</div>`
-          }
-        </div>
-        <span class="badge ${ready?'ready':'locked'}">${ready?'PLAY':'-'+miss.length}</span>
-      </div>
-    `;
-  });
-  return html;
-}
-
-function renderDetail(){
-  const c = COCKTAILS.find(c=>c.id===state.currentCocktailId);
-  const step = c.steps[state.stepIndex];
-  const total = c.steps.length;
-  const isLast = state.stepIndex === total-1;
-  const miss = missingItems(c);
-  const layers = buildLayers(c, state.stepIndex, state.guests);
-  const prevLayers = state.stepIndex>0 ? buildLayers(c, state.stepIndex-1, state.guests) : [];
-  const lvlFrom = prevLayers.length ? prevLayers[prevLayers.length-1].topPct : 0;
-  const lvlTo = layers.length ? layers[layers.length-1].topPct : 0;
-  const newInvs = step.reveal || [];
-  const newCount = layers.filter(l=>newInvs.includes(l.inv)).length;
-
-  let html = hudHTML() + screenHeader(c.name.toUpperCase());
-  html += `<div style="display:flex; justify-content:flex-end; margin:-8px 0 10px;">
-      <button class="back-btn" data-action="restart-cocktail" style="border-color:var(--yellow); color:var(--yellow);">RICOMINCIA</button>
-    </div>`;
-
-  const glassInfo = GLASS_INFO[c.glassShape] || GLASS_INFO['shape-tumbler'];
-  html += `<div class="glass-tag"><span class="mini-glass-icon ${glassInfo.iconClass}"></span>Bicchiere consigliato: <b style="color:var(--cyan);">${glassInfo.name}</b></div>`;
-
-  const vClass = step.vessel==='shaker' ? 'v-shaker' : step.vessel==='mixing' ? 'v-mixing' : glassInfo.vClass;
-  const isShaking = step.tag==='SHAKE' && state.timer.running;
-  const vesselLabel = step.vessel==='shaker' ? 'SHAKER' : step.vessel==='mixing' ? 'MIXING GLASS' : glassInfo.name.toUpperCase();
-
-  html += `<div class="glass-row">
-      <div class="vessel-stage">
-        ${pourRowHTML(step, c, state.guests)}
-        ${iceScoopHTML(step)}
-        <div class="vessel ${vClass} ${isShaking?'shaking':''}">
-          ${layers.map(l=>{
-            const k = newInvs.indexOf(l.inv);
-            const d = (0.5 + Math.max(0,k)*0.45).toFixed(2);
-            return `<div class="layer${k>=0?' new':''}" style="bottom:${l.bottomPct}%; height:${l.heightPct}%; --h:${l.heightPct}%; --d:${d}s; background:${l.color};"></div>`;
-          }).join('')}
-          ${layers.map(l=>{
-            const k = newInvs.indexOf(l.inv);
-            const d2 = (0.5 + Math.max(0,k)*0.45 + 0.4).toFixed(2);
-            return `<div class="glass-tick${k>=0?' new':''}" style="bottom:${l.topPct}%; --d2:${d2}s; background:${l.color};"></div>`;
-          }).join('')}
-          ${iceHTML(step.ice, step.tag==='GHIACCIO', {from:lvlFrom, to:lvlTo, dur:0.45*newCount})}
-          ${stirRingHTML(step, state.timer.running)}
-        </div>
-        ${garnishHTML(c, state.stepIndex)}
-      </div>
-      <div class="legend">
-        ${[...layers].reverse().map(l=>`
-          <div class="legend-row">
-            <span class="legend-swatch" style="background:${l.color};"></span>
-            <span class="legend-text">${l.label} — ${l.amountDisplay}</span>
-          </div>
-        `).join('')}
-      </div>
-    </div>`;
-  html += `<div class="glass-legend">Ora stai lavorando nel: <b style="color:var(--text);">${vesselLabel}</b>. Il colore e l'altezza di ogni strato corrispondono al vero ingrediente versato.</div>`;
-
-  if(miss.length){
-    html += `<div class="tool-list">Ti manca ancora: <span class="missing">${miss.map(m=>INV_LABELS[m]).join(', ')}</span></div>`;
-  }
-
-  html += `<div class="step-counter">STAGE ${state.stepIndex+1} / ${total}</div>`;
-
-  html += `<div class="step-box">
-      <span class="step-tag">${step.tag}</span><br>
-      ${fillTemplate(step.text, c, state.guests)}
-    </div>`;
-
-  if(state.guests>2 && (step.tag==='SHAKE')){
-    html += `<div class="guest-note">Consiglio: con più di 2 persone shakera in 2-3 lotti separati, resta più freddo ed equilibrato.</div>`;
-  }
-
-  if(step.duration){
-    const t = state.timer;
-    const pct = t.total ? Math.min(100, (t.seconds/t.total)*100) : 0;
-    html += `<div class="timer-bar-outer"><div class="timer-bar-inner" style="width:${pct}%;"></div></div>`;
-    if(!t.running && t.seconds===0){
-      html += `<button class="action-btn secondary" data-action="start-timer">AVVIA (${step.duration}s)</button>`;
-    } else if(t.running){
-      html += `<div class="flavor-text">IN CORSO...</div>`;
-      html += `<button class="action-btn" disabled>ATTENDI...</button>`;
-    } else {
-      html += `<div class="flavor-text">PERFETTO!</div>`;
-      html += `<button class="action-btn" data-action="${isLast?'finish-cocktail':'next-step'}">${isLast?'FINE! ▶ TORNA AI COCKTAIL':'STEP SUCCESSIVO ▶'}</button>`;
-    }
-  } else {
-    html += `<button class="action-btn" data-action="${isLast?'finish-cocktail':'next-step'}">${isLast?'FINE! ▶ TORNA AI COCKTAIL':'FATTO ▶ STEP SUCCESSIVO'}</button>`;
-  }
-
-  if(state.stepIndex>0){
-    html += `<button class="action-btn secondary" data-action="prev-step">◀ STEP PRECEDENTE</button>`;
-  }
-
-  return html;
-}
-
-function renderBasi(){
-  let html = hudHTML() + screenHeader('BASI');
-
-  BASI_INFO.forEach(b=>{
-    html += `<div class="card"><h3>${b.title}</h3><p>${b.text}</p></div>`;
-  });
-
-  html += `<div class="card">
-    <h3>CALCOLA LA SERATA</h3>
-    <p style="margin-bottom:10px;">Seleziona i cocktail della serata: per ognuno imposti persone e quanti drink a testa, così ogni cocktail può avere il suo pubblico.</p>
-  `;
-
-  COCKTAILS.forEach(c=>{
-    const item = state.basiSelection[c.id];
-    const selected = !!(item && item.selected);
-    html += `<div class="calc-item">
-      <div class="calc-check">
-        <input type="checkbox" id="basi-${c.id}" data-basi="${c.id}" ${selected?'checked':''}>
-        <label for="basi-${c.id}">${c.name}</label>
-      </div>`;
-    if(selected){
-      html += `
-        <div class="calc-controls">
-          <span class="calc-label">Persone</span>
-          <button data-action="basi-guest-minus" data-id="${c.id}">-</button>
-          <span class="calc-val">${item.guests}</span>
-          <button data-action="basi-guest-plus" data-id="${c.id}">+</button>
-          <span class="calc-label">A testa</span>
-          <button data-action="basi-drinks-minus" data-id="${c.id}">-</button>
-          <span class="calc-val">${item.perPerson}</span>
-          <button data-action="basi-drinks-plus" data-id="${c.id}">+</button>
-        </div>`;
-    }
-    html += `</div>`;
-  });
-
-  const selectedEntries = Object.entries(state.basiSelection).filter(([id,v])=>v.selected);
-  if(selectedEntries.length){
-    const totals = {};
-    selectedEntries.forEach(([id,v])=>{
-      const c = COCKTAILS.find(c=>c.id===id);
-      const multiplier = v.guests * v.perPerson;
-      c.ingredients.forEach(i=>{
-        const amt = scaleAmount(i, multiplier);
-        if(!totals[i.inv]) totals[i.inv] = {amount:0, unit:i.unit, label:i.label};
-        totals[i.inv].amount += amt;
-      });
-    });
-    html += `<div style="margin-top:14px;">`;
-    Object.keys(totals).forEach(key=>{
-      const t = totals[key];
-      let extra = '';
-      if(key==='lime') extra = ` (≈ ${Math.ceil(t.amount/LIME_YIELD)} lime)`;
-      if(key==='limone') extra = ` (≈ ${Math.ceil(t.amount/LEMON_YIELD)} limoni)`;
-      if(key==='sciroppo') extra = ` — prepara almeno ${Math.ceil((t.amount*10)/50)*50}ml di sciroppo`;
-      html += `<div class="result-line"><span>${t.label}${extra}</span><b>${round(t.amount)}${t.unit==='pz'?' pz':t.unit==='dash'?' dash':t.unit==='foglie'?' foglie':t.unit}</b></div>`;
-    });
-    html += `</div>`;
-  } else {
-    html += `<div class="inv-note">Seleziona almeno un cocktail per vedere le quantità totali.</div>`;
-  }
-
-  html += `</div>`;
   return html;
 }
 
@@ -1368,12 +1946,758 @@ function clearTimerState(){
   state.timer = {running:false, interval:null, seconds:0, total:0};
 }
 
+/* ======================================================================
+   PROGRESSIONE, SBLOCCHI, CORSO, CODICI SEGRETI
+   ====================================================================== */
+
+function defaultProgress(){
+  return {
+    points:0,
+    lessonsDone:{},
+    unlocked:{},
+    work:{},
+    cheats:{ money:false, lessons:false, premium:false, all:false },
+  };
+}
+
+function normalizeProgress(p){
+  const out = Object.assign(defaultProgress(), p || {});
+  out.cheats = Object.assign(defaultProgress().cheats, (p && p.cheats) || {});
+  out.lessonsDone = out.lessonsDone || {};
+  out.unlocked = out.unlocked || {};
+  out.work = out.work || {};
+  return out;
+}
+
+function isFree(c){ return FREE_IDS.indexOf(c.id) >= 0; }
+
+function isUnlocked(c){
+  const p = state.progress;
+  return isFree(c) || !!p.unlocked[c.id] || p.cheats.all || (p.cheats.premium && c.tier==='premium');
+}
+
+// Si puo aprire se sbloccato, oppure se aperto da una lezione (accesso temporaneo)
+function canAccess(c){ return isUnlocked(c) || state.tempAccess===c.id; }
+
+function costOf(c){ return COST[c.tier]; }
+function canAfford(c){ return state.progress.cheats.money || state.progress.points >= costOf(c); }
+function pointsLabel(){ return state.progress.cheats.money ? '∞' : String(state.progress.points); }
+
+function unlockCocktail(c){
+  if(isUnlocked(c)) return true;
+  if(!canAfford(c)) return false;
+  if(!state.progress.cheats.money) state.progress.points -= costOf(c);
+  state.progress.unlocked[c.id] = true;
+  persistData();
+  return true;
+}
+
+function lessonUnlocked(i){
+  return state.progress.cheats.lessons || i===0 || !!state.progress.lessonsDone[LESSONS[i-1].id];
+}
+
+function lessonWork(l){
+  const w = state.progress.work;
+  if(!w[l.id]) w[l.id] = { ex:[], quiz:false, cocktail:false };
+  return w[l.id];
+}
+
+function lessonReady(l){
+  const w = lessonWork(l);
+  const exOk = l.ex.every((_, i)=> !!w.ex[i]);
+  const cockOk = !l.cocktail || !!w.cocktail;
+  return exOk && cockOk && !!w.quiz;
+}
+
+function spiritLabel(id){
+  const g = SPIRIT_GROUPS.find(g=>g.id===id);
+  return g ? g.label : 'ALTRO';
+}
+
+function escapeAttr(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function applyCheatCode(raw){
+  const code = String(raw||'').toUpperCase().replace(/[^A-Z]/g,'');
+  const hit = CHEAT_CODES[code];
+  if(!hit){ state.codeMsg = 'CODICE NON VALIDO. Riprova.'; state.codeOk = false; return; }
+  if(hit.key==='reset'){ state.progress = defaultProgress(); state.basiSelection = {}; }
+  else state.progress.cheats[hit.key] = true;
+  state.codeMsg = hit.msg;
+  state.codeOk = true;
+  persistData();
+}
+
+/* ======================================================================
+   HUD, MENU, INTESTAZIONE
+   ====================================================================== */
+
+function hudHTML(title){
+  const unlocked = COCKTAILS.filter(isUnlocked);
+  const ready = unlocked.filter(isCocktailReady).length;
+  return `
+    <div class="hud">
+      <div class="hud-item">
+        <span class="hud-label">PERSONE</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <button data-action="guest-minus">-</button>
+          <span class="val">${String(state.guests).padStart(2,'0')}</span>
+          <button data-action="guest-plus">+</button>
+        </div>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">PUNTI</span>
+        <span class="val" style="color:var(--green);">${pointsLabel()}</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">PRONTI</span>
+        <span class="val">${ready}/${unlocked.length}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderMenu(){
+  return `
+    ${hudHTML()}
+    <div class="menu-title pixel">MENU PRINCIPALE</div>
+    <button class="menu-btn purple" data-action="goto-course">
+      CORSO
+      <span class="sub">Lezioni, esercizi e punti da guadagnare</span>
+    </button>
+    <button class="menu-btn pink" data-action="goto-cocktails">
+      COCKTAIL
+      <span class="sub">I ${COCKTAILS.length} cocktail IBA, passo passo</span>
+    </button>
+    <button class="menu-btn" data-action="goto-inventory">
+      SCORTE
+      <span class="sub">Segna cosa hai in casa</span>
+    </button>
+    <button class="menu-btn yellow" data-action="goto-basi">
+      BASI &amp; SCORTE SERATA
+      <span class="sub">Tecniche base e calcolo quantità</span>
+    </button>
+    <button class="menu-btn green" data-action="goto-music">
+      MUSICA
+      <span class="sub">Colonna sonora retro per la serata</span>
+    </button>
+    <button class="menu-btn orange" data-action="goto-codes">
+      CODICI SEGRETI
+      <span class="sub">Inserisci un cheat code</span>
+    </button>
+  `;
+}
+
+function screenHeader(title, backAction, backLabel){
+  return `
+    <div class="screen-header">
+      <button class="back-btn" data-action="${backAction || 'goto-menu'}">${backLabel || '‹ MENU'}</button>
+      <div class="screen-title pixel">${title}</div>
+    </div>
+  `;
+}
+
+/* ======================================================================
+   LISTA COCKTAIL (filtri, ricerca, sblocco)
+   ====================================================================== */
+
+function matchesFilter(c){
+  const f = state.filter;
+  if(f.tier!=='all' && c.tier!==f.tier) return false;
+  if(f.spirit!=='all' && c.spirit!==f.spirit) return false;
+  if(f.status==='unlocked' && !isUnlocked(c)) return false;
+  if(f.status==='locked' && isUnlocked(c)) return false;
+  if(f.status==='ready' && !(isUnlocked(c) && isCocktailReady(c))) return false;
+  if(f.q && c.name.toLowerCase().indexOf(f.q.toLowerCase()) < 0) return false;
+  return true;
+}
+
+function sortedCocktails(){
+  return COCKTAILS.slice().sort((a,b)=>{
+    const ua = isUnlocked(a) ? 0 : 1, ub = isUnlocked(b) ? 0 : 1;
+    if(ua!==ub) return ua-ub;
+    if(a.tier!==b.tier) return TIER_ORDER[a.tier]-TIER_ORDER[b.tier];
+    return a.name.localeCompare(b.name);
+  });
+}
+
+function cocktailCardHTML(c){
+  const unlocked = isUnlocked(c);
+  const ready = unlocked && isCocktailReady(c);
+  const miss = missingItems(c);
+  const gi = GLASS_INFO[c.glassShape] || GLASS_INFO['shape-tumbler'];
+  const meta = `${CAT_LABELS[c.cat]} · ${spiritLabel(c.spirit)} · ${TIER_LABELS[c.tier]}${isFree(c) ? ' · FREE' : ''}`;
+  let sub, badge;
+  if(unlocked){
+    sub = ready
+      ? `<div class="cc-missing" style="color:var(--green);">Tutto pronto</div>`
+      : `<div class="cc-missing">Manca: ${miss.slice(0,3).map(m=>INV_LABELS[m]).join(', ')}${miss.length>3 ? ` +${miss.length-3}` : ''}</div>`;
+    badge = `<span class="badge ${ready?'ready':'locked'}">${ready?'PLAY':'-'+miss.length}</span>`;
+  } else {
+    const names = c.ingredients.filter(i=>!i.garnish && !i.rinse).map(i=>ibaShortLabel(i.inv)).join(', ');
+    sub = `<div class="cc-missing">${names}</div>`;
+    badge = `<span class="badge pay">${costOf(c)} PT</span>`;
+  }
+  let panel = '';
+  if(!unlocked && state.unlockConfirm===c.id){
+    const afford = canAfford(c);
+    panel = `
+      <div class="unlock-panel">
+        <div style="font-size:17px;margin-bottom:8px;">Sbloccare <b>${c.name}</b> (${TIER_LABELS[c.tier]}) per <b>${costOf(c)} punti</b>? Hai <b>${pointsLabel()}</b>. Bicchiere: ${gi.name}.</div>
+        ${afford
+          ? `<button class="action-btn" data-action="unlock-do" data-id="${c.id}">SBLOCCA</button>`
+          : `<div class="flavor-text" style="color:var(--pink);">PUNTI INSUFFICIENTI: completa altre lezioni del CORSO</div>`}
+        <button class="action-btn secondary" data-action="unlock-cancel">ANNULLA</button>
+      </div>`;
+  }
+  return `
+    <div class="cocktail-card ${ready?'ready':''} ${unlocked?'':'is-locked'}" data-action="open-cocktail" data-id="${c.id}">
+      <div style="flex:1;min-width:0;">
+        <div class="cc-name">${c.name.toUpperCase()}</div>
+        <div class="cc-meta">${meta}</div>
+        ${sub}
+      </div>
+      ${badge}
+      ${panel}
+    </div>
+  `;
+}
+
+function cocktailItemsHTML(){
+  const list = sortedCocktails().filter(matchesFilter);
+  if(!list.length) return `<div class="inv-note">Nessun cocktail con questi filtri.</div>`;
+  return list.map(cocktailCardHTML).join('');
+}
+
+function chipHTML(label, group, value){
+  const on = state.filter[group]===value;
+  return `<button class="chip ${on?'on':''}" data-action="filter" data-group="${group}" data-value="${value}">${label}</button>`;
+}
+
+function renderCocktailList(){
+  const f = state.filter;
+  const unlockedCount = COCKTAILS.filter(isUnlocked).length;
+  const readyCount = COCKTAILS.filter(c=>isUnlocked(c) && isCocktailReady(c)).length;
+  let html = hudHTML() + screenHeader('COCKTAIL');
+  html += `<div class="inv-note" style="margin-top:0;">Sbloccati ${unlockedCount}/${COCKTAILS.length} · Pronti ${readyCount}. Tocca un cocktail bloccato per sbloccarlo con i punti del CORSO.</div>`;
+  html += `<input type="text" class="text-input" id="cocktail-search" placeholder="Cerca un cocktail..." value="${escapeAttr(f.q)}">`;
+  html += `<div class="filter-row">
+    ${chipHTML('TUTTI','tier','all')}
+    ${chipHTML('BASE ('+COST.base+' PT)','tier','base')}
+    ${chipHTML('STANDARD ('+COST.standard+' PT)','tier','standard')}
+    ${chipHTML('PREMIUM ('+COST.premium+' PT)','tier','premium')}
+  </div>`;
+  html += `<div class="filter-row">
+    ${chipHTML('OGNI SPIRITO','spirit','all')}
+    ${SPIRIT_GROUPS.map(g=>chipHTML(g.label,'spirit',g.id)).join('')}
+    ${chipHTML('LIQUORI / ALTRO','spirit','altro')}
+  </div>`;
+  html += `<div class="filter-row">
+    ${chipHTML('TUTTI','status','all')}
+    ${chipHTML('SBLOCCATI','status','unlocked')}
+    ${chipHTML('BLOCCATI','status','locked')}
+    ${chipHTML('PRONTI','status','ready')}
+  </div>`;
+  html += `<div id="cocktail-items">${cocktailItemsHTML()}</div>`;
+  return html;
+}
+
+/* ======================================================================
+   GRAFICA DEL BICCHIERE: strati (con risciacquo e ingredienti che affondano)
+   ====================================================================== */
+
+function buildLayers(cocktail, uptoStepIndex, guests){
+  const revealedOrder = [];
+  for(let i=0;i<=uptoStepIndex;i++){
+    (cocktail.steps[i].reveal||[]).forEach(inv=>{
+      if(!revealedOrder.includes(inv)) revealedOrder.push(inv);
+    });
+  }
+  // Chi "affonda" (granatina, crème de mûre...) si disegna sul fondo, anche se si versa per ultimo
+  const isSink = inv => { const g = cocktail.ingredients.find(i=>i.inv===inv); return !!(g && g.sink); };
+  revealedOrder.sort((a,b)=> (isSink(a)?0:1) - (isSink(b)?0:1));
+
+  // Il totale si calcola sull'intera ricetta finale (non solo su cio' che e' stato
+  // versato finora), cosi' il livello cresce in proporzione reale.
+  const volByInv = {};
+  let total = 0;
+  cocktail.ingredients.forEach(ingredient=>{
+    let vol = 0;
+    if(ingredient.rinse) vol = 0;
+    else if(ingredient.unit==='cl') vol = ingredient.amount;
+    else if(ingredient.unit==='dash') vol = ingredient.amount*NOMINAL_DASH_CL;
+    volByInv[ingredient.inv] = vol;
+    total += vol;
+  });
+  const maxFill = 85;
+  let cumBottom = 0;
+  const layers = [];
+  revealedOrder.forEach(inv=>{
+    const vol = volByInv[inv];
+    if(!vol) return;
+    const ingredient = cocktail.ingredients.find(i=>i.inv===inv);
+    const heightPct = total>0 ? (vol/total)*maxFill : 0;
+    const bottomPct = cumBottom;
+    cumBottom += heightPct;
+    layers.push({
+      inv, bottomPct, heightPct, topPct:cumBottom,
+      color: COLORS[inv] || '#cccccc',
+      label: ingredient.label,
+      amountDisplay: scaleAmount(ingredient, guests) + (ingredient.unit==='dash' ? ' dash' : ingredient.unit)
+    });
+  });
+  return layers;
+}
+
+/* ======================================================================
+   PREPARAZIONE (dettaglio cocktail)
+   ====================================================================== */
+
+function renderDetail(){
+  const c = COCKTAILS.find(c=>c.id===state.currentCocktailId);
+  if(!c) return hudHTML() + screenHeader('COCKTAIL','goto-cocktails','‹ LISTA') + `<div class="inv-note">Cocktail non trovato.</div>`;
+  const step = c.steps[state.stepIndex];
+  const total = c.steps.length;
+  const isLast = state.stepIndex === total-1;
+  const fromLesson = !!(state.backTo && state.backTo.view==='lesson');
+  const miss = missingItems(c);
+  const layers = buildLayers(c, state.stepIndex, state.guests);
+  const prevLayers = state.stepIndex>0 ? buildLayers(c, state.stepIndex-1, state.guests) : [];
+  const lvlFrom = prevLayers.length ? prevLayers[prevLayers.length-1].topPct : 0;
+  const lvlTo = layers.length ? layers[layers.length-1].topPct : 0;
+  const newInvs = step.reveal || [];
+  const newCount = layers.filter(l=>newInvs.includes(l.inv)).length;
+
+  let html = hudHTML() + (fromLesson
+    ? screenHeader(c.name.toUpperCase(), 'back-to-lesson', '‹ LEZIONE')
+    : screenHeader(c.name.toUpperCase(), 'goto-cocktails', '‹ LISTA'));
+  html += `<div style="display:flex; justify-content:flex-end; margin:-8px 0 10px;">
+      <button class="back-btn" data-action="restart-cocktail" style="border-color:var(--yellow); color:var(--yellow);">RICOMINCIA</button>
+    </div>`;
+
+  const glassInfo = GLASS_INFO[c.glassShape] || GLASS_INFO['shape-tumbler'];
+  html += `<div class="glass-tag"><span class="mini-glass-icon ${glassInfo.iconClass}"></span>Bicchiere consigliato: <b style="color:var(--cyan);">${glassInfo.name}</b></div>`;
+
+  const vClass = step.vessel==='shaker' ? 'v-shaker' : step.vessel==='mixing' ? 'v-mixing' : glassInfo.vClass;
+  const isShaking = step.tag==='SHAKE' && state.timer.running;
+  const vesselLabel = step.vessel==='shaker' ? 'SHAKER' : step.vessel==='mixing' ? 'MIXING GLASS' : glassInfo.name.toUpperCase();
+  const hasHandle = step.vessel==='glass' && c.glassShape==='shape-mug';
+
+  html += `<div class="glass-row">
+      <div class="vessel-stage ${hasHandle?'has-handle':''}">
+        ${pourRowHTML(step, c, state.guests)}
+        ${iceScoopHTML(step)}
+        <div class="vessel ${vClass} ${isShaking?'shaking':''}">
+          <div class="vessel-fill">
+            ${layers.map(l=>{
+              const k = newInvs.indexOf(l.inv);
+              const d = (0.5 + Math.max(0,k)*0.45).toFixed(2);
+              return `<div class="layer${k>=0?' new':''}" style="bottom:${l.bottomPct}%; height:${l.heightPct}%; --h:${l.heightPct}%; --d:${d}s; background:${l.color};"></div>`;
+            }).join('')}
+            ${iceHTML(step.ice, step.tag==='GHIACCIO', {from:lvlFrom, to:lvlTo, dur:0.45*newCount})}
+            ${stirRingHTML(step, state.timer.running)}
+          </div>
+        </div>
+        ${garnishHTML(c, state.stepIndex)}
+      </div>
+      <div class="legend">
+        ${[...layers].reverse().map(l=>`
+          <div class="legend-row">
+            <span class="legend-swatch" style="background:${l.color};"></span>
+            <span class="legend-text">${l.label} — ${l.amountDisplay}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  html += `<div class="glass-legend">Ora stai lavorando nel: <b style="color:var(--text);">${vesselLabel}</b>. Il colore e l'altezza di ogni strato corrispondono al vero ingrediente versato.</div>`;
+
+  if(miss.length){
+    html += `<div class="tool-list">Ti manca ancora: <span class="missing">${miss.map(m=>INV_LABELS[m]).join(', ')}</span></div>`;
+  }
+
+  html += `<div class="step-counter">STAGE ${state.stepIndex+1} / ${total}</div>`;
+
+  html += `<div class="step-box">
+      <span class="step-tag">${step.tag}</span><br>
+      ${fillTemplate(step.text, c, state.guests)}
+    </div>`;
+
+  if(state.guests>2 && (step.tag==='SHAKE')){
+    html += `<div class="guest-note">Consiglio: con più di 2 persone shakera in 2-3 lotti separati, resta più freddo ed equilibrato.</div>`;
+  }
+
+  const finishLabel = fromLesson ? 'FINE! ▶ TORNA ALLA LEZIONE' : 'FINE! ▶ TORNA AI COCKTAIL';
+  if(step.duration){
+    const t = state.timer;
+    const pct = t.total ? Math.min(100, (t.seconds/t.total)*100) : 0;
+    html += `<div class="timer-bar-outer"><div class="timer-bar-inner" style="width:${pct}%;"></div></div>`;
+    if(!t.running && t.seconds===0){
+      html += `<button class="action-btn secondary" data-action="start-timer">AVVIA (${step.duration}s)</button>`;
+    } else if(t.running){
+      html += `<div class="flavor-text">IN CORSO...</div>`;
+      html += `<button class="action-btn" disabled>ATTENDI...</button>`;
+    } else {
+      html += `<div class="flavor-text">PERFETTO!</div>`;
+      html += `<button class="action-btn" data-action="${isLast?'finish-cocktail':'next-step'}">${isLast?finishLabel:'STEP SUCCESSIVO ▶'}</button>`;
+    }
+  } else {
+    html += `<button class="action-btn" data-action="${isLast?'finish-cocktail':'next-step'}">${isLast?finishLabel:'FATTO ▶ STEP SUCCESSIVO'}</button>`;
+  }
+
+  if(state.stepIndex>0){
+    html += `<button class="action-btn secondary" data-action="prev-step">◀ STEP PRECEDENTE</button>`;
+  }
+
+  return html;
+}
+
+/* ======================================================================
+   BASI: tecniche + calcolo serata (ogni cocktail con persone e drink a testa)
+   ====================================================================== */
+
+function renderBasi(){
+  let html = hudHTML() + screenHeader('BASI');
+
+  BASI_INFO.forEach(b=>{
+    html += `<div class="card"><h3>${b.title}</h3><p>${b.text}</p></div>`;
+  });
+
+  html += `<div class="card">
+    <h3>CALCOLA LA SERATA</h3>
+    <p style="margin-bottom:10px;">Aggiungi i cocktail della serata (solo quelli sbloccati): per ognuno imposti persone e drink a testa, e l'app somma le quantità totali.</p>
+  `;
+
+  const selectedIds = Object.keys(state.basiSelection).filter(id=>state.basiSelection[id].selected);
+  const available = sortedCocktails().filter(c=>isUnlocked(c) && selectedIds.indexOf(c.id)<0);
+  if(available.length){
+    html += `<div style="display:flex;gap:8px;margin:10px 0;align-items:stretch;">
+      <select id="basi-add" class="text-input" style="margin:0;flex:1;">
+        ${available.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}
+      </select>
+      <button class="chip on" data-action="basi-add">AGGIUNGI</button>
+    </div>`;
+  }
+
+  selectedIds.forEach(id=>{
+    const c = COCKTAILS.find(c=>c.id===id);
+    const item = state.basiSelection[id];
+    if(!c) return;
+    html += `<div class="calc-item">
+      <div class="calc-check" style="justify-content:space-between;">
+        <label style="flex:1;">${c.name}</label>
+        <button class="chip" data-action="basi-remove" data-id="${c.id}">TOGLI</button>
+      </div>
+      <div class="calc-controls">
+        <span class="calc-label">Persone</span>
+        <button data-action="basi-guest-minus" data-id="${c.id}">-</button>
+        <span class="calc-val">${item.guests}</span>
+        <button data-action="basi-guest-plus" data-id="${c.id}">+</button>
+        <span class="calc-label">A testa</span>
+        <button data-action="basi-drinks-minus" data-id="${c.id}">-</button>
+        <span class="calc-val">${item.perPerson}</span>
+        <button data-action="basi-drinks-plus" data-id="${c.id}">+</button>
+      </div>
+    </div>`;
+  });
+
+  if(selectedIds.length){
+    const totals = {};
+    selectedIds.forEach(id=>{
+      const c = COCKTAILS.find(c=>c.id===id);
+      if(!c) return;
+      const item = state.basiSelection[id];
+      const multiplier = item.guests * item.perPerson;
+      c.ingredients.forEach(i=>{
+        const amt = scaleAmount(i, multiplier);
+        const key = i.inv + '|' + i.unit;
+        if(!totals[key]) totals[key] = { inv:i.inv, amount:0, unit:i.unit, label:i.label };
+        totals[key].amount += amt;
+      });
+    });
+    html += `<div style="margin-top:14px;">`;
+    Object.keys(totals).sort((a,b)=> totals[a].label.localeCompare(totals[b].label)).forEach(key=>{
+      const t = totals[key];
+      let extra = '';
+      if(t.unit==='cl' && t.inv==='lime') extra = ` (≈ ${Math.ceil(t.amount/LIME_YIELD)} lime)`;
+      if(t.unit==='cl' && t.inv==='limone') extra = ` (≈ ${Math.ceil(t.amount/LEMON_YIELD)} limoni)`;
+      if(t.unit==='cl' && t.inv==='sciroppo') extra = ` — prepara almeno ${Math.ceil((t.amount*10)/50)*50}ml di sciroppo`;
+      const u = t.unit==='pz' ? ' pz' : t.unit==='dash' ? ' dash' : t.unit==='foglie' ? ' foglie' : t.unit;
+      html += `<div class="result-line"><span>${t.label}${extra}</span><b>${round(t.amount)}${u}</b></div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div class="inv-note">Aggiungi almeno un cocktail per vedere le quantità totali.</div>`;
+  }
+
+  html += `</div>`;
+  return html;
+}
+
+/* ======================================================================
+   CORSO: elenco lezioni e lezione
+   ====================================================================== */
+
+function renderCourse(){
+  const done = LESSONS.filter(l=>state.progress.lessonsDone[l.id]).length;
+  const pct = Math.round(done/LESSONS.length*100);
+  let html = hudHTML() + screenHeader('CORSO');
+  html += `<div class="card">
+    <h3>IL TUO PERCORSO</h3>
+    <p>Lezioni completate: <b>${done}/${LESSONS.length}</b> · Punti: <b>${pointsLabel()}</b></p>
+    <div class="progress-outer"><div class="progress-inner" style="width:${pct}%;"></div></div>
+    <p style="margin-top:8px;font-size:16px;color:var(--dim);">Ogni lezione dà punti. Con i punti sblocchi i cocktail: BASE ${COST.base} pt, STANDARD ${COST.standard} pt, PREMIUM ${COST.premium} pt. Le lezioni si sbloccano una dopo l'altra.</p>
+  </div>`;
+  let lastModule = -1;
+  LESSONS.forEach((l,i)=>{
+    if(l.m!==lastModule){
+      html += `<div class="module-title pixel">MODULO ${l.m+1} · ${COURSE_MODULES[l.m]}</div>`;
+      lastModule = l.m;
+    }
+    const open = lessonUnlocked(i);
+    const dn = !!state.progress.lessonsDone[l.id];
+    html += `<div class="lesson-row ${dn?'done':''} ${open?'':'locked'}" ${open ? `data-action="open-lesson" data-id="${l.id}"` : ''}>
+      <div class="lesson-title">${i+1}. ${l.t}</div>
+      <span class="lesson-pts">${dn ? 'FATTA' : open ? '+'+l.pts+' PT' : 'BLOCCATA'}</span>
+    </div>`;
+  });
+  return html;
+}
+
+function renderLesson(){
+  const idx = LESSONS.findIndex(l=>l.id===state.currentLessonId);
+  const l = LESSONS[idx];
+  if(!l) return hudHTML() + screenHeader('CORSO','goto-course','‹ CORSO');
+  const w = lessonWork(l);
+  const done = !!state.progress.lessonsDone[l.id];
+
+  let html = hudHTML() + screenHeader(`LEZIONE ${idx+1}`, 'goto-course', '‹ CORSO');
+  html += `<div class="card">
+    <h3>${l.t}</h3>
+    <div class="inv-note" style="margin:0 0 8px;">MODULO ${l.m+1} · ${COURSE_MODULES[l.m]} · +${l.pts} PT</div>
+    <p>${l.text}</p>
+  </div>`;
+
+  if(l.needs.length){
+    html += `<div class="card"><h3>COSA TI SERVE</h3>
+      ${l.needs.map(k=>`<div class="${state.inventory[k]?'need-ok':'need-miss'}">${state.inventory[k]?'✓':'✗'} ${INV_LABELS[k]}</div>`).join('')}
+      <div class="inv-note" style="margin-bottom:0;">Segna in SCORTE quello che hai in casa.</div>
+    </div>`;
+  }
+
+  html += `<div class="card"><h3>ESERCIZI</h3>`;
+  l.ex.forEach((t,i)=>{
+    html += `<div class="inv-row ${w.ex[i]?'checked':''}">
+      <input type="checkbox" id="ex-${i}" data-ex="${i}" ${w.ex[i]?'checked':''}>
+      <label for="ex-${i}">${t}</label>
+    </div>`;
+  });
+  if(l.cocktail){
+    const c = COCKTAILS.find(c=>c.id===l.cocktail);
+    html += `<div class="inv-row ${w.cocktail?'checked':''}">
+      <span style="width:20px;color:var(--green);">${w.cocktail?'✓':'•'}</span>
+      <label style="flex:1;">Prepara ${c.name} seguendo la guida, fino alla fine</label>
+    </div>
+    <button class="action-btn secondary" data-action="open-lesson-cocktail" data-id="${c.id}">▶ APRI LA GUIDA: ${c.name.toUpperCase()}</button>`;
+  }
+  html += `</div>`;
+
+  html += `<div class="card"><h3>QUIZ</h3><p style="margin-bottom:10px;">${l.q.q}</p>`;
+  l.q.o.forEach((o,i)=>{
+    html += `<button class="quiz-opt ${w.quiz && i===l.q.a ? 'right' : ''}" data-action="quiz-answer" data-i="${i}" ${w.quiz?'disabled':''}>${o}</button>`;
+  });
+  if(w.quiz) html += `<div class="flavor-text">RISPOSTA ESATTA!</div>`;
+  else if(state.lessonMsg) html += `<div class="flavor-text" style="color:var(--pink);">${state.lessonMsg}</div>`;
+  html += `</div>`;
+
+  if(done){
+    html += `<div class="flavor-text">LEZIONE COMPLETATA</div>`;
+    if(idx < LESSONS.length-1){
+      html += `<button class="action-btn" data-action="open-lesson" data-id="${LESSONS[idx+1].id}">PROSSIMA LEZIONE ▶</button>`;
+    }
+  } else {
+    const ready = lessonReady(l);
+    html += `<button class="action-btn" data-action="complete-lesson" ${ready?'':'disabled'}>COMPLETA LEZIONE (+${l.pts} PT)</button>`;
+    if(!ready){
+      html += `<div class="inv-note">Spunta tutti gli esercizi, rispondi bene al quiz${l.cocktail ? ' e completa la guida del cocktail' : ''} per completare la lezione.</div>`;
+    }
+  }
+  return html;
+}
+
+function renderCodes(){
+  let html = hudHTML() + screenHeader('CODICI SEGRETI');
+  html += `<div class="card">
+    <h3>CHEAT CODE</h3>
+    <p style="margin-bottom:10px;">Come nei cabinati anni 80: inserisci un codice segreto (in inglese, senza spazi o con, non fa differenza) e vedi cosa succede.</p>
+    <input type="text" class="text-input" id="code-input" placeholder="Scrivi il codice..." autocomplete="off" autocapitalize="characters">
+    <button class="action-btn" data-action="submit-code">INVIA CODICE</button>
+    ${state.codeMsg ? `<div class="flavor-text" style="color:${state.codeOk?'var(--green)':'var(--pink)'};">${state.codeMsg}</div>` : ''}
+  </div>`;
+  const ch = state.progress.cheats;
+  const active = [];
+  if(ch.money) active.push('Punti infiniti');
+  if(ch.lessons) active.push('Tutte le lezioni sbloccate');
+  if(ch.premium) active.push('Cocktail premium sbloccati');
+  if(ch.all) active.push('Tutti i cocktail sbloccati');
+  html += `<div class="card"><h3>CODICI ATTIVI</h3>${active.length ? active.map(a=>`<div class="need-ok">✓ ${a}</div>`).join('') : `<p style="color:var(--dim);">Nessun codice attivo.</p>`}</div>`;
+  return html;
+}
+
+/* ======================================================================
+   AZIONI EXTRA (gestite prima dello switch principale)
+   ====================================================================== */
+
+function handleExtraAction(action, target){
+  switch(action){
+    case 'goto-menu':
+      clearTimerState();
+      state.backTo = null; state.tempAccess = null; state.unlockConfirm = null;
+      state.view = 'menu'; render(); return true;
+    case 'goto-cocktails':
+      clearTimerState();
+      state.backTo = null; state.tempAccess = null;
+      state.view = 'cocktails'; render(); return true;
+    case 'goto-course':
+      clearTimerState();
+      state.backTo = null; state.tempAccess = null;
+      state.view = 'course'; render(); return true;
+    case 'goto-codes':
+      state.codeMsg = ''; state.view = 'codes'; render(); return true;
+    case 'filter':
+      state.filter[target.dataset.group] = target.dataset.value;
+      render(); return true;
+    case 'open-cocktail': {
+      const c = COCKTAILS.find(c=>c.id===target.dataset.id);
+      if(!c) return true;
+      if(canAccess(c)){
+        clearTimerState();
+        state.backTo = null;
+        state.currentCocktailId = c.id;
+        state.stepIndex = 0;
+        state.view = 'detail';
+      } else {
+        state.unlockConfirm = (state.unlockConfirm===c.id) ? null : c.id;
+      }
+      render(); return true;
+    }
+    case 'unlock-do': {
+      const c = COCKTAILS.find(c=>c.id===target.dataset.id);
+      if(c && unlockCocktail(c)) state.unlockConfirm = null;
+      render(); return true;
+    }
+    case 'unlock-cancel':
+      state.unlockConfirm = null; render(); return true;
+    case 'open-lesson': {
+      const i = LESSONS.findIndex(l=>l.id===target.dataset.id);
+      if(i>=0 && lessonUnlocked(i)){
+        state.currentLessonId = LESSONS[i].id;
+        state.lessonMsg = '';
+        state.view = 'lesson';
+      }
+      render(); return true;
+    }
+    case 'open-lesson-cocktail': {
+      clearTimerState();
+      state.backTo = { view:'lesson', id:state.currentLessonId };
+      state.tempAccess = target.dataset.id;
+      state.currentCocktailId = target.dataset.id;
+      state.stepIndex = 0;
+      state.view = 'detail';
+      render(); return true;
+    }
+    case 'back-to-lesson':
+      clearTimerState();
+      if(state.backTo) state.currentLessonId = state.backTo.id;
+      state.backTo = null; state.tempAccess = null;
+      state.view = 'lesson'; render(); return true;
+    case 'finish-cocktail': {
+      clearTimerState();
+      if(state.backTo && state.backTo.view==='lesson'){
+        const l = LESSONS.find(l=>l.id===state.backTo.id);
+        if(l && l.cocktail===state.currentCocktailId){ lessonWork(l).cocktail = true; persistData(); }
+        state.currentLessonId = state.backTo.id;
+        state.backTo = null; state.tempAccess = null;
+        state.view = 'lesson';
+      } else {
+        state.tempAccess = null;
+        state.view = 'cocktails';
+      }
+      render(); return true;
+    }
+    case 'quiz-answer': {
+      const l = LESSONS.find(l=>l.id===state.currentLessonId);
+      if(!l) return true;
+      if(parseInt(target.dataset.i,10)===l.q.a){ lessonWork(l).quiz = true; state.lessonMsg = ''; persistData(); }
+      else state.lessonMsg = 'Risposta sbagliata, riprova!';
+      render(); return true;
+    }
+    case 'complete-lesson': {
+      const l = LESSONS.find(l=>l.id===state.currentLessonId);
+      if(l && lessonReady(l) && !state.progress.lessonsDone[l.id]){
+        state.progress.lessonsDone[l.id] = true;
+        state.progress.points += l.pts;
+        persistData();
+      }
+      render(); return true;
+    }
+    case 'submit-code': {
+      const input = document.getElementById('code-input');
+      applyCheatCode(input ? input.value : '');
+      render(); return true;
+    }
+    case 'basi-add': {
+      const sel = document.getElementById('basi-add');
+      if(sel && sel.value){
+        const id = sel.value;
+        if(!state.basiSelection[id]) state.basiSelection[id] = { selected:false, guests:state.guests, perPerson:1 };
+        state.basiSelection[id].selected = true;
+      }
+      render(); return true;
+    }
+    case 'basi-remove': {
+      const it = state.basiSelection[target.dataset.id];
+      if(it) it.selected = false;
+      render(); return true;
+    }
+  }
+  return false;
+}
+
+// Casella di ricerca: aggiorna solo la lista, senza perdere il focus
+app.addEventListener('input', (e)=>{
+  if(e.target && e.target.id==='cocktail-search'){
+    state.filter.q = e.target.value;
+    const box = document.getElementById('cocktail-items');
+    if(box) box.innerHTML = cocktailItemsHTML();
+  }
+});
+
+// Invio sul campo codice
+app.addEventListener('keydown', (e)=>{
+  if(e.key==='Enter' && e.target && e.target.id==='code-input'){
+    applyCheatCode(e.target.value);
+    render();
+  }
+});
+
+// Esercizi della lezione
+app.addEventListener('change', (e)=>{
+  if(e.target && e.target.dataset && e.target.dataset.ex !== undefined){
+    const l = LESSONS.find(l=>l.id===state.currentLessonId);
+    if(l){
+      lessonWork(l).ex[parseInt(e.target.dataset.ex,10)] = e.target.checked;
+      persistData();
+      render();
+    }
+  }
+});
+
 /* ============ EVENTS ============ */
 
 app.addEventListener('click', (e)=>{
   const target = e.target.closest('[data-action]');
   if(!target) return;
   const action = target.dataset.action;
+  if(handleExtraAction(action, target)) return;
 
   switch(action){
     case 'start':
