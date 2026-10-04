@@ -196,7 +196,7 @@
   .badge.locked{background:var(--pink); color:#3a0013;}
 
   /* ---------- Cocktail detail / play screen ---------- */
-  .glass-row{display:flex; justify-content:center; align-items:flex-end; gap:14px; margin:14px 0 6px;}
+  .glass-row{display:flex; justify-content:center; align-items:flex-end; gap:14px; margin:52px 0 6px;}
   .glass{
     position:relative; width:110px; height:130px; flex-shrink:0;
     border:4px solid var(--cyan);
@@ -238,6 +238,100 @@
   .legend-swatch{width:10px; height:10px; flex-shrink:0; border:1px solid rgba(255,255,255,.35);}
   .legend-text{font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   .glass-legend{color:var(--dim); font-size:14px; text-align:center; margin-bottom:14px;}
+
+  /* ---------- Bicchiere consigliato (sempre visibile) ---------- */
+  .glass-tag{
+    display:flex; align-items:center; gap:8px; justify-content:center;
+    color:var(--text); font-size:16px; margin-bottom:10px;
+  }
+  .mini-glass-icon{
+    display:inline-block; width:16px; height:20px; flex-shrink:0;
+    border:2px solid var(--cyan); border-top:none; background:rgba(0,232,255,.12);
+  }
+  .mini-glass-icon.shape-coupe{width:22px; height:13px; border-radius:0 0 11px 11px / 0 0 13px 13px;}
+  .mini-glass-icon.shape-highball{width:11px; height:22px;}
+
+  /* ---------- Palco del contenitore: vaso + animazioni sovrapposte ---------- */
+  .vessel-stage{position:relative; display:inline-block; flex-shrink:0;}
+  .vessel{
+    position:relative; overflow:hidden;
+    border:4px solid var(--cyan); border-top:none; background:rgba(255,255,255,.03);
+    box-shadow:0 0 16px rgba(0,232,255,.35);
+  }
+  .vessel.v-tumbler{width:110px; height:130px;}
+  .vessel.v-coupe{width:130px; height:90px; border-radius:0 0 70px 70px / 0 0 90px 90px;}
+  .vessel.v-highball{width:80px; height:150px;}
+  .vessel.v-shaker{width:76px; height:140px; border-radius:6px 6px 26px 26px;}
+  .vessel.v-mixing{width:96px; height:150px;}
+
+  @keyframes vesselShake{
+    0%,100%{transform:translateX(0) rotate(0deg);}
+    10%{transform:translateX(-6px) rotate(-7deg);}
+    20%{transform:translateX(6px) rotate(7deg);}
+    30%{transform:translateX(-6px) rotate(-6deg);}
+    40%{transform:translateX(6px) rotate(6deg);}
+    50%{transform:translateX(-5px) rotate(-5deg);}
+    60%{transform:translateX(5px) rotate(5deg);}
+    70%{transform:translateX(-4px) rotate(-3deg);}
+    80%{transform:translateX(4px) rotate(3deg);}
+    90%{transform:translateX(-2px) rotate(-1deg);}
+  }
+  .vessel.shaking{animation:vesselShake .35s infinite;}
+
+  .stir-ring{
+    position:absolute; top:10px; left:50%; width:26px; height:26px;
+    margin-left:-13px; border:3px dashed var(--yellow); border-radius:50%;
+    animation:stirSpin .8s linear infinite; z-index:4;
+  }
+  @keyframes stirSpin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+  .ice-scoop{
+    position:absolute; top:2px; right:-8px; width:26px; height:18px; z-index:6;
+    background:linear-gradient(to bottom, #d8e1ea, #99a7b6);
+    border:2px solid #fff;
+    clip-path:polygon(18% 0, 100% 0, 82% 100%, 0% 100%);
+    animation:scoopMove 1.2s ease-in-out 1;
+  }
+  @keyframes scoopMove{
+    0%{ transform:translate(46px,-14px) rotate(0deg); opacity:0; }
+    28%{ transform:translate(0,-8px) rotate(0deg); opacity:1; }
+    55%{ transform:translate(0,-8px) rotate(0deg); opacity:1; }
+    78%{ transform:translate(0,-8px) rotate(-40deg); opacity:1; }
+    100%{ transform:translate(46px,-14px) rotate(-40deg); opacity:0; }
+  }
+  @keyframes iceDrop{ from{opacity:0; transform:translateY(-16px) scale(.6);} to{opacity:1; transform:translateY(0) scale(1);} }
+  .ice[data-animate="1"] .ice-cube,
+  .ice[data-animate="1"] .ice-shard{ animation: iceDrop .5s ease-out .6s both; }
+
+  .pour-row{
+    position:absolute; top:-44px; left:0; right:0; z-index:6; height:44px;
+    display:flex; justify-content:center; gap:12px; pointer-events:none;
+  }
+  .pour-unit{position:relative; width:14px; height:44px;}
+  .pour-bottle{
+    position:absolute; top:2px; left:2px; width:10px; height:24px; border-radius:2px;
+    transform-origin:center center; animation:pourTilt 1.4s ease-in-out 1;
+  }
+  .pour-bottle::before{
+    content:''; position:absolute; left:50%; top:-7px; width:4px; height:7px;
+    transform:translateX(-50%); background:inherit;
+  }
+  .pour-stream{
+    position:absolute; left:50%; top:30px; width:3px; height:0; margin-left:-1px; opacity:0;
+    animation:streamFlow 1.4s ease-in-out 1;
+  }
+  @keyframes pourTilt{
+    0%{ transform:rotate(0deg); }
+    30%{ transform:rotate(180deg); }
+    75%{ transform:rotate(180deg); }
+    100%{ transform:rotate(0deg); }
+  }
+  @keyframes streamFlow{
+    0%,28%{height:0; opacity:0;}
+    38%{height:30px; opacity:.95;}
+    70%{height:30px; opacity:.95;}
+    80%,100%{height:0; opacity:0;}
+  }
   .step-counter{
     text-align:center; color:var(--yellow); font-family:'Press Start 2P', monospace;
     font-size:11px; margin-bottom:10px;
@@ -384,17 +478,24 @@ const COLORS = {
 };
 const NOMINAL_DASH_CL = 0.6; // volume "visivo" convenzionale per un dash, solo per proporzioni grafiche
 
+// Nome leggibile + classe icona per ogni forma di bicchiere di servizio
+const GLASS_INFO = {
+  'shape-tumbler':  { name:'Tumbler basso',      vClass:'v-tumbler',  iconClass:'shape-tumbler' },
+  'shape-coupe':    { name:'Coupe / Nick&Nora',  vClass:'v-coupe',    iconClass:'shape-coupe' },
+  'shape-highball': { name:'Highball / mug',     vClass:'v-highball', iconClass:'shape-highball' },
+};
+
 const COCKTAILS = [
   {
     id:'oldfashioned', name:'Old Fashioned', glassShape:'shape-tumbler',
     tools:['jigger','barSpoon','peeler','tumbler'],
     ingredients:[ing('bourbon',6,'cl'), ing('sciroppo',1,'cl'), ing('angostura',2,'dash'), ing('arancia',1,'pz')],
     steps:[
-      {tag:'BUILD', reveal:['sciroppo','angostura'], ice:'none', text:'Metti {sciroppo}cl di sciroppo e {angostura} dash di Angostura nel bicchiere.'},
-      {tag:'VERSA', reveal:['bourbon'], ice:'none', text:'Aggiungi {bourbon}cl di bourbon.'},
-      {tag:'GHIACCIO', reveal:[], ice:'big', text:'Riempi il bicchiere con un grosso cubo di ghiaccio.'},
-      {tag:'STIR', reveal:[], ice:'big', duration:20, text:'Mescola con il bar spoon per 20 secondi, fino a quando il bicchiere è freddo al tatto.'},
-      {tag:'GARNISH', reveal:[], ice:'big', text:'Ricava una twist di arancia con il peeler e spremila sopra il drink per rilasciare gli oli.'},
+      {tag:'BUILD', vessel:'glass', reveal:['sciroppo','angostura'], ice:'none', text:'Metti {sciroppo}cl di sciroppo e {angostura} dash di Angostura nel bicchiere.'},
+      {tag:'VERSA', vessel:'glass', reveal:['bourbon'], ice:'none', text:'Aggiungi {bourbon}cl di bourbon.'},
+      {tag:'GHIACCIO', vessel:'glass', reveal:[], ice:'big', text:'Riempi il bicchiere con un grosso cubo di ghiaccio.'},
+      {tag:'STIR', vessel:'glass', reveal:[], ice:'big', duration:20, text:'Mescola con il bar spoon per 20 secondi, fino a quando il bicchiere è freddo al tatto.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'big', text:'Ricava una twist di arancia con il peeler e spremila sopra il drink per rilasciare gli oli.'},
     ]
   },
   {
@@ -402,12 +503,12 @@ const COCKTAILS = [
     tools:['jigger','barSpoon','tumbler'],
     ingredients:[ing('gin',3,'cl'), ing('vermouthRosso',3,'cl'), ing('campari',3,'cl'), ing('arancia',1,'pz')],
     steps:[
-      {tag:'GHIACCIO', reveal:[], ice:'cubes', text:'Riempi il bicchiere con ghiaccio.'},
-      {tag:'VERSA', reveal:['gin'], ice:'cubes', text:'Versa {gin}cl di gin.'},
-      {tag:'VERSA', reveal:['vermouthRosso'], ice:'cubes', text:'Aggiungi {vermouthRosso}cl di vermouth rosso.'},
-      {tag:'VERSA', reveal:['campari'], ice:'cubes', text:'Aggiungi {campari}cl di Campari.'},
-      {tag:'STIR', reveal:[], ice:'cubes', duration:15, text:'Mescola per 15 secondi.'},
-      {tag:'GARNISH', reveal:[], ice:'cubes', text:'Guarnisci con una twist di arancia.'},
+      {tag:'GHIACCIO', vessel:'glass', reveal:[], ice:'cubes', text:'Riempi il bicchiere con ghiaccio.'},
+      {tag:'VERSA', vessel:'glass', reveal:['gin'], ice:'cubes', text:'Versa {gin}cl di gin.'},
+      {tag:'VERSA', vessel:'glass', reveal:['vermouthRosso'], ice:'cubes', text:'Aggiungi {vermouthRosso}cl di vermouth rosso.'},
+      {tag:'VERSA', vessel:'glass', reveal:['campari'], ice:'cubes', text:'Aggiungi {campari}cl di Campari.'},
+      {tag:'STIR', vessel:'glass', reveal:[], ice:'cubes', duration:15, text:'Mescola per 15 secondi.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'cubes', text:'Guarnisci con una twist di arancia.'},
     ]
   },
   {
@@ -415,10 +516,10 @@ const COCKTAILS = [
     tools:['shaker','strainer','jigger','coupe'],
     ingredients:[ing('bourbon',6,'cl'), ing('limone',2.5,'cl'), ing('sciroppo',2,'cl')],
     steps:[
-      {tag:'VERSA', reveal:['bourbon','limone','sciroppo'], ice:'none', text:'Versa {bourbon}cl di bourbon, {limone}cl di succo di limone fresco e {sciroppo}cl di sciroppo nello shaker.'},
-      {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio nello shaker e shakera energicamente per 12 secondi.'},
-      {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra con lo strainer nella coppa, senza ghiaccio.'},
-      {tag:'GARNISH', reveal:[], ice:'none', text:'Guarnisci con una twist di limone o una ciliegia.'},
+      {tag:'VERSA', vessel:'shaker', reveal:['bourbon','limone','sciroppo'], ice:'none', text:'Versa {bourbon}cl di bourbon, {limone}cl di succo di limone fresco e {sciroppo}cl di sciroppo nello shaker.'},
+      {tag:'SHAKE', vessel:'shaker', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio nello shaker e shakera energicamente per 12 secondi.'},
+      {tag:'STRAIN', vessel:'glass', reveal:[], ice:'none', text:'Filtra con lo strainer nella coppa, senza ghiaccio.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'none', text:'Guarnisci con una twist di limone o una ciliegia.'},
     ]
   },
   {
@@ -426,9 +527,9 @@ const COCKTAILS = [
     tools:['shaker','strainer','jigger','coupe'],
     ingredients:[ing('rum',6,'cl'), ing('lime',2.5,'cl'), ing('sciroppo',2,'cl')],
     steps:[
-      {tag:'VERSA', reveal:['rum','lime','sciroppo'], ice:'none', text:'Versa {rum}cl di rum bianco, {lime}cl di succo di lime fresco e {sciroppo}cl di sciroppo nello shaker.'},
-      {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
-      {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra nella coppa fredda, senza ghiaccio.'},
+      {tag:'VERSA', vessel:'shaker', reveal:['rum','lime','sciroppo'], ice:'none', text:'Versa {rum}cl di rum bianco, {lime}cl di succo di lime fresco e {sciroppo}cl di sciroppo nello shaker.'},
+      {tag:'SHAKE', vessel:'shaker', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
+      {tag:'STRAIN', vessel:'glass', reveal:[], ice:'none', text:'Filtra nella coppa fredda, senza ghiaccio.'},
     ]
   },
   {
@@ -437,10 +538,10 @@ const COCKTAILS = [
     extraTools:['saleRim'],
     ingredients:[ing('tequila',5,'cl'), ing('tripleSec',2,'cl'), ing('lime',2.5,'cl')],
     steps:[
-      {tag:'RIM', reveal:[], ice:'none', text:'Bagna il bordo del bicchiere con uno spicchio di lime e passalo nel sale grosso.'},
-      {tag:'VERSA', reveal:['tequila','tripleSec','lime'], ice:'none', text:'Versa {tequila}cl di tequila, {tripleSec}cl di triple sec e {lime}cl di succo di lime nello shaker.'},
-      {tag:'SHAKE', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
-      {tag:'STRAIN', reveal:[], ice:'cubes', text:'Filtra nel bicchiere con ghiaccio.'},
+      {tag:'RIM', vessel:'glass', reveal:[], ice:'none', text:'Bagna il bordo del bicchiere con uno spicchio di lime e passalo nel sale grosso.'},
+      {tag:'VERSA', vessel:'shaker', reveal:['tequila','tripleSec','lime'], ice:'none', text:'Versa {tequila}cl di tequila, {tripleSec}cl di triple sec e {lime}cl di succo di lime nello shaker.'},
+      {tag:'SHAKE', vessel:'shaker', reveal:[], ice:'cubes', duration:12, text:'Aggiungi ghiaccio e shakera per 12 secondi.'},
+      {tag:'STRAIN', vessel:'glass', reveal:[], ice:'cubes', text:'Filtra nel bicchiere con ghiaccio.'},
     ]
   },
   {
@@ -448,11 +549,11 @@ const COCKTAILS = [
     tools:['jigger','highball'],
     ingredients:[ing('vodka',5,'cl'), ing('lime',1.5,'cl'), ing('gingerBeer',10,'cl')],
     steps:[
-      {tag:'GHIACCIO', reveal:[], ice:'cubes', text:'Riempi il bicchiere (o mug di rame) con ghiaccio.'},
-      {tag:'VERSA', reveal:['vodka','lime'], ice:'cubes', text:'Versa {vodka}cl di vodka e {lime}cl di succo di lime.'},
-      {tag:'TOP', reveal:['gingerBeer'], ice:'cubes', text:'Completa con {gingerBeer}cl di ginger beer.'},
-      {tag:'STIR', reveal:[], ice:'cubes', duration:5, text:'Mescola brevemente per amalgamare.'},
-      {tag:'GARNISH', reveal:[], ice:'cubes', text:'Guarnisci con una rondella di lime.'},
+      {tag:'GHIACCIO', vessel:'glass', reveal:[], ice:'cubes', text:'Riempi il bicchiere (o mug di rame) con ghiaccio.'},
+      {tag:'VERSA', vessel:'glass', reveal:['vodka','lime'], ice:'cubes', text:'Versa {vodka}cl di vodka e {lime}cl di succo di lime.'},
+      {tag:'TOP', vessel:'glass', reveal:['gingerBeer'], ice:'cubes', text:'Completa con {gingerBeer}cl di ginger beer.'},
+      {tag:'STIR', vessel:'glass', reveal:[], ice:'cubes', duration:5, text:'Mescola brevemente per amalgamare.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'cubes', text:'Guarnisci con una rondella di lime.'},
     ]
   },
   {
@@ -460,11 +561,11 @@ const COCKTAILS = [
     tools:['muddler','jigger','highball'],
     ingredients:[ing('rum',6,'cl'), ing('lime',2,'cl'), ing('sciroppo',2,'cl'), ing('mentaFresca',9,'foglie'), ing('sodaWater',6,'cl')],
     steps:[
-      {tag:'MUDDLE', reveal:['lime'], ice:'none', text:'Metti {mentaFresca} foglie di menta e {lime}cl di succo di lime nel bicchiere, pesta leggermente per svegliare gli aromi.'},
-      {tag:'VERSA', reveal:['rum','sciroppo'], ice:'none', text:'Aggiungi {rum}cl di rum bianco e {sciroppo}cl di sciroppo.'},
-      {tag:'GHIACCIO', reveal:[], ice:'crushed', text:'Riempi con ghiaccio tritato.'},
-      {tag:'TOP', reveal:['sodaWater'], ice:'crushed', text:'Completa con {sodaWater}cl di soda.'},
-      {tag:'STIR', reveal:[], ice:'crushed', duration:5, text:'Mescola delicatamente con un movimento verticale, dal basso in alto.'},
+      {tag:'MUDDLE', vessel:'glass', reveal:['lime'], ice:'none', text:'Metti {mentaFresca} foglie di menta e {lime}cl di succo di lime nel bicchiere, pesta leggermente per svegliare gli aromi.'},
+      {tag:'VERSA', vessel:'glass', reveal:['rum','sciroppo'], ice:'none', text:'Aggiungi {rum}cl di rum bianco e {sciroppo}cl di sciroppo.'},
+      {tag:'GHIACCIO', vessel:'glass', reveal:[], ice:'crushed', text:'Riempi con ghiaccio tritato.'},
+      {tag:'TOP', vessel:'glass', reveal:['sodaWater'], ice:'crushed', text:'Completa con {sodaWater}cl di soda.'},
+      {tag:'STIR', vessel:'glass', reveal:[], ice:'crushed', duration:5, text:'Mescola delicatamente con un movimento verticale, dal basso in alto.'},
     ]
   },
   {
@@ -472,10 +573,10 @@ const COCKTAILS = [
     tools:['mixingGlass','barSpoon','strainer','jigger','coupe'],
     ingredients:[ing('bourbon',6,'cl'), ing('vermouthRosso',3,'cl'), ing('angostura',2,'dash')],
     steps:[
-      {tag:'VERSA', reveal:['bourbon','vermouthRosso','angostura'], ice:'none', text:'Versa {bourbon}cl di bourbon (o rye), {vermouthRosso}cl di vermouth rosso e {angostura} dash di Angostura nel mixing glass.'},
-      {tag:'STIR', reveal:[], ice:'cubes', duration:20, text:'Aggiungi ghiaccio e mescola per 20 secondi.'},
-      {tag:'STRAIN', reveal:[], ice:'none', text:'Filtra nella coppa fredda.'},
-      {tag:'GARNISH', reveal:[], ice:'none', text:'Guarnisci con una ciliegia sotto spirito.'},
+      {tag:'VERSA', vessel:'mixing', reveal:['bourbon','vermouthRosso','angostura'], ice:'none', text:'Versa {bourbon}cl di bourbon (o rye), {vermouthRosso}cl di vermouth rosso e {angostura} dash di Angostura nel mixing glass.'},
+      {tag:'STIR', vessel:'mixing', reveal:[], ice:'cubes', duration:20, text:'Aggiungi ghiaccio e mescola per 20 secondi.'},
+      {tag:'STRAIN', vessel:'glass', reveal:[], ice:'none', text:'Filtra nella coppa fredda.'},
+      {tag:'GARNISH', vessel:'glass', reveal:[], ice:'none', text:'Guarnisci con una ciliegia sotto spirito.'},
     ]
   },
 ];
@@ -615,12 +716,41 @@ function buildLayers(cocktail, uptoStepIndex, guests){
   return layers;
 }
 
-function iceHTML(iceState){
+function iceHTML(iceState, animate){
   if(!iceState || iceState==='none') return '';
-  if(iceState==='big') return `<div class="ice"><div class="ice-cube big"></div></div>`;
-  if(iceState==='cubes') return `<div class="ice">${'<div class="ice-cube"></div>'.repeat(3)}</div>`;
-  if(iceState==='crushed') return `<div class="ice">${'<div class="ice-shard"></div>'.repeat(9)}</div>`;
+  const flag = animate ? ' data-animate="1"' : '';
+  if(iceState==='big') return `<div class="ice"${flag}><div class="ice-cube big"></div></div>`;
+  if(iceState==='cubes') return `<div class="ice"${flag}>${'<div class="ice-cube"></div>'.repeat(3)}</div>`;
+  if(iceState==='crushed') return `<div class="ice"${flag}>${'<div class="ice-shard"></div>'.repeat(9)}</div>`;
   return '';
+}
+
+// Una bottiglietta colorata per ciascun ingrediente versato in QUESTO step (non cumulativo),
+// con un'animazione di inclinazione + rivolo, per mostrare visivamente il versamento
+function pourRowHTML(step, cocktail, guests){
+  const revealed = step.reveal || [];
+  if(!revealed.length) return '';
+  const units = revealed.map((inv, idx)=>{
+    const ingredient = cocktail.ingredients.find(i=>i.inv===inv);
+    if(!ingredient) return '';
+    const color = COLORS[inv] || '#cccccc';
+    const delay = (idx*0.2).toFixed(2);
+    return `<div class="pour-unit">
+      <div class="pour-bottle" style="background:${color}; animation-delay:${delay}s;"></div>
+      <div class="pour-stream" style="background:${color}; animation-delay:${delay}s;"></div>
+    </div>`;
+  }).join('');
+  return `<div class="pour-row">${units}</div>`;
+}
+
+function iceScoopHTML(step){
+  if(step.tag !== 'GHIACCIO') return '';
+  return `<div class="ice-scoop"></div>`;
+}
+
+function stirRingHTML(step, timerRunning){
+  if(step.tag !== 'STIR' || !timerRunning) return '';
+  return `<div class="stir-ring"></div>`;
 }
 
 /* ============ RENDER ============ */
@@ -764,11 +894,23 @@ function renderDetail(){
       <button class="back-btn" data-action="restart-cocktail" style="border-color:var(--yellow); color:var(--yellow);">RICOMINCIA</button>
     </div>`;
 
+  const glassInfo = GLASS_INFO[c.glassShape] || GLASS_INFO['shape-tumbler'];
+  html += `<div class="glass-tag"><span class="mini-glass-icon ${glassInfo.iconClass}"></span>Bicchiere consigliato: <b style="color:var(--cyan);">${glassInfo.name}</b></div>`;
+
+  const vClass = step.vessel==='shaker' ? 'v-shaker' : step.vessel==='mixing' ? 'v-mixing' : glassInfo.vClass;
+  const isShaking = step.tag==='SHAKE' && state.timer.running;
+  const vesselLabel = step.vessel==='shaker' ? 'SHAKER' : step.vessel==='mixing' ? 'MIXING GLASS' : glassInfo.name.toUpperCase();
+
   html += `<div class="glass-row">
-      <div class="${glassShapeClass(c.glassShape)}">
-        ${layers.map(l=>`<div class="layer" style="bottom:${l.bottomPct}%; height:${l.heightPct}%; background:${l.color};"></div>`).join('')}
-        ${layers.map(l=>`<div class="glass-tick" style="bottom:${l.topPct}%; background:${l.color};"></div>`).join('')}
-        ${iceHTML(step.ice)}
+      <div class="vessel-stage">
+        ${pourRowHTML(step, c, state.guests)}
+        ${iceScoopHTML(step)}
+        <div class="vessel ${vClass} ${isShaking?'shaking':''}">
+          ${layers.map(l=>`<div class="layer" style="bottom:${l.bottomPct}%; height:${l.heightPct}%; background:${l.color};"></div>`).join('')}
+          ${layers.map(l=>`<div class="glass-tick" style="bottom:${l.topPct}%; background:${l.color};"></div>`).join('')}
+          ${iceHTML(step.ice, step.tag==='GHIACCIO')}
+          ${stirRingHTML(step, state.timer.running)}
+        </div>
       </div>
       <div class="legend">
         ${[...layers].reverse().map(l=>`
@@ -779,7 +921,7 @@ function renderDetail(){
         `).join('')}
       </div>
     </div>`;
-  html += `<div class="glass-legend">Il colore e l'altezza di ogni strato corrispondono al vero ingrediente versato.</div>`;
+  html += `<div class="glass-legend">Ora stai lavorando nel: <b style="color:var(--text);">${vesselLabel}</b>. Il colore e l'altezza di ogni strato corrispondono al vero ingrediente versato.</div>`;
 
   if(miss.length){
     html += `<div class="tool-list">Ti manca ancora: <span class="missing">${miss.map(m=>INV_LABELS[m]).join(', ')}</span></div>`;
@@ -1117,12 +1259,19 @@ function startTimer(duration){
   render();
   state.timer.interval = setInterval(()=>{
     state.timer.seconds += 0.1;
+    const bar = document.querySelector('.timer-bar-inner');
     if(state.timer.seconds >= state.timer.total){
       state.timer.seconds = state.timer.total;
       state.timer.running = false;
       clearInterval(state.timer.interval);
+      render(); // solo ora serve un ridisegno completo (sblocca il pulsante, ferma le animazioni)
+    } else if(bar){
+      // aggiorno solo la barra, senza ridisegnare tutto: cosi' le animazioni di
+      // shaker/mescolare restano fluide invece di essere riavviate ogni 100ms
+      bar.style.width = Math.min(100, (state.timer.seconds/state.timer.total)*100) + '%';
+    } else {
+      render();
     }
-    render();
   }, 100);
 }
 
