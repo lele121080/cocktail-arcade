@@ -90,7 +90,7 @@ Persistenza in `localStorage`, chiave `cocktailArcadeData`: inventario, numero p
 - `fillTemplate()` sostituisce `{inv}` con **solo il numero**: l'unità di misura è scritta nel testo dello step (evita duplicati tipo "4dash dash").
 - `buildLayers()` costruisce gli strati colorati. Il totale è calcolato sull'**intera ricetta finale**, non solo su quanto versato finora, altrimenti un ingrediente piccolo sembra riempire il bicchiere. Un dash vale 0,6 "cl visivi" (`NOMINAL_DASH_CL`) solo per il disegno.
 - Animazioni solo CSS: `vesselShake`, `stirSpin`, `scoopMove`, `iceDrop`, `iceRise`, `layerGrow`, `pourTilt`, `streamFlow`, `garnishDrop`.
-- Il ghiaccio (`.ice`) è ancorato al fondo con `bottom` calcolato dal livello del liquido (variabili CSS `--lvl-from` / `--lvl-to`): lo step precedente dà il punto di partenza, quello corrente il punto di arrivo.
+- Il ghiaccio (`.ice`) è ancorato al fondo con `bottom` calcolato dal livello del liquido (variabili CSS `--lvl-from` / `--lvl-to`): lo step precedente dà il punto di partenza, quello corrente il punto di arrivo. Il valore è limitato con `clamp()` usando l'ingombro del ghiaccio (`--ice-h`, diverso per cubo grande, cubetti e tritato), così non esce mai dal bordo superiore.
 - Le guarnizioni sono un campo `garnish` dello step (`orangeTwist`, `lemonTwist`, `cherry`, `limeWheel`, `mintSprig`, `saltRim`), accumulate fino allo step corrente e mostrate solo sul bicchiere di servizio. Il timer aggiorna soltanto la barra (non ridisegna tutto) per non riavviare le animazioni a ogni tick.
 - Suono moneta: Web Audio API (due onde quadre), parte al tocco.
 
@@ -133,6 +133,7 @@ Il **Redirect URI** registrato su Spotify deve coincidere esattamente (carattere
 7. Preparazione animata: shaker/mixing glass, anello di mescolata, paletta del ghiaccio, bottiglie che versano, bicchiere consigliato sempre visibile.
 8. Bottiglie ridisegnate: si capovolgono con il rivolo dal collo, e c'è più spazio sopra il bicchiere per non sovrapporsi al testo.
 9. Guarnizioni disegnate (twist, ciliegia, rondella di lime, menta, bordo di sale), ghiaccio che cade sul fondo e sale col liquido, strati che crescono mentre si versa; aggiunto lo step di guarnizione con menta al Mojito.
+10. Ghiaccio ridisegnato: cubetti più piccoli su una sola riga e posizione limitata dentro il bordo del bicchiere (prima, nel highball, la riga superiore usciva e veniva tagliata).
 
 ## 4. Idee future (non approvate, solo appuntate)
 

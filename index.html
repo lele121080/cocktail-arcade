@@ -217,21 +217,26 @@
   }
   .ice{
     position:absolute; left:0; right:0; z-index:3;
-    bottom:max(0px, calc(var(--lvl-to, 0) * 1% - 14px));
-    display:flex; justify-content:center; align-items:flex-end; gap:4px;
-    flex-wrap:wrap; padding:0 8px; pointer-events:none;
+    --ice-h:30px;
+    bottom:clamp(0px, calc(var(--lvl-to, 0) * 1% - 14px), calc(100% - var(--ice-h)));
+    display:flex; justify-content:center; align-items:flex-end; gap:3px;
+    flex-wrap:wrap; padding:0 2px; pointer-events:none;
     animation:iceRise var(--rise-dur, 0s) ease-out var(--rise-delay, 0s) both;
   }
   @keyframes iceRise{
-    from{bottom:max(0px, calc(var(--lvl-from, 0) * 1% - 14px));}
-    to{bottom:max(0px, calc(var(--lvl-to, 0) * 1% - 14px));}
+    from{bottom:clamp(0px, calc(var(--lvl-from, 0) * 1% - 14px), calc(100% - var(--ice-h)));}
+    to{bottom:clamp(0px, calc(var(--lvl-to, 0) * 1% - 14px), calc(100% - var(--ice-h)));}
   }
   .ice-cube{
-    width:24px; height:24px; flex-shrink:0;
+    width:20px; height:20px; flex-shrink:0;
     background:rgba(255,255,255,.5); border:2px solid rgba(255,255,255,.85);
     box-shadow:inset -3px -3px 0 rgba(255,255,255,.2);
   }
-  .ice-cube.big{width:44px; height:44px;}
+  .ice-cube.big{width:40px; height:40px;}
+  .ice-cubes{--ice-h:30px;}
+  .ice-big{--ice-h:40px;}
+  .ice-crushed{--ice-h:24px;}
+  .ice-cubes > :nth-child(2){margin-bottom:8px;}
   .ice-shard{
     width:8px; height:8px; flex-shrink:0;
     background:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.8);
@@ -777,9 +782,9 @@ function iceHTML(iceState, animate, vars){
   const flag = animate ? ' data-animate="1"' : '';
   const v = vars || {};
   const style = ` style="--lvl-from:${(v.from||0).toFixed(1)}; --lvl-to:${(v.to||0).toFixed(1)}; --rise-dur:${(v.dur||0).toFixed(2)}s; --rise-delay:.5s;"`;
-  if(iceState==='big') return `<div class="ice"${flag}${style}><div class="ice-cube big"></div></div>`;
-  if(iceState==='cubes') return `<div class="ice"${flag}${style}>${'<div class="ice-cube"></div>'.repeat(3)}</div>`;
-  if(iceState==='crushed') return `<div class="ice"${flag}${style}>${'<div class="ice-shard"></div>'.repeat(9)}</div>`;
+  if(iceState==='big') return `<div class="ice ice-big"${flag}${style}><div class="ice-cube big"></div></div>`;
+  if(iceState==='cubes') return `<div class="ice ice-cubes"${flag}${style}>${'<div class="ice-cube"></div>'.repeat(3)}</div>`;
+  if(iceState==='crushed') return `<div class="ice ice-crushed"${flag}${style}>${'<div class="ice-shard"></div>'.repeat(9)}</div>`;
   return '';
 }
 
